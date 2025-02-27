@@ -93,7 +93,7 @@ def waiting_ui(timeout=5, text="", device_id=None):
     print()
     return 0
 
-def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, mh_mode="old", recreate_driver=True, device_id=None):
+def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, mh_mode="old", recreate_driver=True, device_id=None, appium_port=None):
     for i in range(1, times_scroll+1):
 
         if random.choice([True]+[False for _ in range(10)]) and rdn_options:
@@ -143,7 +143,7 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
 
         except:
             if recreate_driver:
-                driver = driver_init(adb_path, False, device_id)
+                driver = driver_init(adb_path, False, device_id, appium_port)
                 waiting_ui(5, "Lỗi driver, đợi 5s để tiếp tục scroll", device_id)
             else:
                 return "lỗi khi scroll"

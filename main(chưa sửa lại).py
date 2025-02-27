@@ -26,6 +26,10 @@ import os
 import sys
 
 more_wait_when_error = 1
+max_times_for_switch_account = 10
+max_times_for_error_verify_job = 2
+switch_account_counter = 0
+error_verify_job_counter = 0
 mh_mode = input(system_color("[?] Nhập loại màn hình (old/new)\n-> ")).lower().strip()
 
 def choose_id():
@@ -52,6 +56,8 @@ def choose_id():
 
 def auto(driver, account_id, adb_path):
     global more_wait_when_error
+    global error_verify_job_counter
+
     account_id = str(account_id)
     
     error = True
@@ -96,7 +102,7 @@ def auto(driver, account_id, adb_path):
         return "error"
     
     else:
-        rf = follow(driver, adb_path, rj[0], capabilities['udid'])
+        rf = follow(driver, adb_path, rj[0])
         
         if "error" in rf:
             print(error_color("[!] Đã có lỗi khi follow!"))
@@ -132,6 +138,8 @@ def auto(driver, account_id, adb_path):
                     print(success_color("[#] Đã bỏ job thành công!"))
 
                 more_wait_when_error += 1
+
+                return "error verify job"
                 
                 # r = delete_cache(driver, adb_path)
 
@@ -154,26 +162,119 @@ def auto(driver, account_id, adb_path):
                 #     print(success_color("[#] đã xóa cache thành công."))
                 
                 more_wait_when_error = 1
+                error_verify_job_counter = 0
 
 
 def run(adb_path):
     global more_wait_when_error
-    id_gl = choose_id()
-    os.system(adb_path + " devices")
-    udid_inp = input(system_color("[?] Nhập vào udid máy của bạn\n-> "))
-    capabilities['udid'] = udid_inp
-    wait = int(input(system_color("[?] Nhập số thời gian chờ\n-> ")))
-    appium_port = input(system_color('[?] Nhập port appium của bạn\n-> '))
-    print()
+    global error_verify_job_counter
+    global switch_account_counter
+    global max_times_for_error_verify_job
+    global max_times_for_switch_account
 
-    driver = driver_init(adb_path, False, capabilities['udid'], appium_port=appium_port)
-    driver = waiting_scroll(driver, adb_path, 5, "Đợi 5 scroll để bắt đầu...", mh_mode=mh_mode, device_id=capabilities['udid'], appium_port=appium_port)
+    driver = driver_init(adb_path)
+    accounts_id = check_tiktok_account_id()
+
+    wait = int(input(system_color(f"[] [?] Nhập số thời gian chờ\n-> ")))
+    print()
+    
+    print(system_color("[>] tiến hành đăng nhập tài khoản để bắt đầu chạy..."))
+    id_gl = None
+    success = False
+    while True:
+        
+        try:
+            username = login_tiktok_lite(adb_path, driver, mh_mode)
+        except:
+            print(error_color("[!] Lỗi khi chuyển acc, khởi tạo lại driver..."))
+            os.system(f'{adb_path} -s {capabilities["udid"]} shell input keyevent 4')
+            try:
+                driver.quit()
+            except:
+                pass
+            driver = driver_init(adb_path, False)
+            continue
+
+        username = username['username']
+        username = username.replace("@", "")
+
+        for id_username in accounts_id:
+            if username == id_username[1]:
+                id_gl = id_username[0]
+                print(success_color(f"[#] username '{username}' có tồn tại trong account golike"))
+                success = True
+                break
+
+        if not success:
+            print(error_color(f"[!] username '{username}' không tồn tại trong account golike"))
+            continue
+        else:
+            break
+
+    driver = waiting_scroll(driver, adb_path, 5, "Đợi 5 scroll để bắt đầu...", mh_mode=mh_mode)
 
     while True:
-        r = auto(driver, id_gl[0], adb_path)
+        r = auto(driver, id_gl, adb_path)
         
         if r == "!=follow":
-            driver = waiting_scroll(driver, adb_path, 1, f"Vui lòng đợi 1 scroll để nhận job tiếp theo...",  mh_mode=mh_mode, device_id=capabilities['udid'], appium_port=appium_port)
+            driver = waiting_scroll(driver, adb_path, 1, f"Vui lòng đợi 1 scroll để nhận job tiếp theo...",  mh_mode=mh_mode)
+            continue
+        
+        elif r == "error verify job":
+            error_verify_job_counter += 1
+            switch_account_counter += 1
+
+            if error_verify_job_counter >= max_times_for_error_verify_job:
+                print(error_color("[!] Lỗi xác minh job vượt qua số lần giới hạn, đổi account.."))
+                pass
+            else:
+                print(system_color(f"[!] Thử lại follow trên account '{username}' lần thử {error_verify_job_counter}/{max_times_for_error_verify_job}"))
+                try:
+                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode)
+                except:
+                    pass
+                continue
+             
+            if switch_account_counter >= max_times_for_switch_account:
+                print(system_color("[>] Số lần đổi account đã lớn hơn mức quy định, tiến hành scroll..."))
+                try:
+                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode)
+                except:
+                    pass
+                switch_account_counter = 0
+
+            print(system_color("[!] Lỗi xác minh job, tiến hành đổi tài khoản khác..."))
+            id_gl = None
+            success = False
+            while True:
+
+                try:
+                    username = login_tiktok_lite(adb_path, driver, mh_mode)
+                except:
+                    print(error_color("[!] Lỗi khi chuyển acc, khởi tạo lại driver..."))
+                    os.system(f'{adb_path} -s {capabilities["udid"]} shell input keyevent 4')
+                    try:
+                        driver.quit()
+                    except:
+                        pass
+                    driver = driver_init(adb_path, False)
+                    continue
+
+                username = username['username']
+                username = username.replace("@", "")
+
+                for id_username in accounts_id:
+                    if username == id_username[1]:
+                        id_gl = id_username[0]
+                        print(success_color(f"[#] username '{username}' có tồn tại trong account golike"))
+                        success = True
+                        break
+
+                if not success:
+                    print(error_color(f"[!] username '{username}' không tồn tại trong account golike"))
+                    continue
+                else:
+                    break
             continue
 
         elif r == "error follow":
@@ -182,12 +283,12 @@ def run(adb_path):
                 driver.quit()
             except:
                 pass
-            driver = driver_init(adb_path, False, capabilities['udid'], appium_port)
+            driver = driver_init(adb_path, False)
 
             # r = delete_cache(driver, adb_path)
             # if r == "error":
             #     print(error_color("[!] đã xóa cache không thành công, khởi tạo lại driver.."))
-            #     driver = driver_init(adb_path, False, appium_port)
+            #     driver = driver_init(adb_path, False)
             # else:
             #     print(success_color("[#] đã xóa cache thành công."))
 
@@ -199,7 +300,7 @@ def run(adb_path):
             except:
                 pass
             print(system_color("[!] Lỗi khi xóa cache, Khởi tạo lại driver..."))
-            driver = driver_init(adb_path, False, capabilities['udid'], appium_port)
+            driver = driver_init(adb_path, False)
             continue
         
         elif r == "diff username":
@@ -208,11 +309,11 @@ def run(adb_path):
                 driver.quit()
             except:
                 pass
-            driver = driver_init(adb_path, False, capabilities['udid'], appium_port)
+            driver = driver_init(adb_path, False)
             continue
 
         try:
-            driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode, device_id=capabilities['udid'], appium_port=appium_port)
+            driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode)
         except:
             pass
 
@@ -230,7 +331,7 @@ if __name__ == "__main__":
         print(system_color("| ? Các lựa chọn theo index                       |"))
         print(system_color("| [0] Thêm golike authorization                   |"))
         print(system_color("| [1] Thêm golike t                               |"))
-        print(system_color("| [2] Chạy tool                               |"))
+        print(system_color("| [2] Chạy tool                                   |"))
         print(system_color(" -------------------------------------------------"))
         print()
 

@@ -212,13 +212,13 @@ def run(adb_path, device_id, wait, mh_mode, appium_port):
         else:
             break
 
-    driver = waiting_scroll(driver, adb_path, 5, f"Đợi 5 scroll để bắt đầu...", mh_mode=mh_mode, device_id=device_id)
+    driver = waiting_scroll(driver, adb_path, 5, f"Đợi 5 scroll để bắt đầu...", mh_mode=mh_mode, device_id=device_id, appium_port=appium_port)
 
     while True:
         r = auto(driver, id_gl, adb_path, device_id)
         
         if r == "!=follow":
-            driver = waiting_scroll(driver, adb_path, 1, f"Vui lòng đợi 1 scroll để nhận job tiếp theo...",  mh_mode=mh_mode, device_id=device_id)
+            driver = waiting_scroll(driver, adb_path, 1, f"Vui lòng đợi 1 scroll để nhận job tiếp theo...",  mh_mode=mh_mode, device_id=device_id, appium_port=appium_port)
             continue
         
         elif r == "error verify job":
@@ -231,7 +231,7 @@ def run(adb_path, device_id, wait, mh_mode, appium_port):
             else:
                 print(system_color(f"[Device: {device_id}] [!] Thử lại follow trên account '{username}' lần thử {error_verify_job_counter}/{max_times_for_error_verify_job}"))
                 try:
-                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode, device_id=device_id)
+                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode, device_id=device_id, appium_port=appium_port)
                 except:
                     pass
                 continue
@@ -239,7 +239,7 @@ def run(adb_path, device_id, wait, mh_mode, appium_port):
             if switch_account_counter >= max_times_for_switch_account:
                 print(system_color(f"[Device: {device_id}] [>] Số lần đổi account đã lớn hơn mức quy định, tiến hành scroll..."))
                 try:
-                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode, device_id=device_id)
+                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode, device_id=device_id, appium_port=appium_port)
                 except:
                     pass
                 switch_account_counter = 0
@@ -314,7 +314,7 @@ def run(adb_path, device_id, wait, mh_mode, appium_port):
             continue
 
         try:
-            driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode, device_id=device_id)
+            driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode, device_id=device_id, appium_port=appium_port)
         except:
             pass
 
