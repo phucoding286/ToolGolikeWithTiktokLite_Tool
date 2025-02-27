@@ -182,7 +182,7 @@ def run(adb_path):
                 driver.quit()
             except:
                 pass
-            driver = driver_init(adb_path, False, appium_port)
+            driver = driver_init(adb_path, False, capabilities['udid'], appium_port)
 
             # r = delete_cache(driver, adb_path)
             # if r == "error":
@@ -199,7 +199,7 @@ def run(adb_path):
             except:
                 pass
             print(system_color("[!] Lỗi khi xóa cache, Khởi tạo lại driver..."))
-            driver = driver_init(adb_path, False, appium_port)
+            driver = driver_init(adb_path, False, capabilities['udid'], appium_port)
             continue
         
         elif r == "diff username":
@@ -208,7 +208,7 @@ def run(adb_path):
                 driver.quit()
             except:
                 pass
-            driver = driver_init(adb_path, False, appium_port)
+            driver = driver_init(adb_path, False, capabilities['udid'], appium_port)
             continue
 
         try:
