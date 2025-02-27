@@ -1,7 +1,7 @@
 import multi_devices
 import one_tk
 from modules import *
-from multi_devices import *
+import multi_devices
 
 if __name__ == "__main__":
     while True:
@@ -25,17 +25,17 @@ if __name__ == "__main__":
         inp = int(input("[?] Nhập lựa chọn của bạn\n-> "))
 
         if inp == 0:
-            add_golike_auth()
+            multi_devices.add_golike_auth()
             os.system("cls") if sys.platform.startswith("win") else os.system("clear")
 
         elif inp == 1:
-            add_golike_t()
+            multi_devices.add_golike_t()
             os.system("cls") if sys.platform.startswith("win") else os.system("clear")
 
         elif inp == 2:
             adb_path = open("adb_path.txt", "r").read()
-            GOLIKE_HEADERS['authorization'] = open("auth.txt", "r").read()
-            GOLIKE_HEADERS["t"] = open("t.txt", "r").read()
+            multi_devices.GOLIKE_HEADERS['authorization'] = open("auth.txt", "r").read()
+            multi_devices.GOLIKE_HEADERS["t"] = open("t.txt", "r").read()
 
             print(error_color("[!] Bạn có thể Ctrl+C để thoát khi tool đang chạy"))
             print()
@@ -49,15 +49,15 @@ if __name__ == "__main__":
         
         elif inp == 3:
             adb_path = open("adb_path.txt", "r").read()
-            GOLIKE_HEADERS['authorization'] = open("auth.txt", "r").read()
-            GOLIKE_HEADERS["t"] = open("t.txt", "r").read()
+            multi_devices.GOLIKE_HEADERS['authorization'] = open("auth.txt", "r").read()
+            multi_devices.GOLIKE_HEADERS["t"] = open("t.txt", "r").read()
 
             print(error_color(f"[!] Bạn có thể Ctrl+C để thoát khi tool đang chạy"))
             print()
 
             appium_port = input(system_color('[?] Nhập port appium của bạn\n-> '))
-            devices = get_devices(adb_path)
-            wait = input(system_color(f"[?] Nhập số thời gian chờ\n-> "))
+            devices = multi_devices.get_devices(adb_path)
+            wait = int(input(system_color(f"[?] Nhập số thời gian chờ\n-> ")))
             ask = input(system_color("[?] Bạn có muốn thêm mã device tách biệt?\n(y/N)-> "))
             
             out_device_list = []
@@ -94,7 +94,7 @@ if __name__ == "__main__":
                 if device in out_device_list:
                     continue
                 try:
-                    thread = threading.Thread(target=run, args=[adb_path, device, wait, appium_port])
+                    thread = threading.Thread(target=multi_devices.run, args=[adb_path, device, wait, appium_port])
                     thread.start()
                     waiting_ui(4, "Đợi 4s để chạy tất cả", device)
                     continue

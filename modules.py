@@ -16,6 +16,7 @@ import subprocess
 import threading
 import pytesseract
 from PIL import Image
+import sys
 
 colorama.init()
 pytesseract.pytesseract.tesseract_cmd = open("./tesseract_path.txt").read()

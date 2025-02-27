@@ -208,7 +208,7 @@ def run(adb_path, device_id, wait, appium_port):
     while True:
         r = auto(driver, id_gl, adb_path, device_id, more_wait_when_error, error_verify_job_counter)
 
-        if isinstance(r, tuple) and len(r) == 3:
+        if isinstance(r, tuple) and len(r) == 3 and r[0] == "success":
             more_wait_when_error = r[1]
             error_verify_job_counter = r[2]
         
