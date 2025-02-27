@@ -3,6 +3,7 @@
 # Có thắc mắc gì về cách thiết lập, cứ đọc trong file có tên 'requirements.txt' của project
 # Các yêu cầu tương thích
 - tải phiên bản python3.11
+- link python release: https://www.python.org/downloads/release/python-3110/
 - dùng lệnh pip install -r requirements.txt, để tải các thư viện cần thiết.
 # về file 'main.bat'
 - chương trình chính, có các chức năng như sau
