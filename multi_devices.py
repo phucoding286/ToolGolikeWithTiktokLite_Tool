@@ -26,12 +26,6 @@ import time
 import os
 import sys
 
-more_wait_when_error = 1
-max_times_for_switch_account = 10
-max_times_for_error_verify_job = 2
-switch_account_counter = 0
-error_verify_job_counter = 0
-
 def choose_id():
     inp, r = None, None
 
@@ -55,11 +49,7 @@ def choose_id():
     return r[inp]
 
 def auto(driver, account_id, adb_path, device_id):
-    global more_wait_when_error
-    global error_verify_job_counter
-
     account_id = str(account_id)
-    
     error = True
     rj = None
 
@@ -139,7 +129,7 @@ def auto(driver, account_id, adb_path, device_id):
 
                 more_wait_when_error += 1
 
-                return "error verify job"
+                return "error verify job", more_wait_when_error
                 
                 # r = delete_cache(driver, adb_path)
 
@@ -163,14 +153,15 @@ def auto(driver, account_id, adb_path, device_id):
                 
                 more_wait_when_error = 1
                 error_verify_job_counter = 0
+                return "success", more_wait_when_error, error_verify_job_counter
 
 
 def run(adb_path, device_id, wait, mh_mode, appium_port):
-    global more_wait_when_error
-    global error_verify_job_counter
-    global switch_account_counter
-    global max_times_for_error_verify_job
-    global max_times_for_switch_account
+    more_wait_when_error = 1
+    max_times_for_switch_account = 10
+    max_times_for_error_verify_job = 2
+    switch_account_counter = 0
+    error_verify_job_counter = 0
 
     driver = driver_init(adb_path, False, device_id, appium_port)
     accounts_id = check_tiktok_account_id(device_id)
@@ -216,14 +207,19 @@ def run(adb_path, device_id, wait, mh_mode, appium_port):
 
     while True:
         r = auto(driver, id_gl, adb_path, device_id)
+
+        if isinstance(r, tuple) and len(r) == 3:
+            more_wait_when_error = r[1]
+            error_verify_job_counter = r[2]
         
         if r == "!=follow":
             driver = waiting_scroll(driver, adb_path, 1, f"Vui lòng đợi 1 scroll để nhận job tiếp theo...",  mh_mode=mh_mode, device_id=device_id, appium_port=appium_port)
             continue
         
-        elif r == "error verify job":
+        elif isinstance(r, tuple) and r[0] == "error verify job":
             error_verify_job_counter += 1
             switch_account_counter += 1
+            more_wait_when_error = r[1]
 
             if error_verify_job_counter >= max_times_for_error_verify_job:
                 print(error_color(f"[Device: {device_id}] [!] Lỗi xác minh job vượt qua số lần giới hạn, đổi account.."))
