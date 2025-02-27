@@ -96,7 +96,7 @@ def auto(driver, account_id, adb_path):
         return "error"
     
     else:
-        rf = follow(driver, adb_path, rj[0])
+        rf = follow(driver, adb_path, rj[0], capabilities['udid'])
         
         if "error" in rf:
             print(error_color("[!] Đã có lỗi khi follow!"))
@@ -158,19 +158,22 @@ def auto(driver, account_id, adb_path):
 
 def run(adb_path):
     global more_wait_when_error
-    driver = driver_init(adb_path)
     id_gl = choose_id()
-
+    os.system(adb_path + " devices")
+    udid_inp = input(system_color("[?] Nhập vào udid máy của bạn\n-> "))
+    capabilities['udid'] = udid_inp
     wait = int(input(system_color("[?] Nhập số thời gian chờ\n-> ")))
+    appium_port = input(system_color('[?] Nhập port appium của bạn\n-> '))
     print()
 
-    driver = waiting_scroll(driver, adb_path, 5, "Đợi 5 scroll để bắt đầu...", mh_mode=mh_mode)
+    driver = driver_init(adb_path, False, capabilities['udid'], appium_port=appium_port)
+    driver = waiting_scroll(driver, adb_path, 5, "Đợi 5 scroll để bắt đầu...", mh_mode=mh_mode, device_id=capabilities['udid'])
 
     while True:
         r = auto(driver, id_gl[0], adb_path)
         
         if r == "!=follow":
-            driver = waiting_scroll(driver, adb_path, 1, f"Vui lòng đợi 1 scroll để nhận job tiếp theo...",  mh_mode=mh_mode)
+            driver = waiting_scroll(driver, adb_path, 1, f"Vui lòng đợi 1 scroll để nhận job tiếp theo...",  mh_mode=mh_mode, device_id=capabilities['udid'])
             continue
 
         elif r == "error follow":
@@ -179,12 +182,12 @@ def run(adb_path):
                 driver.quit()
             except:
                 pass
-            driver = driver_init(adb_path, False)
+            driver = driver_init(adb_path, False, appium_port)
 
             # r = delete_cache(driver, adb_path)
             # if r == "error":
             #     print(error_color("[!] đã xóa cache không thành công, khởi tạo lại driver.."))
-            #     driver = driver_init(adb_path, False)
+            #     driver = driver_init(adb_path, False, appium_port)
             # else:
             #     print(success_color("[#] đã xóa cache thành công."))
 
@@ -196,7 +199,7 @@ def run(adb_path):
             except:
                 pass
             print(system_color("[!] Lỗi khi xóa cache, Khởi tạo lại driver..."))
-            driver = driver_init(adb_path, False)
+            driver = driver_init(adb_path, False, appium_port)
             continue
         
         elif r == "diff username":
@@ -205,11 +208,11 @@ def run(adb_path):
                 driver.quit()
             except:
                 pass
-            driver = driver_init(adb_path, False)
+            driver = driver_init(adb_path, False, appium_port)
             continue
 
         try:
-            driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode)
+            driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode, device_id=capabilities['udid'])
         except:
             pass
 
