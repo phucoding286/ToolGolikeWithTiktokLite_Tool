@@ -61,7 +61,7 @@ def driver_init(adb_path, ask_udid=True, device_id=None, appium_port=None):
 
             driver = webdriver.Remote(appium_server_url, options=AppiumOptions().load_capabilities(capabilities))
             time.sleep(2)
-            waiting_scroll(driver, adb_path, 1, f"scroll sau khi tạo lại driver", False, device_id=device_id)
+            waiting_scroll(driver, adb_path, 1, f"scroll sau khi tạo lại driver", False, device_id=device_id, appium_port=appium_port)
             
             error = False
             break

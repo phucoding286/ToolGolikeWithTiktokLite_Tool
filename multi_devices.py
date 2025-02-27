@@ -185,7 +185,7 @@ def run(adb_path, device_id, wait, mh_mode, appium_port):
     while True:
         
         try:
-            username = login_tiktok_lite(adb_path, driver, device_id, mh_mode)
+            username = login_tiktok_lite(adb_path, driver, device_id, mh_mode, appium_port)
         except:
             print(error_color(f"[Device: {device_id}] [!] Lỗi khi chuyển acc, khởi tạo lại driver..."))
             os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
@@ -250,7 +250,7 @@ def run(adb_path, device_id, wait, mh_mode, appium_port):
             while True:
 
                 try:
-                    username = login_tiktok_lite(adb_path, driver, device_id, mh_mode)
+                    username = login_tiktok_lite(adb_path, driver, device_id, mh_mode, appium_port)
                 except:
                     print(error_color(f"[Device: {device_id}] [!] Lỗi khi chuyển acc, khởi tạo lại driver..."))
                     os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
@@ -380,10 +380,10 @@ if __name__ == "__main__":
                 try:
                     thread = threading.Thread(target=run, args=[adb_path, key, value[0], value[1], appium_port])
                     thread.start()
-                    waiting_ui(4, "Đợi 4s để chạy tất cả", device_id)
+                    waiting_ui(4, "Đợi 4s để chạy tất cả", key)
                     continue
                 except KeyboardInterrupt:
                     waiting_ui(4, "Bạn đã chọn thoát chương trình 4s")
                     os.system("cls") if sys.platform.startswith("win") else os.system("clear")
                     break
-            input(success_color("[#] Đã chạy xong tất cả thiết bị\n-> "))
+            input(success_color("[#] Đã chạy xong tất cả thiết bị"))

@@ -4,7 +4,7 @@ google_account_elements = 0
 next_count = 0
 scroll_to_find_delete_btn = 20
 
-def login_tiktok_lite(adb_path, driver, device_id, mh_mode):
+def login_tiktok_lite(adb_path, driver, device_id, mh_mode, appium_port):
     global google_account_elements
     global next_count
     global capabilities
@@ -43,10 +43,10 @@ def login_tiktok_lite(adb_path, driver, device_id, mh_mode):
                 delete_cache_btn.click()
                 break
             except:
-                waiting_scroll(driver, adb_path, 1, "tìm kiếm nút xóa cache...", False, mh_mode, False, device_id=device_id)
+                waiting_scroll(driver, adb_path, 1, "tìm kiếm nút xóa cache...", False, mh_mode, False, device_id=device_id, appium_port=appium_port)
                 continue
 
-        waiting_scroll(driver, adb_path, 2, "tìm kiếm nút đăng xuất...", False, mh_mode, False, device_id=device_id)
+        waiting_scroll(driver, adb_path, 2, "tìm kiếm nút đăng xuất...", False, mh_mode, False, device_id=device_id, appium_port=appium_port)
         
         for _ in range(scroll_to_find_delete_btn):
             try:
@@ -58,7 +58,7 @@ def login_tiktok_lite(adb_path, driver, device_id, mh_mode):
                 logout.click()
                 break
             except:
-                waiting_scroll(driver, adb_path, 1, "tìm kiếm nút đăng xuất...", False, mh_mode, False, device_id=device_id)
+                waiting_scroll(driver, adb_path, 1, "tìm kiếm nút đăng xuất...", False, mh_mode, False, device_id=device_id, appium_port=appium_port)
                 continue
 
         # dùng toán học để xác định tọa độ của nút đăng xuất trong popup đăng xuất
@@ -124,7 +124,7 @@ def login_tiktok_lite(adb_path, driver, device_id, mh_mode):
         )
     )
     option_btns[-1].click()
-    os.system(f'{adb_path} -s {capabilities["udid"]} shell input keyevent 4')
+    os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
     option_btns[-1].click()
 
     username = WebDriverWait(driver, 10).until(
@@ -133,16 +133,16 @@ def login_tiktok_lite(adb_path, driver, device_id, mh_mode):
         )
     )
     username = username[0].text
-    os.system(f'{adb_path} -s {capabilities["udid"]} shell input keyevent 4')
+    os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
     return {"username": username}
 
 if __name__ == "__main__":
     capabilities['udid'] = "192.168.1.56:5555"
     adb_path = open("adb_path.txt", "r").read()
 
-    driver = driver_init(adb_path, ask_udid=False)
-    r = login_tiktok_lite(adb_path, driver, mh_mode="old")
+    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
+    r = login_tiktok_lite(adb_path, driver, mh_mode="old", device_id="192.168.1.56:5555", appium_port="1000")
     print(r)
     input(">>> ")
-    r = login_tiktok_lite(adb_path, driver, mh_mode="old")
+    r = login_tiktok_lite(adb_path, driver, mh_mode="old", device_id="192.168.1.56:5555", appium_port="1000")
     print(r)

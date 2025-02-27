@@ -1,13 +1,13 @@
 from modules import *
 
-def manual_send_keys(adb_path, text: str, enter=False):
-    os.system(f'{adb_path} -s {capabilities["udid"]}  shell input text "{text}"')
+def manual_send_keys(adb_path, text: str, enter=False, device_id=None):
+    os.system(f'{adb_path} -s {device_id}  shell input text "{text}"')
     time.sleep(1)
     if enter:
-        os.system(f'{adb_path} -s {capabilities["udid"]}  shell input keyevent 66')
+        os.system(f'{adb_path} -s {device_id}  shell input keyevent 66')
 
 
-def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/"):
+def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", device_id=None):
 
     try:
         
@@ -26,7 +26,7 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/"):
         )
         find_cell.click()
 
-        manual_send_keys(adb_path, target_link.split("/")[3], True)
+        manual_send_keys(adb_path, target_link.split("/")[3], True, device_id)
 
         user_finded_list = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located(
@@ -66,7 +66,7 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/"):
         follow_btn.click()
         
         time.sleep(1)
-        os.system(f'{adb_path} -s {capabilities["udid"]} shell input keyevent 4')
+        os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
         
         exit_btn2 = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located(
@@ -77,7 +77,7 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/"):
         exit_btn2.click()
         
         time.sleep(1)
-        os.system(f'{adb_path} -s {capabilities["udid"]} shell input keyevent 4')
+        os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
 
         return {"success": "Follow thành công!"}
     
