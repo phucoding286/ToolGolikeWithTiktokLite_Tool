@@ -1,20 +1,20 @@
-# Tool này dùng làm gì?
-- dùng để kiếm tiền online, thông qua nền tảng có tên là 'Golike', nền tảng kiếm tiền thông qua tăng tương tác cho khách hàng trên mạng xã hội
-- golike là một nền tảng trung gian kết nối các khách hàng với người làm việc tăng tương tác
-- tool này dùng để làm điều đó trên nền tảng tiktok.
-- link trang web golike: https://app.golike.net
-# Yêu cầu cài đặt tiktok lite phiên bản 37.8.4 trên điện thoại cần auto
-- link file tiktok 37.8.4 apk: https://drive.google.com/file/d/11wyNGK_q191wjZp72HFnDrbMqA_3RQh1/view?usp=drive_link
-# Có thắc mắc gì về cách thiết lập, cứ đọc trong file có tên 'requirements.txt' của project
-# Các yêu cầu tương thích
-- tải phiên bản python3.11
-- link python release: https://www.python.org/downloads/release/python-3110/
-- dùng lệnh pip install -r requirements.txt, để tải các thư viện cần thiết.
-# về file 'MULTI_DEVICES_TK_RUN.bat'
-- chương trình chính, có các chức năng như sau
-1. mô phỏng hành vi tự nhiên (thích video, lướt tiktok)
-2. follow khách hàng qua tiềm kiếm
-3. tự động đổi acc khi lỗi (hổ trợ qua account đăng ký với google)
-4. chạy song song nhiều thiết bị
-# về file '1_TK_RUN.bat'
-- chương trình kèm theo có các chức năng tương tự như chương trình trong 'main.bat' nhưng không có chức năng tự động đổi account và song song thiết bị, dùng để chạy 1 account duy nhất
+* Hướng dẫn:
+1. bạn cần cài đặt python với phiên bản 3.11
+- link: https://www.python.org/downloads/release/python-3110/
+
+2. bạn cần cài đặt android-studio
+- link: https://developer.android.com/studio?gad_source=1&gclid=CjwKCAiA5Ka9BhB5EiwA1ZVtvG3pfLygEY-iGi0KHeQFqXem0MrQMpZ5JksOcjQt8eDMFLx8SwDjbBoC7oAQAvD_BwE&gclsrc=aw.ds
+
+3. bạn cần cài đặt appium
+- link: https://github.com/appium/appium-desktop/releases/tag/v1.22.3-4
+
+4. bạn cần cài đặt tiktok like phiên bản phù hợp với tool (37.8.4) cho điện thoại
+- link: https://apkpure.com/vn/tiktok-lite-2024/com.zhiliaoapp.musically.go/downloading
+
+* Lưu ý:
+1. Trong ứng dụng tiktok lite trên android của bạn nên cấp các quyền sau:
+- Quyền bộ nhớ
+- Quyền danh bạ
+- Quyền vị trí
+
+2. Đảm bảo rằng ứng dụng tiktok lite của bạn trong quá trình hoạt động không có popup gì khác trong script, để đảm bảo tool chạy ổn định!

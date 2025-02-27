@@ -156,7 +156,7 @@ def auto(driver, account_id, adb_path, device_id, more_wait_when_error, error_ve
                 return "success", more_wait_when_error, error_verify_job_counter
 
 
-def run(adb_path, device_id, wait, mh_mode, appium_port):
+def run(adb_path, device_id, wait, appium_port):
     more_wait_when_error = 1
     max_times_for_switch_account = 10
     max_times_for_error_verify_job = 2
@@ -176,7 +176,7 @@ def run(adb_path, device_id, wait, mh_mode, appium_port):
     while True:
         
         try:
-            username = login_tiktok_lite(adb_path, driver, device_id, mh_mode, appium_port)
+            username = login_tiktok_lite(adb_path, driver, device_id, appium_port)
         except:
             print(error_color(f"[Device: {device_id}] [!] Lỗi khi chuyển acc, khởi tạo lại driver..."))
             os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
@@ -203,7 +203,7 @@ def run(adb_path, device_id, wait, mh_mode, appium_port):
         else:
             break
 
-    driver = waiting_scroll(driver, adb_path, 5, f"Đợi 5 scroll để bắt đầu...", mh_mode=mh_mode, device_id=device_id, appium_port=appium_port)
+    driver = waiting_scroll(driver, adb_path, 5, f"Đợi 5 scroll để bắt đầu...", device_id=device_id, appium_port=appium_port)
 
     while True:
         r = auto(driver, id_gl, adb_path, device_id, more_wait_when_error, error_verify_job_counter)
@@ -213,7 +213,7 @@ def run(adb_path, device_id, wait, mh_mode, appium_port):
             error_verify_job_counter = r[2]
         
         if r == "!=follow":
-            driver = waiting_scroll(driver, adb_path, 1, f"Vui lòng đợi 1 scroll để nhận job tiếp theo...",  mh_mode=mh_mode, device_id=device_id, appium_port=appium_port)
+            driver = waiting_scroll(driver, adb_path, 1, f"Vui lòng đợi 1 scroll để nhận job tiếp theo...", device_id=device_id, appium_port=appium_port)
             continue
         
         elif isinstance(r, tuple) and r[0] == "error verify job":
@@ -227,7 +227,7 @@ def run(adb_path, device_id, wait, mh_mode, appium_port):
             else:
                 print(system_color(f"[Device: {device_id}] [!] Thử lại follow trên account '{username}' lần thử {error_verify_job_counter}/{max_times_for_error_verify_job}"))
                 try:
-                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode, device_id=device_id, appium_port=appium_port)
+                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
                 except:
                     pass
                 continue
@@ -235,7 +235,7 @@ def run(adb_path, device_id, wait, mh_mode, appium_port):
             if switch_account_counter >= max_times_for_switch_account:
                 print(system_color(f"[Device: {device_id}] [>] Số lần đổi account đã lớn hơn mức quy định, tiến hành scroll..."))
                 try:
-                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode, device_id=device_id, appium_port=appium_port)
+                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
                 except:
                     pass
                 switch_account_counter = 0
@@ -246,7 +246,7 @@ def run(adb_path, device_id, wait, mh_mode, appium_port):
             while True:
 
                 try:
-                    username = login_tiktok_lite(adb_path, driver, device_id, mh_mode, appium_port)
+                    username = login_tiktok_lite(adb_path, driver, device_id, appium_port)
                 except:
                     print(error_color(f"[Device: {device_id}] [!] Lỗi khi chuyển acc, khởi tạo lại driver..."))
                     os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
@@ -310,7 +310,7 @@ def run(adb_path, device_id, wait, mh_mode, appium_port):
             continue
 
         try:
-            driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode, device_id=device_id, appium_port=appium_port)
+            driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
         except:
             pass
 
@@ -361,20 +361,14 @@ if __name__ == "__main__":
                 if wait.strip().lower() == "skip":
                     device_with_options[device_id] = False
                     continue
-
-                mh_mode = input(system_color(f"[Device: {device_id}] [?] Nhập loại màn hình (old/new)\n-> ")).lower().strip()
-                if mh_mode.strip().lower() == "skip":
-                    device_with_options[device_id] = False
-                    continue
-                
-                device_with_options[device_id] = (int(wait), mh_mode)
+                device_with_options[device_id] = (int(wait))
             print()
             
             for key, value in device_with_options.items():
                 if not value:
                     continue
                 try:
-                    thread = threading.Thread(target=run, args=[adb_path, key, value[0], value[1], appium_port])
+                    thread = threading.Thread(target=run, args=[adb_path, key, value[0], appium_port])
                     thread.start()
                     waiting_ui(4, "Đợi 4s để chạy tất cả", key)
                     continue
@@ -382,4 +376,4 @@ if __name__ == "__main__":
                     waiting_ui(4, "Bạn đã chọn thoát chương trình 4s")
                     os.system("cls") if sys.platform.startswith("win") else os.system("clear")
                     break
-            input(success_color("[#] Đã chạy xong tất cả thiết bị"))
+            input(success_color("[#] Đã chạy xong tất cả thiết bị\n"))

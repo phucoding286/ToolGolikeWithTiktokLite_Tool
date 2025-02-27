@@ -14,8 +14,11 @@ import time
 import random
 import subprocess
 import threading
+import pytesseract
+from PIL import Image
 
 colorama.init()
+pytesseract.pytesseract.tesseract_cmd = open("./tesseract_path.txt").read()
 scraper = cloudscraper.create_scraper()
 prices = 0
 
@@ -93,7 +96,7 @@ def waiting_ui(timeout=5, text="", device_id=None):
     print()
     return 0
 
-def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, mh_mode="old", recreate_driver=True, device_id=None, appium_port=None):
+def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, recreate_driver=True, device_id=None, appium_port=None):
     for i in range(1, times_scroll+1):
 
         if random.choice([True]+[False for _ in range(10)]) and rdn_options:
@@ -131,11 +134,10 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
         
         try:
 
-            if mh_mode == "old":
-                driver.swipe(start_x=0, start_y=600, end_x=0, end_y=100, duration=500)
-            else:
-                time.sleep(1)
-                driver.swipe(start_x=360, start_y=1300, end_x=360, end_y=500, duration=300)
+            size = driver.get_window_size()
+            width = size['width']
+            height = size['height']
+            driver.swipe(start_x=width/2, start_y=height/2, end_x=width/2, end_y=0, duration=500)
 
             print(colorama.Fore.YELLOW + f"[Device: {device_id}] [{i}-scroll] " + colorama.Style.RESET_ALL, end="")
             print(colorama.Fore.BLUE + text + colorama.Style.RESET_ALL)

@@ -1,10 +1,14 @@
 from modules import *
+from process_popup_via_screencap import (
+    popup_processing,
+    screencap
+)
 
 google_account_elements = 0
 next_count = 0
 scroll_to_find_delete_btn = 20
 
-def login_tiktok_lite(adb_path, driver, device_id, mh_mode, appium_port):
+def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     global google_account_elements
     global next_count
     global capabilities
@@ -16,6 +20,26 @@ def login_tiktok_lite(adb_path, driver, device_id, mh_mode, appium_port):
         )
     )
     option_btns[-1].click()
+
+    r = None
+    max_times = 2
+    count = 0
+    while True:
+        try:
+            screencap(adb_path, device_id)
+            r = popup_processing()
+            print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
+            if r is None and count < max_times:
+                count += 1
+                print(system_color(f"[Device: {device_id}] [>] Kết quả là None, thử lại ({count}/{max_times})"))
+                continue
+            break
+        except:
+            print(error_color(f"[Device: {device_id}] [!] Lỗi không thể chụp ảnh màn hình và detect văn bản trong ảnh."))
+            continue
+    
+    if r == "Follow bạn bè của bạn":
+        os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
     
     logined_previous = False
     try:
@@ -43,10 +67,10 @@ def login_tiktok_lite(adb_path, driver, device_id, mh_mode, appium_port):
                 delete_cache_btn.click()
                 break
             except:
-                waiting_scroll(driver, adb_path, 1, "tìm kiếm nút xóa cache...", False, mh_mode, False, device_id=device_id, appium_port=appium_port)
+                waiting_scroll(driver, adb_path, 1, "tìm kiếm nút xóa cache...", False, False, device_id=device_id, appium_port=appium_port)
                 continue
 
-        waiting_scroll(driver, adb_path, 2, "tìm kiếm nút đăng xuất...", False, mh_mode, False, device_id=device_id, appium_port=appium_port)
+        waiting_scroll(driver, adb_path, 2, "tìm kiếm nút đăng xuất...", False, False, device_id=device_id, appium_port=appium_port)
         
         for _ in range(scroll_to_find_delete_btn):
             try:
@@ -58,22 +82,51 @@ def login_tiktok_lite(adb_path, driver, device_id, mh_mode, appium_port):
                 logout.click()
                 break
             except:
-                waiting_scroll(driver, adb_path, 1, "tìm kiếm nút đăng xuất...", False, mh_mode, False, device_id=device_id, appium_port=appium_port)
+                waiting_scroll(driver, adb_path, 1, "tìm kiếm nút đăng xuất...", False, False, device_id=device_id, appium_port=appium_port)
                 continue
 
         # dùng toán học để xác định tọa độ của nút đăng xuất trong popup đăng xuất
         # lý do dùng tọa độ thay vì appium: Do appium không quét được popup tiktok lite
         size = driver.get_window_size()
-
         width = size['width']
         height = size['height']
 
-        width = (width / 2) + 150
-        height = (height / 2) + 145
+        width_dx = (width / 2) + 150
+        height_dx = (height / 2) + 145
+        width_asdt = (width / 2) -150
+        height_asdt = (height / 2) + 205
         
-        time.sleep(1)
-        print(system_color(f"[Device: {device_id}] [>] Tọa độ đã tính toán {width}x{height}"))
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width} {height}")
+        r = None
+        max_times = 2
+        count = 0
+        while True:
+            try:
+                screencap(adb_path, device_id)
+                r = popup_processing()
+                print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
+                if r is None and count < max_times:
+                    count += 1
+                    print(system_color(f"[Device: {device_id}] [>] Kết quả là None, thử lại ({count}/{max_times})"))
+                    continue
+                break
+            except:
+                print(error_color(f"[Device: {device_id}] [!] Lỗi không thể chụp ảnh màn hình và detect văn bản trong ảnh."))
+                continue
+
+        if r == "Đăng xuất?":      
+            time.sleep(1)
+            print(system_color(f"[Device: {device_id}] [>] Tọa độ đã tính toán {width_dx}x{height_dx} nút đăng xuất."))
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width_dx} {height_dx}")
+        
+        elif r == "Lưu thông tin đăng nhập?":
+            time.sleep(1)
+            print(system_color(f"[Device: {device_id}] [>] Tọa độ đã tính toán {width_asdt}x{height_asdt} nút 'để sau' cho popup lưu thông tin đăng nhập."))
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width_asdt} {height_asdt}")
+
+            time.sleep(1)
+            print(system_color(f"[Device: {device_id}] [>] Tọa độ đã tính toán {width_dx}x{height_dx} nút đăng xuất."))
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width_dx} {height_dx}")
+
         logined_previous = True
 
     except:
@@ -124,8 +177,26 @@ def login_tiktok_lite(adb_path, driver, device_id, mh_mode, appium_port):
         )
     )
     option_btns[-1].click()
-    os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
-    option_btns[-1].click()
+
+    r = None
+    max_times = 2
+    count = 0
+    while True:
+        try:
+            screencap(adb_path, device_id)
+            r = popup_processing()
+            print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
+            if r is None and count < max_times:
+                count += 1
+                print(system_color(f"[Device: {device_id}] [>] Kết quả là None, thử lại ({count}/{max_times})"))
+                continue
+            break
+        except:
+            print(error_color(f"[Device: {device_id}] [!] Lỗi không thể chụp ảnh màn hình và detect văn bản trong ảnh."))
+            continue
+    
+    if r == "Follow bạn bè của bạn":
+        os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
 
     username = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(
@@ -140,9 +211,9 @@ if __name__ == "__main__":
     capabilities['udid'] = "192.168.1.56:5555"
     adb_path = open("adb_path.txt", "r").read()
 
-    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
-    r = login_tiktok_lite(adb_path, driver, mh_mode="old", device_id="192.168.1.56:5555", appium_port="1000")
+    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.6:5555", appium_port="1000")
+    r = login_tiktok_lite(adb_path, driver, device_id="192.168.1.56:5555", appium_port="1000")
     print(r)
     input(">>> ")
-    r = login_tiktok_lite(adb_path, driver, mh_mode="old", device_id="192.168.1.56:5555", appium_port="1000")
+    r = login_tiktok_lite(adb_path, driver, device_id="192.168.1.56:5555", appium_port="1000")
     print(r)

@@ -26,7 +26,6 @@ import os
 import sys
 
 more_wait_when_error = 1
-mh_mode = input(system_color("[?] Nhập loại màn hình (old/new)\n-> ")).lower().strip()
 
 def choose_id():
     inp, r = None, None
@@ -158,22 +157,23 @@ def auto(driver, account_id, adb_path):
 
 def run(adb_path):
     global more_wait_when_error
+    
+    appium_port = input(system_color('[?] Nhập port appium của bạn\n-> '))
+    wait = int(input(system_color("[?] Nhập số thời gian chờ\n-> ")))
     id_gl = choose_id()
     os.system(adb_path + " devices")
     udid_inp = input(system_color("[?] Nhập vào udid máy của bạn\n-> "))
     capabilities['udid'] = udid_inp
-    wait = int(input(system_color("[?] Nhập số thời gian chờ\n-> ")))
-    appium_port = input(system_color('[?] Nhập port appium của bạn\n-> '))
     print()
 
     driver = driver_init(adb_path, False, capabilities['udid'], appium_port=appium_port)
-    driver = waiting_scroll(driver, adb_path, 5, "Đợi 5 scroll để bắt đầu...", mh_mode=mh_mode, device_id=capabilities['udid'], appium_port=appium_port)
+    driver = waiting_scroll(driver, adb_path, 5, "Đợi 5 scroll để bắt đầu...", device_id=capabilities['udid'], appium_port=appium_port)
 
     while True:
         r = auto(driver, id_gl[0], adb_path)
         
         if r == "!=follow":
-            driver = waiting_scroll(driver, adb_path, 1, f"Vui lòng đợi 1 scroll để nhận job tiếp theo...",  mh_mode=mh_mode, device_id=capabilities['udid'], appium_port=appium_port)
+            driver = waiting_scroll(driver, adb_path, 1, f"Vui lòng đợi 1 scroll để nhận job tiếp theo...", device_id=capabilities['udid'], appium_port=appium_port)
             continue
 
         elif r == "error follow":
@@ -212,7 +212,7 @@ def run(adb_path):
             continue
 
         try:
-            driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", mh_mode=mh_mode, device_id=capabilities['udid'], appium_port=appium_port)
+            driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=capabilities['udid'], appium_port=appium_port)
         except:
             pass
 
