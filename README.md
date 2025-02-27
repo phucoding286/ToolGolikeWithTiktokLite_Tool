@@ -10,10 +10,11 @@
 - tải phiên bản python3.11
 - link python release: https://www.python.org/downloads/release/python-3110/
 - dùng lệnh pip install -r requirements.txt, để tải các thư viện cần thiết.
-# về file 'main.bat'
+# về file 'MULTI_DEVICES_TK_RUN.bat'
 - chương trình chính, có các chức năng như sau
 1. mô phỏng hành vi tự nhiên (thích video, lướt tiktok)
 2. follow khách hàng qua tiềm kiếm
 3. tự động đổi acc khi lỗi (hổ trợ qua account đăng ký với google)
+4. chạy song song nhiều thiết bị
 # về file '1_TK_RUN.bat'
-- chương trình kèm theo có các chức năng tương tự như chương trình trong 'main.bat' nhưng không có chức năng tự động đổi account, dùng để chạy 1 account duy nhất
+- chương trình kèm theo có các chức năng tương tự như chương trình trong 'main.bat' nhưng không có chức năng tự động đổi account và song song thiết bị, dùng để chạy 1 account duy nhất
