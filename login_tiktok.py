@@ -4,7 +4,7 @@ google_account_elements = 0
 next_count = 0
 scroll_to_find_delete_btn = 20
 
-def login_tiktok_lite(adb_path, driver, mh_mode):
+def login_tiktok_lite(adb_path, driver, device_id, mh_mode):
     global google_account_elements
     global next_count
     global capabilities
@@ -43,10 +43,10 @@ def login_tiktok_lite(adb_path, driver, mh_mode):
                 delete_cache_btn.click()
                 break
             except:
-                waiting_scroll(driver, adb_path, 1, "tìm kiếm nút xóa cache...", False, mh_mode, False)
+                waiting_scroll(driver, adb_path, 1, "tìm kiếm nút xóa cache...", False, mh_mode, False, device_id=device_id)
                 continue
 
-        waiting_scroll(driver, adb_path, 2, "tìm kiếm nút đăng xuất...", False, mh_mode, False)
+        waiting_scroll(driver, adb_path, 2, "tìm kiếm nút đăng xuất...", False, mh_mode, False, device_id=device_id)
         
         for _ in range(scroll_to_find_delete_btn):
             try:
@@ -58,7 +58,7 @@ def login_tiktok_lite(adb_path, driver, mh_mode):
                 logout.click()
                 break
             except:
-                waiting_scroll(driver, adb_path, 1, "tìm kiếm nút đăng xuất...", False, mh_mode, False)
+                waiting_scroll(driver, adb_path, 1, "tìm kiếm nút đăng xuất...", False, mh_mode, False, device_id=device_id)
                 continue
 
         # dùng toán học để xác định tọa độ của nút đăng xuất trong popup đăng xuất
@@ -72,8 +72,8 @@ def login_tiktok_lite(adb_path, driver, mh_mode):
         height = (height / 2) + 145
         
         time.sleep(1)
-        print(system_color(f"[>] Tọa độ đã tính toán {width}x{height}"))
-        os.system(adb_path + f" -s {capabilities['udid']}" + f" shell input tap {width} {height}")
+        print(system_color(f"[Device: {device_id}] [>] Tọa độ đã tính toán {width}x{height}"))
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width} {height}")
         logined_previous = True
 
     except:
@@ -99,7 +99,7 @@ def login_tiktok_lite(adb_path, driver, mh_mode):
                 (By.XPATH, options_xpath_path+f"[{i+1}]/android.widget.TextView")
             )
         )
-        print(system_color(f"[>] Đang detect ô cần đăng nhập, text output: {__get.text}"))
+        print(system_color(f"[Device: {device_id}] [>] Đang detect ô cần đăng nhập, text output: {__get.text}"))
         if __get.text == "Tiếp tục với Google":
             option_logins[i].click()
             break
@@ -117,7 +117,7 @@ def login_tiktok_lite(adb_path, driver, mh_mode):
     else:
         next_count += 1
     
-    print(system_color("[>] lấy username..."))
+    print(system_color(f"[Device: {device_id}] [>] lấy username..."))
     option_btns = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(
             (By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.viewpager.widget.ViewPager/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout")

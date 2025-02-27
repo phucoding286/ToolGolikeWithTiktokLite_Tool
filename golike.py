@@ -33,7 +33,7 @@ GOLIKE_HEADERS = {
 
 
 # get job from golike
-def get_job(account_id):
+def get_job(account_id, device_id=None):
     try:
 
         # requests for get job
@@ -45,7 +45,7 @@ def get_job(account_id):
 
         # if status code is 400 inference it's end jobs
         if gjj['status'] == 400:
-            raise ValueError("đã hết jobs để làm")
+            raise ValueError(error_color(f"[Device: {device_id}] Đã hết job để làm, chờ load lại sau."))
         # else get needed data
         insta_link = gjj['data']['link']
         golike_user_id = gjj['data']['id']
@@ -61,7 +61,7 @@ def get_job(account_id):
 
 
 # drop job from golike when error
-def drop_job(ads_id, object_id, account_id, task_type):
+def drop_job(ads_id, object_id, account_id, task_type, device_id=None):
     for i in range(5):
         try:
             response = scraper.post(
@@ -73,11 +73,11 @@ def drop_job(ads_id, object_id, account_id, task_type):
             if response.status_code == 200:
                 return {"success": "đã bỏ job thành công"}
             else:
-                print(error_color("đã có lỗi khi bỏ job, thử lại..."))
+                print(error_color(f"[Device: {device_id}] [!] đã có lỗi khi bỏ job, thử lại..."))
                 time.sleep(1)
                 continue
         except:
-            print(error_color("đã có lỗi khi bỏ job, thử lại..."))
+            print(error_color(f"[Device: {device_id}] [!] đã có lỗi khi bỏ job, thử lại..."))
             time.sleep(1)
             continue
     return {"error": "đã có lỗi khi bỏ job"}
@@ -85,7 +85,7 @@ def drop_job(ads_id, object_id, account_id, task_type):
 
 
 # verify job on golike when complete task for get money
-def verify_complete_job(ads_id, account_id):
+def verify_complete_job(ads_id, account_id, device_id=None):
     global prices
     for i in range(5):
         try:
@@ -98,7 +98,7 @@ def verify_complete_job(ads_id, account_id):
             prices += c['data']['prices']
             return (c['status'], f"trạng thái [{c['status']}] -> {'thành công' if c['success'] else 'không thành công'}", f"tiền công -> {c['data']['prices']}đ")
         except:
-            print(error_color("[!] đã có lỗi khi xác minh job, thử lại..."))
+            print(error_color(f"[Device: {device_id}] [!] đã có lỗi khi xác minh job, thử lại..."))
             time.sleep(1)
             continue
     return {"error": f"đã có lỗi khi xác minh hoàn thành job"}
@@ -106,7 +106,7 @@ def verify_complete_job(ads_id, account_id):
 
 
 # check instagram accounts linking on golike
-def check_tiktok_account_id():
+def check_tiktok_account_id(device_id=None):
     while True:
         try:
             response = scraper.get(
@@ -122,5 +122,5 @@ def check_tiktok_account_id():
             return insta_id
         except Exception as e:
             print(e)
-            print(error_color("lỗi không xác định đã xảy ra khi gửi yêu cầu nhận về list account id, thử lại"))
+            print(error_color(f"[Device: {device_id}] lỗi không xác định đã xảy ra khi gửi yêu cầu nhận về list account id, thử lại"))
             continue

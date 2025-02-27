@@ -12,6 +12,8 @@ import os
 import colorama
 import time
 import random
+import subprocess
+import threading
 
 colorama.init()
 scraper = cloudscraper.create_scraper()
@@ -38,15 +40,17 @@ capabilities = {
   "noReset": True
 }
 
-appium_port = input(system_color('nhập port appium của bạn\n-> '))
-appium_server_url = f"http://localhost:{appium_port}/wd/hub"
 
+def driver_init(adb_path, ask_udid=True, device_id=None, appium_port=None):
+    appium_server_url = f"http://localhost:{appium_port}/wd/hub"
 
-def driver_init(adb_path, ask_udid=True):
     if ask_udid:
         os.system(adb_path + " devices")
         udid_inp = input(system_color("[?] Nhập vào udid máy của bạn\n-> "))
         capabilities['udid'] = udid_inp
+
+    elif device_id is not None:
+        capabilities['udid'] = device_id
     
     error = False
     while True:
@@ -57,7 +61,7 @@ def driver_init(adb_path, ask_udid=True):
 
             driver = webdriver.Remote(appium_server_url, options=AppiumOptions().load_capabilities(capabilities))
             time.sleep(2)
-            waiting_scroll(driver, adb_path, 1, "scroll sau khi tạo lại driver", False)
+            waiting_scroll(driver, adb_path, 1, f"scroll sau khi tạo lại driver", False, device_id=device_id)
             
             error = False
             break
@@ -67,7 +71,7 @@ def driver_init(adb_path, ask_udid=True):
                 driver.quit()
             except:
                 pass
-            print(error_color("[!] Lỗi khi tạo driver, thử lại..."))
+            print(error_color(f"[Device: {device_id}] [!] Lỗi khi tạo driver, thử lại..."))
             error = True
     
     return driver
@@ -81,15 +85,15 @@ def go_to_my_page(username, adb_path):
 
 
 # make waiting animation theme
-def waiting_ui(timeout=5, text=""):
+def waiting_ui(timeout=5, text="", device_id=None):
     for i in range(1, timeout+1):
-        print(colorama.Fore.YELLOW + f"\r[{i}s] " + colorama.Style.RESET_ALL, end="")
+        print(colorama.Fore.YELLOW + f"\r[Device: {device_id}] [{i}s] " + colorama.Style.RESET_ALL, end="")
         print(colorama.Fore.BLUE + text + colorama.Style.RESET_ALL, end="")
         time.sleep(1)
     print()
     return 0
 
-def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, mh_mode="old", recreate_driver=True):
+def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, mh_mode="old", recreate_driver=True, device_id=None):
     for i in range(1, times_scroll+1):
 
         if random.choice([True]+[False for _ in range(10)]) and rdn_options:
@@ -99,7 +103,7 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
                         (By.ID, 'com.zhiliaoapp.musically.go:id/dm4')
                     )
                 ).click()
-                print(success_color("[#] Đã thực tim video"))
+                print(success_color(f"[Device: {device_id}] [#] Đã thực hiện tim video"))
             except:
                 try:
                     WebDriverWait(driver, 5).until(
@@ -108,21 +112,21 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
                         )
                     ).click()
                 except:
-                    print(error_color("[!] Đã có lỗi khi tim video"))
+                    print(error_color(f"[Device: {device_id}] [!] Đã có lỗi khi tim video"))
         else:
             if rdn_options:
-                print(system_color("[00] Không chọn thực hiện tim"))
+                print(system_color(f"[Device: {device_id}] [00] Không chọn thực hiện tim"))
 
         if rdn_options:
-            print("[...] Thực hiện thời gian xem ngẫu nhiên")
+            print(f"[Device: {device_id}] [...] Thực hiện thời gian xem ngẫu nhiên")
             
         while True and rdn_options:
             if random.choice([False]+[True for _ in range(2)]):
-                print(system_color("[>] Xem tiếp 2s..."))
+                print(system_color(f"[Device: {device_id}] [>] Xem tiếp 2s..."))
                 time.sleep(2)
                 continue
             else:
-                print(system_color("[#] Lướt xem video mới."))
+                print(system_color(f"[Device: {device_id}] [#] Lướt xem video mới."))
                 break
         
         try:
@@ -133,14 +137,14 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
                 time.sleep(1)
                 driver.swipe(start_x=360, start_y=1300, end_x=360, end_y=500, duration=300)
 
-            print(colorama.Fore.YELLOW + f"[{i}-scroll] " + colorama.Style.RESET_ALL, end="")
+            print(colorama.Fore.YELLOW + f"[Device: {device_id}] [{i}-scroll] " + colorama.Style.RESET_ALL, end="")
             print(colorama.Fore.BLUE + text + colorama.Style.RESET_ALL)
             time.sleep(1)
 
         except:
             if recreate_driver:
-                driver = driver_init(adb_path, False)
-                waiting_ui(5, "Lỗi driver, đợi 5s để tiếp tục scroll")
+                driver = driver_init(adb_path, False, device_id)
+                waiting_ui(5, "Lỗi driver, đợi 5s để tiếp tục scroll", device_id)
             else:
                 return "lỗi khi scroll"
         

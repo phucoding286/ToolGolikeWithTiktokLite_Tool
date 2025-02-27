@@ -175,7 +175,7 @@ def run(adb_path):
     driver = driver_init(adb_path)
     accounts_id = check_tiktok_account_id()
 
-    wait = int(input(system_color("[?] Nhập số thời gian chờ\n-> ")))
+    wait = int(input(system_color(f"[] [?] Nhập số thời gian chờ\n-> ")))
     print()
     
     print(system_color("[>] tiến hành đăng nhập tài khoản để bắt đầu chạy..."))
@@ -331,7 +331,7 @@ if __name__ == "__main__":
         print(system_color("| ? Các lựa chọn theo index                       |"))
         print(system_color("| [0] Thêm golike authorization                   |"))
         print(system_color("| [1] Thêm golike t                               |"))
-        print(system_color("| [2] Chạy tool                               |"))
+        print(system_color("| [2] Chạy tool                                   |"))
         print(system_color(" -------------------------------------------------"))
         print()
 
