@@ -48,7 +48,7 @@ def choose_id():
     
     return r[inp]
 
-def auto(driver, account_id, adb_path, device_id):
+def auto(driver, account_id, adb_path, device_id, more_wait_when_error, error_verify_job_counter):
     account_id = str(account_id)
     error = True
     rj = None
@@ -206,7 +206,7 @@ def run(adb_path, device_id, wait, mh_mode, appium_port):
     driver = waiting_scroll(driver, adb_path, 5, f"Đợi 5 scroll để bắt đầu...", mh_mode=mh_mode, device_id=device_id, appium_port=appium_port)
 
     while True:
-        r = auto(driver, id_gl, adb_path, device_id)
+        r = auto(driver, id_gl, adb_path, device_id, more_wait_when_error, error_verify_job_counter)
 
         if isinstance(r, tuple) and len(r) == 3:
             more_wait_when_error = r[1]
