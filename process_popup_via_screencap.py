@@ -2,7 +2,8 @@ from modules import *
 
 def detect_popup(img):
     str_detected = pytesseract.image_to_string(img).splitlines()
-    print(str_detected)
+    # print(str_detected)
+    
     if "Dang xuat?" in str_detected:
         return "Đăng xuất?"
     
