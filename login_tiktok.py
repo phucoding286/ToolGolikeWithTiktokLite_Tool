@@ -21,6 +21,10 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     )
     option_btns[-1].click()
 
+    size = driver.get_window_size()
+    width = size['width']
+    height = size['height']
+
     r = None
     max_times = 2
     count = 0
@@ -40,6 +44,8 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     
     if r == "Follow bạn bè của bạn":
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+    elif r == "Thêm bạn bè, dùng Tiktok t":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
     
     logined_previous = False
     try:
@@ -126,6 +132,9 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
             time.sleep(1)
             print(system_color(f"[Device: {device_id}] [>] Tọa độ đã tính toán {width_dx}x{height_dx} nút đăng xuất."))
             os.system(adb_path + f" -s {device_id}" + f" shell input tap {width_dx} {height_dx}")
+        
+        elif r == "Thêm bạn bè, dùng Tiktok t":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
 
         logined_previous = True
 
@@ -197,6 +206,9 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     
     if r == "Follow bạn bè của bạn":
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+    
+    elif r == "Thêm bạn bè, dùng Tiktok t":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
 
     username = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(
