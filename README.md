@@ -14,6 +14,12 @@
 5. bạn cần cài đặt tesseract
 - [link đến trang web tải tesseract](https://sourceforge.net/projects/tesseract-ocr.mirror/)
 
+# Hướng dẫn setup các file quan trọng trong tool
+1. file 'adb_path.txt'
+- bạn có thể thêm vào đường dẫn của tệp adb.exe vào đây, hoặc nếu bạn đã thêm adb.exe vào biến môi trường thì chỉ cần để 'adb' là được
+2. file 'tesseract_path.txt'
+- bạn có thể thêm đường dẫn của tệp tesseract.exe vào file này hoặc bạn có thể để 'tesseract' nếu đã thiết lập biến môi trường
+
 # Hướng dẫn phụ và các lưu ý nhỏ
 1. Trong ứng dụng tiktok lite trên android của bạn nên cấp các quyền sau:
 - Quyền bộ nhớ
