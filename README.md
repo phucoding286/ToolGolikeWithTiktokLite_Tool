@@ -1,4 +1,4 @@
-* Hướng dẫn:
+# Hướng dẫn:
 1. bạn cần cài đặt python với phiên bản 3.11
 - link: https://www.python.org/downloads/release/python-3110/
 
@@ -11,7 +11,7 @@
 4. bạn cần cài đặt tiktok like phiên bản phù hợp với tool (37.8.4) cho điện thoại
 - link: https://apkpure.com/vn/tiktok-lite-2024/com.zhiliaoapp.musically.go/downloading
 
-* Lưu ý:
+# Lưu ý:
 1. Trong ứng dụng tiktok lite trên android của bạn nên cấp các quyền sau:
 - Quyền bộ nhớ
 - Quyền danh bạ
