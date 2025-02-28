@@ -3,8 +3,7 @@
 - link: https://www.python.org/downloads/release/python-3110/
 
 2. bạn cần cài đặt android-studio
-- [link tải android-studio (bạn có thể tải thủ công nếu link lỗi)]
-(https://developer.android.com/studio?gad_source=1&gclid=CjwKCAiA5Ka9BhB5EiwA1ZVtvG3pfLygEY-iGi0KHeQFqXem0MrQMpZ5JksOcjQt8eDMFLx8SwDjbBoC7oAQAvD_BwE&gclsrc=aw.ds)
+- [link tải android-studio (bạn có thể tải thủ công nếu link lỗi)](https://developer.android.com/studio?gad_source=1&gclid=CjwKCAiA5Ka9BhB5EiwA1ZVtvG3pfLygEY-iGi0KHeQFqXem0MrQMpZ5JksOcjQt8eDMFLx8SwDjbBoC7oAQAvD_BwE&gclsrc=aw.ds)
 
 3. bạn cần cài đặt appium
 - link: https://github.com/appium/appium-desktop/releases/tag/v1.22.3-4
