@@ -1,4 +1,4 @@
-# Hướng dẫn cài đặt các phụ thuộc cần thiếtng dẫn cài đặt các phụ thuộc cần thiết
+# Hướng dẫn cài đặt các phụ thuộc cần thiết
 1. bạn cần cài đặt ```python``` với phiên bản ```3.11```
 - [link tải python, hãy kéo xuống cùng trang bạn sẽ thấy các bản cài đặt](https://www.python.org/downloads/release/python-3110/)
 
