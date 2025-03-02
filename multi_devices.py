@@ -18,7 +18,7 @@ from info_manager import (
 from delete_tiktok_lite_cache import (
     delete_cache
 )
-from login_tiktok import login_tiktok_lite
+from login_tiktok import login_tiktok_lite, next_count
 from get_device_id import get_devices
 
 from modules import *
@@ -176,6 +176,7 @@ def run(adb_path, device_id, wait, appium_port):
         try:
             username = login_tiktok_lite(adb_path, driver, device_id, appium_port)
         except:
+            next_count = 0
             print(error_color(f"[Device: {device_id}] [!] Lỗi khi chuyển acc, khởi tạo lại driver..."))
             os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
             try:
@@ -263,6 +264,7 @@ def run(adb_path, device_id, wait, appium_port):
                 try:
                     username = login_tiktok_lite(adb_path, driver, device_id, appium_port)
                 except:
+                    next_count = 0
                     print(error_color(f"[Device: {device_id}] [!] Lỗi khi chuyển acc, khởi tạo lại driver..."))
                     os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
                     try:
