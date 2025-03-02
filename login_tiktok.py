@@ -46,6 +46,8 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
     elif r == "Thêm bạn bè, dùng Tiktok t":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
+    elif r == "Thêm bạn bè, dùng TikTok":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
     elif r == "Đồng bộ danh sách bạn bè":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
     
@@ -137,6 +139,9 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         
         elif r == "Thêm bạn bè, dùng Tiktok t":
             os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
+        
+        elif r == "Thêm bạn bè, dùng TikTok":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
 
         logined_previous = True
 
@@ -215,7 +220,10 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     
     elif r == "Thêm bạn bè, dùng Tiktok t":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
-
+    
+    elif r == "Thêm bạn bè, dùng TikTok":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
+        
     username = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(
             (By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.viewpager.widget.ViewPager/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.FrameLayout[4]/android.widget.LinearLayout/android.view.ViewGroup/android.widget.Button")

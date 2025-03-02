@@ -19,6 +19,9 @@ def detect_popup(img):
     elif "Déng bé danh sach ban be" in str_detected:
         return "Đồng bộ danh sách bạn bè"
 
+    elif "Thém ban bé, dung TikTok" in str_detected:
+        return "Thêm bạn bè, dùng TikTok"
+
 def popup_processing(): 
     img = Image.open(r"./screenshot.png")
     return detect_popup(img)
