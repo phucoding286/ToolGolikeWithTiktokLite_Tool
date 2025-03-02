@@ -2,7 +2,7 @@ from modules import *
 
 def detect_popup(img):
     str_detected = pytesseract.image_to_string(img).splitlines()
-    # print(str_detected)
+    print(str_detected)
     
     if "Dang xuat?" in str_detected:
         return "Đăng xuất?"
@@ -15,6 +15,9 @@ def detect_popup(img):
     
     elif "Thém ban bé, dung TikTok t" in str_detected:
         return "Thêm bạn bè, dùng Tiktok t"
+    
+    elif "Déng bé danh sach ban be" in str_detected:
+        return "Đồng bộ danh sách bạn bè"
 
 def popup_processing(): 
     img = Image.open(r"./screenshot.png")
@@ -25,5 +28,5 @@ def screencap(adb_path, device_id):
     os.system(f'{adb_path} -s {device_id} pull /storage/emulated/0/Download/screenshot.png ./screenshot.png')
 
 if __name__ == "__main__":
-    screencap(open("adb_path.txt").read(), "192.168.1.4:5555")
+    screencap(open("adb_path.txt").read(), "351a9fc")
     print(popup_processing())
