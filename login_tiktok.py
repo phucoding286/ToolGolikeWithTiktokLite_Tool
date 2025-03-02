@@ -5,7 +5,7 @@ from process_popup_via_screencap import (
 )
 
 google_account_elements = 0
-next_count = 0
+next_count = {}
 scroll_to_find_delete_btn = 20
 
 def login_tiktok_lite(adb_path, driver, device_id, appium_port):
@@ -174,12 +174,16 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         )
     )
     google_account_elements = len(_gaelms) -2
+
+    if device_id not in next_count:
+        next_count[device_id] = 0
     
-    _gaelms[next_count].click()
-    if next_count >= google_account_elements:
-        next_count = 0
+    _gaelms[next_count[device_id]].click()
+
+    if next_count[device_id] >= google_account_elements:
+        next_count[device_id] = 0
     else:
-        next_count += 1
+        next_count[device_id] += 1
     
     print(system_color(f"[Device: {device_id}] [>] lấy username..."))
     option_btns = WebDriverWait(driver, 10).until(
