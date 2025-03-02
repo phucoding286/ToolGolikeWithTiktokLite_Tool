@@ -96,7 +96,7 @@ if __name__ == "__main__":
                 try:
                     thread = threading.Thread(target=multi_devices.run, args=[adb_path, device, wait, appium_port])
                     thread.start()
-                    waiting_ui(4, "Đợi 4s để chạy tất cả", device)
+                    waiting_ui(10, "Đợi 10s để chạy tất cả", device)
                     continue
                 except KeyboardInterrupt:
                     waiting_ui(4, "Bạn đã chọn thoát chương trình 4s")
