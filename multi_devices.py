@@ -223,13 +223,13 @@ def run(adb_path, device_id, wait, appium_port):
             else:
                 error_get_job_counter += 1
 
-            if error_verify_job_counter >= max_times_for_error_verify_job and isinstance(r, tuple) and r[0] == "error verify job":
+            if error_verify_job_counter >= max_times_for_error_verify_job and r == "error verify job":
                 print(error_color(f"[Device: {device_id}] [!] Lỗi xác minh job vượt qua số lần giới hạn, đổi account.."))
                 pass
             elif error_get_job_counter >= max_times_for_error_get_job and r == "error job":
                 print(error_color(f"[Device: {device_id}] [!] Lỗi nhận job vượt qua số lần giới hạn, đổi account.."))
                 pass
-            elif error_verify_job_counter < max_times_for_error_verify_job and isinstance(r, tuple) and r[0] == "error verify job":
+            elif error_verify_job_counter < max_times_for_error_verify_job and r == "error verify job":
                 print(system_color(f"[Device: {device_id}] [!] Thử lại follow trên account '{username}' lần thử {error_verify_job_counter}/{max_times_for_error_verify_job}"))
                 try:
                     driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
@@ -385,7 +385,7 @@ if __name__ == "__main__":
                 try:
                     thread = threading.Thread(target=run, args=[adb_path, key, value[0], appium_port])
                     thread.start()
-                    waiting_ui(4, "Đợi 4s để chạy tất cả", key)
+                    waiting_ui(10, "Đợi 4s để chạy tất cả", key)
                     continue
                 except KeyboardInterrupt:
                     waiting_ui(4, "Bạn đã chọn thoát chương trình 4s")
