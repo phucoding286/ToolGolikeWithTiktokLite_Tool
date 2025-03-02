@@ -66,7 +66,7 @@ def auto(driver, account_id, adb_path, device_id, more_wait_when_error, error_ve
             break
     
     if error:
-        return "error"
+        return "error job"
     
     if rj[2] != "follow":
         print(error_color(f"[Device: {device_id}] [!] Không phải nhiệm vụ follow!"))
@@ -89,7 +89,7 @@ def auto(driver, account_id, adb_path, device_id, more_wait_when_error, error_ve
         else:
             print(success_color(f"[Device: {device_id}] [#] Đã bỏ job thành công!"))
         
-        return "error"
+        return "error job"
     
     else:
         rf = follow(driver, adb_path, rj[0], device_id)
@@ -162,6 +162,8 @@ def run(adb_path, device_id, wait, appium_port):
     max_times_for_error_verify_job = 2
     switch_account_counter = 0
     error_verify_job_counter = 0
+    error_get_job_counter = 0
+    max_times_for_error_get_job = 2
 
     driver = driver_init(adb_path, False, device_id, appium_port)
     accounts_id = check_tiktok_account_id(device_id)
@@ -211,20 +213,34 @@ def run(adb_path, device_id, wait, appium_port):
         if isinstance(r, tuple) and len(r) == 3 and r[0] == "success":
             more_wait_when_error = r[1]
             error_verify_job_counter = r[2]
+            error_get_job_counter = 0
         
         if r == "!=follow":
             driver = waiting_scroll(driver, adb_path, 1, f"Vui lòng đợi 1 scroll để nhận job tiếp theo...", device_id=device_id, appium_port=appium_port)
             continue
         
-        elif isinstance(r, tuple) and r[0] == "error verify job":
-            error_verify_job_counter += 1
-            switch_account_counter += 1
-            more_wait_when_error = r[1]
+        elif isinstance(r, tuple) and r[0] == "error verify job" or r == "error job":
+            if r != "error job":
+                error_verify_job_counter += 1
+                switch_account_counter += 1
+            else:
+                error_get_job_counter += 1
+                more_wait_when_error = r[1]
 
             if error_verify_job_counter >= max_times_for_error_verify_job:
                 print(error_color(f"[Device: {device_id}] [!] Lỗi xác minh job vượt qua số lần giới hạn, đổi account.."))
                 pass
-            else:
+            elif error_get_job_counter >= max_times_for_error_get_job:
+                print(error_color(f"[Device: {device_id}] [!] Lỗi nhận job vượt qua số lần giới hạn, đổi account.."))
+                pass
+            elif error_get_job_counter < max_times_for_error_get_job:
+                print(system_color(f"[Device: {device_id}] [!] Thử lại nhận job trên account '{username}' lần thử {error_get_job_counter}/{max_times_for_error_get_job}"))
+                try:
+                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
+                except:
+                    pass
+                continue
+            elif error_verify_job_counter < max_times_for_error_verify_job:
                 print(system_color(f"[Device: {device_id}] [!] Thử lại follow trên account '{username}' lần thử {error_verify_job_counter}/{max_times_for_error_verify_job}"))
                 try:
                     driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
@@ -239,8 +255,11 @@ def run(adb_path, device_id, wait, appium_port):
                 except:
                     pass
                 switch_account_counter = 0
-
-            print(system_color(f"[Device: {device_id}] [!] Lỗi xác minh job, tiến hành đổi tài khoản khác..."))
+            
+            if r == "error job":
+                print(system_color(f"[Device: {device_id}] [!] Lỗi nhận job, tiến hành đổi tài khoản khác..."))
+            else:
+                print(system_color(f"[Device: {device_id}] [!] Lỗi xác minh job, tiến hành đổi tài khoản khác..."))
             id_gl = None
             success = False
             while True:
