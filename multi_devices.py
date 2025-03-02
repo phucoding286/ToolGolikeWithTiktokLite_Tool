@@ -48,7 +48,7 @@ def choose_id():
     
     return r[inp]
 
-def auto(driver, account_id, adb_path, device_id, more_wait_when_error, error_verify_job_counter):
+def auto(driver, account_id, adb_path, device_id):
     account_id = str(account_id)
     error = True
     rj = None
@@ -127,9 +127,7 @@ def auto(driver, account_id, adb_path, device_id, more_wait_when_error, error_ve
                 else:
                     print(success_color(f"[Device: {device_id}] [#] Đã bỏ job thành công!"))
 
-                more_wait_when_error += 1
-
-                return "error verify job", more_wait_when_error
+                return "error verify job"
                 
                 # r = delete_cache(driver, adb_path)
 
@@ -151,9 +149,7 @@ def auto(driver, account_id, adb_path, device_id, more_wait_when_error, error_ve
                 # else:
                 #     print(success_color("[#] đã xóa cache thành công."))
                 
-                more_wait_when_error = 1
-                error_verify_job_counter = 0
-                return "success", more_wait_when_error, error_verify_job_counter
+                return "success"
 
 
 def run(adb_path, device_id, wait, appium_port):
@@ -208,24 +204,24 @@ def run(adb_path, device_id, wait, appium_port):
     driver = waiting_scroll(driver, adb_path, 5, f"Đợi 5 scroll để bắt đầu...", device_id=device_id, appium_port=appium_port)
 
     while True:
-        r = auto(driver, id_gl, adb_path, device_id, more_wait_when_error, error_verify_job_counter)
+        r = auto(driver, id_gl, adb_path, device_id)
 
-        if isinstance(r, tuple) and len(r) == 3 and r[0] == "success":
-            more_wait_when_error = r[1]
-            error_verify_job_counter = r[2]
+        if r == "success":
+            more_wait_when_error = 1
+            error_verify_job_counter = 0
             error_get_job_counter = 0
         
         if r == "!=follow":
             driver = waiting_scroll(driver, adb_path, 1, f"Vui lòng đợi 1 scroll để nhận job tiếp theo...", device_id=device_id, appium_port=appium_port)
             continue
         
-        elif isinstance(r, tuple) and r[0] == "error verify job" or r == "error job":
+        elif r == "error verify job" or r == "error job":
             if r != "error job":
                 error_verify_job_counter += 1
                 switch_account_counter += 1
+                more_wait_when_error += 1
             else:
                 error_get_job_counter += 1
-                more_wait_when_error = r[1]
 
             if error_verify_job_counter >= max_times_for_error_verify_job and isinstance(r, tuple) and r[0] == "error verify job":
                 print(error_color(f"[Device: {device_id}] [!] Lỗi xác minh job vượt qua số lần giới hạn, đổi account.."))
