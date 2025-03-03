@@ -16,7 +16,7 @@ def detect_popup(img):
             for char in value:
                 str_detected[i] = str_detected[i].replace(char, key)
 
-    print(str_detected)
+    # print(str_detected)
     
     if "Dang xuat?" in str_detected or "Dang xuat" in str_detected:
         return "Đăng xuất?"
