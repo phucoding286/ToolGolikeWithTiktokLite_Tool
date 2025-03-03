@@ -14,6 +14,34 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     global capabilities
     global scroll_to_find_delete_btn
 
+    size = driver.get_window_size()
+    width = size['width']
+    height = size['height']
+
+    r = None
+    max_times = 1
+    count = 0
+    while True:
+        try:
+            screencap(adb_path, device_id)
+            r = popup_processing()
+            print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
+            if r is None and count < max_times:
+                count += 1
+                print(system_color(f"[Device: {device_id}] [>] Kết quả là None, thử lại ({count}/{max_times})"))
+                continue
+            break
+        except:
+            print(error_color(f"[Device: {device_id}] [!] Lỗi không thể chụp ảnh màn hình và detect văn bản trong ảnh."))
+            continue
+
+    size = driver.get_window_size()
+    width = size['width']
+    height = size['height']
+
+    if r == "Trạng thái tài khoản":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2)+150} {(height/2)+145}")
+
     option_btns = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(
             (By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.viewpager.widget.ViewPager/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout")
