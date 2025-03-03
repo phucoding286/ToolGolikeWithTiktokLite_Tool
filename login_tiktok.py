@@ -41,6 +41,14 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
 
     if r == "Trạng thái tài khoản":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2)+150} {(height/2)+145}")
+    elif r == "Follow bạn bè của bạn":
+        os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+    elif r == "Thêm bạn bè, dùng Tiktok t":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
+    elif r == "Thêm bạn bè, dùng TikTok":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
+    elif r == "Đồng bộ danh sách bạn bè":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
 
     option_btns = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(
@@ -72,6 +80,8 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     
     if r == "Follow bạn bè của bạn":
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+    elif r == "Trạng thái tài khoản":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2)+150} {(height/2)+145}")
     elif r == "Thêm bạn bè, dùng Tiktok t":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
     elif r == "Thêm bạn bè, dùng TikTok":
@@ -156,6 +166,9 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
             print(system_color(f"[Device: {device_id}] [>] Tọa độ đã tính toán {width_dx}x{height_dx} nút đăng xuất."))
             os.system(adb_path + f" -s {device_id}" + f" shell input tap {width_dx} {height_dx}")
         
+        elif r == "Trạng thái tài khoản":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2)+150} {(height/2)+145}")
+
         elif r == "Lưu thông tin đăng nhập?":
             time.sleep(1)
             print(system_color(f"[Device: {device_id}] [>] Tọa độ đã tính toán {width_asdt}x{height_asdt} nút 'để sau' cho popup lưu thông tin đăng nhập."))
