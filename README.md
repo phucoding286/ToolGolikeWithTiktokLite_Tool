@@ -25,5 +25,5 @@
 - Quyền bộ nhớ
 - Quyền danh bạ
 - Quyền vị trí
-
 2. Đảm bảo rằng ứng dụng ```tiktok lite``` của bạn trong quá trình hoạt động không có popup gì khác trong script, để đảm bảo tool chạy ổn định!
+3. trên tài khoản ```tiktok``` của bạn, để đảm bảo tool chạy đúng hãy cập nhật ```tên hồ sơ``` (nếu chưa có) và đăng ít nhất ```một ảnh``` nếu chưa đăng ảnh nào.
