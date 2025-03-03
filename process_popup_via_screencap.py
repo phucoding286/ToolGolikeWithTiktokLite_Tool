@@ -15,8 +15,8 @@ def detect_popup(img):
         for key, value in vocab.items():
             for char in value:
                 str_detected[i] = str_detected[i].replace(char, key)
-                
-    # print(str_detected)
+
+    print(str_detected)
     
     if "Dang xuat?" in str_detected or "Dang xuat" in str_detected:
         return "Đăng xuất?"
@@ -30,7 +30,7 @@ def detect_popup(img):
     elif "Them ban be, dung TikTok t" in str_detected:
         return "Thêm bạn bè, dùng Tiktok t"
     
-    elif "Deng be danh sach ban be" in str_detected:
+    elif "Deng be danh sach ban be" in str_detected or "Dong bo danh sach ban be" in str_detected:
         return "Đồng bộ danh sách bạn bè"
 
     elif "Them ban be, dung TikTok" in str_detected:
@@ -40,8 +40,11 @@ def detect_popup(img):
         return "Trạng thái tài khoản"
 
 def popup_processing(): 
-    img = Image.open(r"./screenshot.png")
-    return detect_popup(img)
+    image = cv2.imread("./screenshot.png")
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    gray = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
+    gray = cv2.GaussianBlur(gray, (5,5), 0)
+    return detect_popup(gray)
 
 def screencap(adb_path, device_id):
     os.system(f'{adb_path} -s {device_id} shell screencap /storage/emulated/0/Download/screenshot.png')
