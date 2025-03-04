@@ -17,7 +17,7 @@ def detect_popup(img1, img2):
             for char in value:
                 str_detected[i] = str_detected[i].replace(char, key)
 
-    # print(str_detected)
+    print(str_detected)
     
     if "Dang xuat?" in str_detected:
         return "Đăng xuất?"
@@ -39,6 +39,12 @@ def detect_popup(img1, img2):
     
     elif "Trang thai tai knoan" in str_detected:
         return "Trạng thái tài khoản"
+    
+    elif "tren TikTok, hay cho phep tru" in str_detected:
+        return "trên Tiktok, hãy cho phép tru"
+    
+    elif "Khdeng cho phep" in str_detected or "Kheng cho phep" in str_detected:
+        return "Không cho phép"
 
 def popup_processing(): 
     image = cv2.imread("./screenshot.png")
@@ -53,5 +59,5 @@ def screencap(adb_path, device_id):
     os.system(f'{adb_path} -s {device_id} pull /storage/emulated/0/Download/screenshot.png ./screenshot.png')
 
 if __name__ == "__main__":
-    screencap(open("adb_path.txt").read(), "192.168.1.4:5555")
+    screencap(open("adb_path.txt").read(), "192.168.1.6:5555")
     print(popup_processing())

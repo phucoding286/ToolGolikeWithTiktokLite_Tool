@@ -49,6 +49,10 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
     elif r == "Đồng bộ danh sách bạn bè":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
+    elif r == "trên Tiktok, hãy cho phép tru":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
+    elif r == "Không cho phép":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
 
     option_btns = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(
@@ -88,7 +92,11 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
     elif r == "Đồng bộ danh sách bạn bè":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
-    
+    elif r == "trên Tiktok, hãy cho phép tru":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
+    elif r == "Không cho phép":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
+
     logined_previous = False
     try:
         ba_cham = WebDriverWait(driver, 5).until(
@@ -183,7 +191,13 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         
         elif r == "Thêm bạn bè, dùng TikTok":
             os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
-
+        
+        elif r == "trên Tiktok, hãy cho phép tru":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
+        
+        elif r == "Không cho phép":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
+    
         logined_previous = True
 
     except:
@@ -264,7 +278,13 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     
     elif r == "Thêm bạn bè, dùng TikTok":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
-        
+    
+    elif r == "trên Tiktok, hãy cho phép tru":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
+    
+    elif r == "Không cho phép":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+250}")
+
     username = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(
             (By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.viewpager.widget.ViewPager/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.FrameLayout[4]/android.widget.LinearLayout/android.view.ViewGroup/android.widget.Button")
