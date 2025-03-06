@@ -150,7 +150,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         width_dx = (width / 2) + 150
         height_dx = (height / 2) + 145
         width_asdt = (width / 2) -150
-        height_asdt = (height / 2) + 205
+        height_asdt = (height / 2) + 210
         
         r = None
         max_times = 2
@@ -298,7 +298,9 @@ if __name__ == "__main__":
     capabilities['udid'] = "192.168.1.56:5555"
     adb_path = open("adb_path.txt", "r").read()
 
-    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.6:5555", appium_port="1000")
+    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
+    size = driver.get_window_size()
+    input(size)
     r = login_tiktok_lite(adb_path, driver, device_id="192.168.1.56:5555", appium_port="1000")
     print(r)
     input(">>> ")
