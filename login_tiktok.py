@@ -149,8 +149,8 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
 
         width_dx = (width / 2) + 150
         height_dx = (height / 2) + 145
-        width_asdt = (width / 2) -150
-        height_asdt = (height / 2) + 210
+        width_asdt = (width / 2) - 150
+        height_asdt = (height / 2) + 230
         
         r = None
         max_times = 2
