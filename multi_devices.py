@@ -160,6 +160,8 @@ def run(adb_path, device_id, wait, appium_port):
     error_verify_job_counter = 0
     error_get_job_counter = 0
     max_times_for_error_get_job = 2
+    max_times_for_error_follow = 2
+    error_follow_counter = 0
 
     driver = driver_init(adb_path, False, device_id, appium_port)
     accounts_id = check_tiktok_account_id(device_id)
@@ -210,18 +212,28 @@ def run(adb_path, device_id, wait, appium_port):
             more_wait_when_error = 1
             error_verify_job_counter = 0
             error_get_job_counter = 0
+            error_follow_counter = 0
         
         if r == "!=follow":
             driver = waiting_scroll(driver, adb_path, 1, f"Vui lòng đợi 1 scroll để nhận job tiếp theo...", device_id=device_id, appium_port=appium_port)
             continue
         
-        elif r == "error verify job" or r == "error job":
-            if r != "error job":
+        elif r == "error verify job" or r == "error job" or r == "error follow":
+            if r == "error verify job":
                 error_verify_job_counter += 1
                 switch_account_counter += 1
                 more_wait_when_error += 1
-            else:
+            elif r == "error job":
                 error_get_job_counter += 1
+            elif r == "error follow":
+                switch_account_counter += 1
+                error_follow_counter += 1
+                print(system_color(f"[Device: {device_id}] [!] Lỗi follow, Khởi tạo lại driver..."))
+                try:
+                    driver.quit()
+                except:
+                    pass
+                driver = driver_init(adb_path, False, device_id, appium_port)
 
             if error_verify_job_counter >= max_times_for_error_verify_job and r == "error verify job":
                 print(error_color(f"[Device: {device_id}] [!] Lỗi xác minh job vượt qua số lần giới hạn, đổi account.."))
@@ -229,6 +241,10 @@ def run(adb_path, device_id, wait, appium_port):
             elif error_get_job_counter >= max_times_for_error_get_job and r == "error job":
                 print(error_color(f"[Device: {device_id}] [!] Lỗi nhận job vượt qua số lần giới hạn, đổi account.."))
                 pass
+            elif error_follow_counter >= max_times_for_error_follow and r == "error follow":
+                print(error_color(f"[Device: {device_id}] [!] Lỗi khi follow vượt qua số lần giới hạn, đổi account.."))
+                pass
+
             elif error_verify_job_counter < max_times_for_error_verify_job and r == "error verify job":
                 print(system_color(f"[Device: {device_id}] [!] Thử lại follow trên account '{username}' lần thử {error_verify_job_counter}/{max_times_for_error_verify_job}"))
                 try:
@@ -238,6 +254,13 @@ def run(adb_path, device_id, wait, appium_port):
                 continue
             elif error_get_job_counter < max_times_for_error_get_job and r == "error job":
                 print(system_color(f"[Device: {device_id}] [!] Thử lại nhận job trên account '{username}' lần thử {error_get_job_counter}/{max_times_for_error_get_job}"))
+                try:
+                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
+                except:
+                    pass
+                continue
+            elif error_follow_counter < max_times_for_error_follow and r == "error follow":
+                print(system_color(f"[Device: {device_id}] [!] Thử lại follow trên account '{username}' lần thử {error_follow_counter}/{max_times_for_error_follow}"))
                 try:
                     driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
                 except:

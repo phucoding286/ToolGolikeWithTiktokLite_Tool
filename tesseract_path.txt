@@ -1,1 +1,1 @@
-E:\Tesseract-OCR\tesseract.exe
+tesseract

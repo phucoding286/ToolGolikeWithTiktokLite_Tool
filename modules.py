@@ -71,7 +71,8 @@ def driver_init(adb_path, ask_udid=True, device_id=None, appium_port=None):
             error = False
             break
 
-        except:
+        except Exception as e:
+            # print(e)
             try:
                 driver.quit()
             except:

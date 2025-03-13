@@ -1,4 +1,3 @@
-import multi_devices
 import one_tk
 from modules import *
 import multi_devices
@@ -58,6 +57,7 @@ if __name__ == "__main__":
             appium_port = input(system_color('[?] Nhập port appium của bạn\n-> '))
             devices = multi_devices.get_devices(adb_path)
             wait = int(input(system_color(f"[?] Nhập số thời gian chờ\n-> ")))
+            wait_device_setup = int(input(system_color("[?] Nhận vào số thời gian chờ mỗi thiết bị setup xong\n-> ")))
             ask = input(system_color("[?] Bạn có muốn thêm mã device tách biệt?\n(y/N)-> "))
             
             out_device_list = []
@@ -96,7 +96,7 @@ if __name__ == "__main__":
                 try:
                     thread = threading.Thread(target=multi_devices.run, args=[adb_path, device, wait, appium_port])
                     thread.start()
-                    waiting_ui(10, "Đợi 10s để chạy tất cả", device)
+                    waiting_ui(wait_device_setup, f"Đợi {wait_device_setup}s để chạy tất cả\n", device)
                     continue
                 except KeyboardInterrupt:
                     waiting_ui(4, "Bạn đã chọn thoát chương trình 4s")

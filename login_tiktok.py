@@ -323,7 +323,7 @@ if __name__ == "__main__":
     capabilities['udid'] = "192.168.1.56:5555"
     adb_path = open("adb_path.txt", "r").read()
 
-    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
+    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:45197", appium_port="1001")
     size = driver.get_window_size()
     input(size)
     r = login_tiktok_lite(adb_path, driver, device_id="192.168.1.56:5555", appium_port="1000")
