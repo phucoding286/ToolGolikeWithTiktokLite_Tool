@@ -26,9 +26,6 @@ import time
 import os
 import sys
 
-total_error = 0
-total_success = 0
-
 def choose_id():
     inp, r = None, None
 
@@ -165,7 +162,6 @@ def run(adb_path, device_id, wait, appium_port):
     max_times_for_error_get_job = 2
     max_times_for_error_follow = 2
     error_follow_counter = 0
-    global total_success, total_error
     const_wait = wait
 
     driver = driver_init(adb_path, False, device_id, appium_port)
@@ -211,11 +207,6 @@ def run(adb_path, device_id, wait, appium_port):
     driver = waiting_scroll(driver, adb_path, 5, f"Đợi 5 scroll để bắt đầu...", device_id=device_id, appium_port=appium_port)
 
     while True:
-        if total_error - total_success > wait:
-            wait = total_error - total_success
-        else:
-            wait = const_wait
-            
         r = auto(driver, id_gl, adb_path, device_id)
 
         if r == "success":
@@ -223,7 +214,6 @@ def run(adb_path, device_id, wait, appium_port):
             error_verify_job_counter = 0
             error_get_job_counter = 0
             error_follow_counter = 0
-            total_success += 1
         
         if r == "!=follow":
             driver = waiting_scroll(driver, adb_path, 1, f"Vui lòng đợi 1 scroll để nhận job tiếp theo...", device_id=device_id, appium_port=appium_port)
@@ -234,7 +224,6 @@ def run(adb_path, device_id, wait, appium_port):
                 error_verify_job_counter += 1
                 switch_account_counter += 1
                 more_wait_when_error += 1
-                total_error += 1
             elif r == "error job":
                 error_get_job_counter += 1
             elif r == "error follow":
