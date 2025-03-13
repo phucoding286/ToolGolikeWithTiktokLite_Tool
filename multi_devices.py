@@ -228,6 +228,7 @@ def run(adb_path, device_id, wait, appium_port):
             elif r == "error follow":
                 switch_account_counter += 1
                 error_follow_counter += 1
+                more_wait_when_error += 1
                 print(system_color(f"[Device: {device_id}] [!] Lỗi follow, Khởi tạo lại driver..."))
                 try:
                     driver.quit()
