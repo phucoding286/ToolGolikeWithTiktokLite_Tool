@@ -1,5 +1,8 @@
 from modules import *
 
+API_URL = "https://router.huggingface.co/hf-inference/models/openai/whisper-large-v3"
+hgf_headers = {"Authorization": "Bearer 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"}
+
 headers = {
     "authority": "www.tiktok.com",
     "method": "GET",
@@ -141,14 +144,15 @@ def main():
             with open("hist_data.json", "w") as file:
                 json.dump({"data":users}, file)
 
-    options = selenium_webdriver.ChromeOptions()
+    options = undetected_chromedriver.ChromeOptions()
     chrome_user_data = open("selenium_path.txt").read()
-    options.add_argument("--headless")
+    # options.add_argument("--headless")
     options.add_argument("--log-level=3")
     options.add_argument("--disable-popup-blocking")
     options.add_argument(f"--user-data-dir={chrome_user_data}")
     options.add_argument("--mute-audio")
-    driver = selenium_webdriver.Chrome(options=options)
+    driver = undetected_chromedriver.Chrome(options=options)
+    driver.set_window_size(50, 500)
     
     driver.get("https://www.tiktok.com/")
     for ck in cookie_name_val:
@@ -158,6 +162,34 @@ def main():
     i = 0
     for username in reversed(users):
         driver.get(f"https://www.tiktok.com/@{username}")
+        try:
+            captcha_audio_btn = WebDriverWait(driver, 2).until(EC.presence_of_element_located(
+                (By.XPATH, "//button[@class='TUXButton TUXButton--borderless TUXButton--xsmall TUXButton--secondary cap-flex ']")
+            ))
+            captcha_audio_btn.click()
+            
+            print(system_color("[>] Phát hiện captcha, tiến hành giải captcha..."))
+
+            audio_element = WebDriverWait(driver, 10).until(EC.presence_of_element_located(
+                (By.XPATH, '//*[@id="captcha-verify-container-main-page"]/div[2]/div[1]/audio')
+            ))
+            audio_url = audio_element.get_attribute("src")
+
+            data = requests.get(audio_url).content
+            response = requests.post(API_URL, headers=hgf_headers, data=data)
+
+            text_captcha = WebDriverWait(driver, 10).until(EC.presence_of_element_located(
+                (By.XPATH, '//input[@class="TUXTextInputCore-input"]')
+            ))
+            text_captcha.send_keys(response.json()['text'])
+            
+            verify_btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located(
+                (By.XPATH, '//button[@class="TUXButton TUXButton--default TUXButton--medium TUXButton--primary cap-w-full sm:cap-w-auto sm:cap-ml-8 cap-ml-0"]')
+            ))
+            verify_btn.click()
+        except:
+            pass
+
         try:
             unfl_btn = WebDriverWait(driver, 10).until(EC.presence_of_element_located(
                 (By.XPATH, "//button[@class='TUXButton TUXButton--default TUXButton--medium TUXButton--secondary']")
