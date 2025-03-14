@@ -2,7 +2,7 @@ from modules import *
 
 def manual_send_keys(adb_path, text: str, enter=False, device_id=None):
     os.system(f'{adb_path} -s {device_id}  shell input text "{text}"')
-    time.sleep(1)
+    time.sleep(2)
     if enter:
         os.system(f'{adb_path} -s {device_id}  shell input keyevent 66')
 
@@ -47,6 +47,7 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", d
                 time.sleep(1)
                 continue
         
+        # check username
         try:
             xml_src = driver.page_source
             top_username = xml_src.split("desc=\"")[39].split("\" checkable")[0]
@@ -56,7 +57,42 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", d
             pass
         
         time.sleep(1)
-
+        
+        # xem video của mục tiêu cần follow trước khi follow
+        top_username_btn = WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located(
+                (By.XPATH, f'//com.lynx.tasm.behavior.ui.text.FlattenUIText[@content-desc="{top_username}"]')
+            )
+        )
+        top_username_btn.click()
+        
+        try:
+            index_random = random.choice([1, 2, 3])
+            rdn_user_video_btn = WebDriverWait(driver, 5).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, f'/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.LinearLayout/androidx.viewpager.widget.ViewPager/android.widget.FrameLayout/android.widget.GridView/android.widget.FrameLayout[{index_random}]/android.view.View')
+                )
+            )
+            rdn_user_video_btn.click()
+        
+            times_scrol_rdn = random.choice([1, 2, 3])
+            r = waiting_scroll(
+                driver, adb_path,
+                times_scroll=times_scrol_rdn,
+                text="Xem video của user trước khi follow",
+                recreate_driver=False,
+                device_id=device_id
+            )
+            if r == "lỗi khi scroll":
+                raise ValueError("")
+        
+            os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+            time.sleep(1)
+            os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+        except:
+            os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+        
+        # follow và thoát
         follow_btn = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located(
                 (By.XPATH, '(//com.lynx.tasm.behavior.ui.text.FlattenUIText[@content-desc="Follow"])[1]')
@@ -85,7 +121,7 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", d
         return {"error": "Đã có lỗi khi follow"}
     
 if __name__ == "__main__":
-    # capabilities['udid'] = "R59R200B92N"
-    driver = driver_init(r"E:\Android\Sdk\platform-tools\adb.exe", False)
-    print(follow(driver, adb_path=r"E:\Android\Sdk\platform-tools\adb.exe", target_link="https://www.tiktok.com/@kekdjdjd"))
+    adb_path = open("adb_path.txt", "r").read()
+    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
+    print(follow(driver, adb_path, target_link="https://www.tiktok.com/@kekdjdjd7", device_id="192.168.1.56:5555"))
     time.sleep(5)
