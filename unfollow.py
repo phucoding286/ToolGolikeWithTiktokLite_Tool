@@ -153,6 +153,7 @@ def main():
     options.add_argument("--mute-audio")
     driver = undetected_chromedriver.Chrome(options=options)
     driver.set_window_size(50, 500)
+    driver.set_page_load_timeout(10000)
     
     driver.get("https://www.tiktok.com/")
     for ck in cookie_name_val:
