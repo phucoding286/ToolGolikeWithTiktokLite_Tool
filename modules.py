@@ -18,6 +18,8 @@ import pytesseract
 from PIL import Image
 import sys
 import cv2
+import requests
+from selenium import webdriver as selenium_webdriver
 
 colorama.init()
 pytesseract.pytesseract.tesseract_cmd = open("./tesseract_path.txt").read()
