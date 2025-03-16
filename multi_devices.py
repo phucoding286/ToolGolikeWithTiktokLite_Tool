@@ -63,14 +63,7 @@ def auto(driver, account_id, adb_path, device_id):
             continue
         
         elif "<42" in rj:
-            print(error_color(f"[Device: {device_id}] [!] {rj['<42']}..."))
-
-            r = drop_job(rj[1], rj[3], account_id, rj[2], device_id)
-            if "error" in r:
-                print(error_color(f"[Device: {device_id}] [!] Đã bỏ job thất bại."))
-            else:
-                print(success_color(f"[Device: {device_id}] [#] Đã bỏ job thành công!"))
-            
+            print(error_color(f"[Device: {device_id}] [!] {rj['<42']}..."))            
             time.sleep(1)
             error = True
             continue
