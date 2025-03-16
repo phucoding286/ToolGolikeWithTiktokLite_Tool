@@ -89,6 +89,9 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
             top_user_video_btn.click()
         
             times_scrol_rdn = random.choice([i for i in range(time_scroll)])
+            if times_scrol_rdn < 1:
+                times_scrol_rdn = time_scroll
+                
             r = waiting_scroll(
                 driver, adb_path,
                 times_scroll=times_scrol_rdn,
