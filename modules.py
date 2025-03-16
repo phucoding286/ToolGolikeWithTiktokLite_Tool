@@ -20,6 +20,7 @@ import sys
 import cv2
 import requests
 from selenium import webdriver as selenium_webdriver
+import undetected_chromedriver
 
 colorama.init()
 pytesseract.pytesseract.tesseract_cmd = open("./tesseract_path.txt").read()
