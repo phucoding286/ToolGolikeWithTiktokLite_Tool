@@ -57,6 +57,7 @@ if __name__ == "__main__":
             appium_port = input(system_color('[?] Nhập port appium của bạn\n-> '))
             devices = multi_devices.get_devices(adb_path)
             wait = int(input(system_color(f"[?] Nhập số thời gian chờ\n-> ")))
+            times_scroll = int(input(system_color(f"[?] Nhập số scroll video user\n-> ")))
             wait_device_setup = int(input(system_color("[?] Nhận vào số thời gian chờ mỗi thiết bị setup xong\n-> ")))
             ask = input(system_color("[?] Bạn có muốn thêm mã device tách biệt?\n(y/N)-> "))
             
@@ -94,7 +95,7 @@ if __name__ == "__main__":
                 if device in out_device_list:
                     continue
                 try:
-                    thread = threading.Thread(target=multi_devices.run, args=[adb_path, device, wait, appium_port])
+                    thread = threading.Thread(target=multi_devices.run, args=[adb_path, device, wait, appium_port, times_scroll])
                     thread.start()
                     waiting_ui(wait_device_setup, f"Đợi {wait_device_setup}s để chạy tất cả\n", device)
                     continue

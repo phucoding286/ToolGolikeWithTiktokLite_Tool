@@ -48,7 +48,7 @@ def choose_id():
     
     return r[inp]
 
-def auto(driver, account_id, adb_path, device_id):
+def auto(driver, account_id, adb_path, time_scroll, device_id):
     account_id = str(account_id)
     error = True
     rj = None
@@ -104,7 +104,7 @@ def auto(driver, account_id, adb_path, device_id):
         return "error job"
     
     else:
-        rf = follow(driver, adb_path, rj[0], device_id)
+        rf = follow(driver, adb_path, rj[0], time_scroll, device_id)
         
         if "error" in rf:
             print(error_color(f"[Device: {device_id}] [!] Đã có lỗi khi follow!"))
@@ -164,7 +164,7 @@ def auto(driver, account_id, adb_path, device_id):
                 return "success"
 
 
-def run(adb_path, device_id, wait, appium_port):
+def run(adb_path, device_id, wait, appium_port, times_scroll=3):
     more_wait_when_error = 1
     max_times_for_switch_account = 10
     max_times_for_error_verify_job = 2
@@ -219,7 +219,7 @@ def run(adb_path, device_id, wait, appium_port):
     driver = waiting_scroll(driver, adb_path, 5, f"Đợi 5 scroll để bắt đầu...", device_id=device_id, appium_port=appium_port)
 
     while True:
-        r = auto(driver, id_gl, adb_path, device_id)
+        r = auto(driver, id_gl, adb_path, times_scroll, device_id)
 
         if r == "success":
             more_wait_when_error = 1

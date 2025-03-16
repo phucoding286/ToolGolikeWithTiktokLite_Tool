@@ -7,7 +7,7 @@ def manual_send_keys(adb_path, text: str, enter=False, device_id=None):
         os.system(f'{adb_path} -s {device_id}  shell input keyevent 66')
 
 
-def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", device_id=None):
+def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", time_scroll=3, device_id=None):
 
     try:
         
@@ -81,15 +81,14 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", d
         top_username_btn.click()
         
         try:
-            index_random = random.choice([1, 2, 3])
-            rdn_user_video_btn = WebDriverWait(driver, 5).until(
+            top_user_video_btn = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located(
-                    (By.XPATH, f'/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.LinearLayout/androidx.viewpager.widget.ViewPager/android.widget.FrameLayout/android.widget.GridView/android.widget.FrameLayout[{index_random}]/android.view.View')
+                    (By.XPATH, f'/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.LinearLayout/androidx.viewpager.widget.ViewPager/android.widget.FrameLayout/android.widget.GridView/android.widget.FrameLayout[1]/android.view.View')
                 )
             )
-            rdn_user_video_btn.click()
+            top_user_video_btn.click()
         
-            times_scrol_rdn = random.choice([1, 2, 3])
+            times_scrol_rdn = random.choice([i for i in range(time_scroll)])
             r = waiting_scroll(
                 driver, adb_path,
                 times_scroll=times_scrol_rdn,
