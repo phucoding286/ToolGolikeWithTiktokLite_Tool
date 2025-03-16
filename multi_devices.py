@@ -60,10 +60,29 @@ def auto(driver, account_id, adb_path, device_id):
             print(error_color(f"[Device: {device_id}] [!] Đã có lỗi khi nhận job, thử lại..."))
             time.sleep(1)
             error = True
-        else:
+            continue
+        
+        elif "<42" in rj:
+            print(error_color(f"[Device: {device_id}] [!] {rj['<42']}..."))
+
+            r = drop_job(rj[1], rj[3], account_id, rj[2], device_id)
+            if "error" in r:
+                print(error_color(f"[Device: {device_id}] [!] Đã bỏ job thất bại."))
+            else:
+                print(success_color(f"[Device: {device_id}] [#] Đã bỏ job thành công!"))
+            
+            time.sleep(1)
+            error = True
+            continue
+
+        elif isinstance(rj, tuple):
             print(success_color(f"[Device: {device_id}] [#] Đã nhận job thành công."))
             error = False
             break
+
+        else:
+            print(f"Trường hợp không xác định khi nhận job")
+            print(rj)
     
     if error:
         return "error job"
@@ -341,12 +360,7 @@ def run(adb_path, device_id, wait, appium_port):
             continue
         
         elif r == "diff username":
-            print(system_color(f"[Device: {device_id}] [!] Lỗi khác username, Khởi tạo lại driver..."))
-            try:
-                driver.quit()
-            except:
-                pass
-            driver = driver_init(adb_path, False, device_id, appium_port)
+            print(system_color(f"[Device: {device_id}] [!] Lỗi khác username."))
             continue
 
         try:

@@ -51,6 +51,12 @@ def get_job(account_id, device_id=None):
         golike_user_id = gjj['data']['id']
         task_type = gjj['data']['type']
         object_id = gjj['data']['object_id']
+        
+        price_per_after_cost = gjj['data']['price_per_after_cost']
+        if int(price_per_after_cost) < 42:
+            return {"<42": "Thu nhập nhỏ hơn 42d"}
+        else:
+            print(success_color(f"[Device: {device_id}] Job hợp lê, thu nhập lớn hơn hoặc bằng 42d"))
 
         return insta_link, golike_user_id, task_type, object_id, {"status_code": gjj['status'], 'status': gjj['success']}
     
