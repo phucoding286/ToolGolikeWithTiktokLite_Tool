@@ -262,17 +262,21 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
             print(error_color(f"[Device: {device_id}] [!] Lỗi không thể chụp ảnh màn hình và detect văn bản trong ảnh."))
             continue
     
-    if r == "Follow bạn bè của bạn":
+    if r == "Trạng thái tài khoản":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2)+150} {(height/2)+145}")
+    elif r == "Follow bạn bè của bạn":
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
     elif r == "Thêm bạn bè, dùng Tiktok t":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
     elif r == "Thêm bạn bè, dùng TikTok":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+    elif r == "Đồng bộ danh sách bạn bè":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
     elif r == "trên Tiktok, hãy cho phép tru":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
     elif r == "Không cho phép":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
-    
+
     print(system_color(f"[Device: {device_id}] [>] lấy username..."))
     option_btns = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(
@@ -298,11 +302,15 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
             print(error_color(f"[Device: {device_id}] [!] Lỗi không thể chụp ảnh màn hình và detect văn bản trong ảnh."))
             continue
     
-    if r == "Follow bạn bè của bạn":
+    if r == "Trạng thái tài khoản":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2)+150} {(height/2)+145}")
+    elif r == "Follow bạn bè của bạn":
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
     elif r == "Thêm bạn bè, dùng Tiktok t":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
     elif r == "Thêm bạn bè, dùng TikTok":
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+    elif r == "Đồng bộ danh sách bạn bè":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
     elif r == "trên Tiktok, hãy cho phép tru":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
