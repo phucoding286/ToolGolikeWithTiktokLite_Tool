@@ -95,7 +95,10 @@ if __name__ == "__main__":
                 if device in out_device_list:
                     continue
                 try:
-                    thread = threading.Thread(target=multi_devices.run, args=[adb_path, device, wait, appium_port, times_scroll])
+                    thread = threading.Thread(
+                        target=multi_devices.run, args=[adb_path, device, wait, appium_port, times_scroll],
+                        daemon=True
+                    )
                     thread.start()
                     waiting_ui(wait_device_setup, f"Đợi {wait_device_setup}s để chạy tất cả\n", device)
                     continue
@@ -103,4 +106,5 @@ if __name__ == "__main__":
                     waiting_ui(4, "Bạn đã chọn thoát chương trình 4s")
                     os.system("cls") if sys.platform.startswith("win") else os.system("clear")
                     break
+
             input(success_color("[#] Đã chạy xong tất cả thiết bị\n"))
