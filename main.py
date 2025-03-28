@@ -106,5 +106,8 @@ if __name__ == "__main__":
                     waiting_ui(4, "Bạn đã chọn thoát chương trình 4s")
                     os.system("cls") if sys.platform.startswith("win") else os.system("clear")
                     break
-
-            input(success_color("[#] Đã chạy xong tất cả thiết bị\n"))
+            
+            try:
+                input(success_color("[#] Đã chạy xong tất cả thiết bị\n"))
+            except:
+                pass
