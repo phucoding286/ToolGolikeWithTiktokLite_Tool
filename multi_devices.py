@@ -62,8 +62,8 @@ def auto(driver, account_id, adb_path, time_scroll, device_id):
             error = True
             continue
         
-        elif "<42" in rj:
-            print(error_color(f"[Device: {device_id}] [!] {rj['<42']}..."))            
+        elif "<20" in rj:
+            print(error_color(f"[Device: {device_id}] [!] {rj['<20']}..."))            
             time.sleep(1)
             error = True
             continue
