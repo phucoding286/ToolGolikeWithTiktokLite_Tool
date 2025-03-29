@@ -61,7 +61,7 @@ def get_job(account_id, device_id=None):
                 print(success_color(f"[Device: {device_id}] [#] Đã bỏ job thành công!"))
             return {"<20": "Thu nhập nhỏ hơn 20d"}
         else:
-            print(success_color(f"[Device: {device_id}] Job hợp lê, thu nhập lớn hơn hoặc bằng 42d"))
+            print(success_color(f"[Device: {device_id}] Job hợp lê, thu nhập lớn hơn hoặc bằng 20d"))
 
         return insta_link, golike_user_id, task_type, object_id, {"status_code": gjj['status'], 'status': gjj['success']}
     
