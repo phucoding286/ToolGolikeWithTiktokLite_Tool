@@ -107,7 +107,8 @@ if __name__ == "__main__":
                     os.system("cls") if sys.platform.startswith("win") else os.system("clear")
                     break
             
-            try:
-                input(success_color("[#] Đã chạy xong tất cả thiết bị\n"))
-            except:
-                pass
+            while True:
+                try:
+                    input(success_color("[#] Đã chạy xong tất cả thiết bị\n"))
+                except:
+                    pass
