@@ -1,6 +1,11 @@
 from modules import *
 from urllib.parse import parse_qs
 
+for character in "TOOL BY HOANG PHU : tool được viết bởi Phú":
+    print(system_color(character), end="", flush=True)
+    time.sleep(0.02)
+print()
+
 API_URL = "https://router.huggingface.co/hf-inference/models/openai/whisper-large-v3"
 hgf_headers = {"Authorization": "Bearer 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"}
 
@@ -34,8 +39,6 @@ def dump_following_list():
                 users.append(user_list['user']['uniqueId'])
         except:
             break
-        
-        input(users)
         
         print(success_color(f"[..] Đang dump following list, username cuối list: {users[-1]}, tổng số index: {len(users)}"))
 

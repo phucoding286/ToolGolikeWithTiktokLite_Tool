@@ -2,6 +2,11 @@ from modules import *
 from golike import check_tiktok_account_id
 import golike
 
+for character in "TOOL BY HOANG PHU : tool được viết bởi Phú":
+    print(system_color(character), end="", flush=True)
+    time.sleep(0.02)
+print()
+
 golike.GOLIKE_HEADERS['authorization'] = open("auth.txt", "r").read()
 golike.GOLIKE_HEADERS["t"] = open("t.txt", "r").read()
 
