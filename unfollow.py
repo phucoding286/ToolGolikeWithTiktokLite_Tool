@@ -74,11 +74,17 @@ def main():
 
     options = undetected_chromedriver.ChromeOptions()
     chrome_user_data = open("selenium_path.txt").read()
-    # options.add_argument("--headless")
+    options.add_argument('--window-position=0,10000')
     options.add_argument("--log-level=3")
     options.add_argument("--disable-popup-blocking")
     options.add_argument(f"--user-data-dir={chrome_user_data}")
     options.add_argument("--mute-audio")
+    # vẫn render khi minimize hoặc kéo tab khỏi màn hình
+    options.add_argument("--disable-background-timer-throttling")
+    options.add_argument("--disable-backgrounding-occluded-windows")
+    options.add_argument("--disable-renderer-backgrounding")
+    options.add_argument("--disable-features=PaintHolding")
+    options.add_argument("--disable-features=FreezeUserAgent")
     driver = undetected_chromedriver.Chrome(options=options)
     driver.set_window_size(50, 500)
     driver.set_page_load_timeout(10000)
