@@ -98,7 +98,7 @@ def main():
     for username in reversed(users):
         try:
             driver.get(f"https://www.tiktok.com/@{username}")
-            
+
             captcha_audio_btn = WebDriverWait(driver, 2).until(EC.presence_of_element_located(
                 (By.XPATH, "//button[@class='TUXButton TUXButton--borderless TUXButton--xsmall TUXButton--secondary cap-flex ']")
             ))
@@ -139,12 +139,15 @@ def main():
             break
         else:
             i += 1
-
-        driver.execute_script("window.open();")
-        time.sleep(1)
-        driver.close()
-        windows = driver.window_handles
-        driver.switch_to.window(windows[0])
+        
+        try:
+            driver.execute_script("window.open();")
+            time.sleep(1)
+            driver.close()
+            windows = driver.window_handles
+            driver.switch_to.window(windows[0])
+        except:
+            pass
         
         try:
             if i % 2 == 0:
