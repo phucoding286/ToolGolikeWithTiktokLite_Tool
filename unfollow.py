@@ -74,7 +74,7 @@ def main():
 
     options = undetected_chromedriver.ChromeOptions()
     chrome_user_data = open("selenium_path.txt").read()
-    options.add_argument('--window-position=0,10000')
+    # options.add_argument('--window-position=0,10000')
     options.add_argument("--log-level=3")
     options.add_argument("--disable-popup-blocking")
     options.add_argument(f"--user-data-dir={chrome_user_data}")
