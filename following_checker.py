@@ -12,7 +12,9 @@ golike.GOLIKE_HEADERS["t"] = open("t.txt", "r").read()
 
 def check_follow_count(username, limit=1000):
     r = scraper.get(f"https://tiktok.com/@{username}")
+    print(system_color(f"{username} ->"), end="", flush=True)
     fl_count = r.text.split("followingCount\":")[1].split(",")[0]
+    print(system_color(f" {fl_count}"))
     if int(fl_count) >= limit:
         return True, f"username {username} | {fl_count} following."
     else:
@@ -25,7 +27,13 @@ def main():
     rchk = check_tiktok_account_id(None)
     true_list, false_list = [], []
     for t in rchk:
-        r = check_follow_count(t[1], limit)
+        error = True
+        while error is True:
+            time.sleep(0.5)
+            try:
+                r = check_follow_count(t[1], limit)
+                error = False
+            except: error = True
         if r[0] is True:
             true_list.append(r[1])
         else:
