@@ -8,8 +8,7 @@
 3. bạn cần cài đặt ```appium```
 - [link cài đặt appium](https://github.com/appium/appium-desktop/releases/tag/v1.22.3-4)
 
-# Link video hướng dẫn chi tiết setup appium và android studio
-[Link Video](https://youtu.be/oqaJvdIQ7JQ?si=Zc_kqeJcMMiULRZ8)
+- Link video hướng dẫn chi tiết setup appium và android studio [Link Video](https://youtu.be/oqaJvdIQ7JQ?si=Zc_kqeJcMMiULRZ8)
 
 4. bạn cần cài đặt ```tiktok lik```e phiên bản phù hợp với tool ```(37.8.4)``` cho điện thoại
 - [link tải tệp tiktok lite apk tương thích cho tool](https://apkpure.com/vn/tiktok-lite-2024/com.zhiliaoapp.musically.go/downloading)
