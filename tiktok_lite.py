@@ -106,7 +106,9 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
             time.sleep(1)
             os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
 
-        except: pass
+        except:
+            os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+            pass
         #     os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
         #     os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
         #     exit_btn2 = WebDriverWait(driver, 10).until(
