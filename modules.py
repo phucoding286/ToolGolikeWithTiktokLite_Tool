@@ -105,7 +105,7 @@ def waiting_ui(timeout=5, text="", device_id=None):
 def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, recreate_driver=True, device_id=None, appium_port=None):
     for i in range(1, times_scroll+1):
 
-        if random.choice([True]+[False for _ in range(10)]) and rdn_options:
+        if random.choice([False for _ in range(10)] + [True] + [False for _ in range(10)]) and rdn_options:
             try:
                 WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located(
