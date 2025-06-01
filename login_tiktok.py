@@ -288,6 +288,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
 
     print(system_color(f"[Device: {device_id}] [>] lấy username..."))
+    os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
     option_btns = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(
             (By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.viewpager.widget.ViewPager/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout")
