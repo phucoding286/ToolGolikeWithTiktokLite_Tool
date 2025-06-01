@@ -4,10 +4,12 @@ from process_popup_via_screencap import (
     screencap
 )
 
+google_account_elements = 0
 next_count = {}
 scroll_to_find_delete_btn = 20
 
 def login_tiktok_lite(adb_path, driver, device_id, appium_port):
+    global google_account_elements
     global next_count
     global capabilities
     global scroll_to_find_delete_btn
@@ -237,13 +239,14 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
             (By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.support.v7.widget.RecyclerView/android.widget.LinearLayout")
         )
     )
+    google_account_elements = len(_gaelms) -2
 
     if device_id not in next_count:
         next_count[device_id] = 0
     
     _gaelms[next_count[device_id]].click()
 
-    if next_count[device_id] >= 3:
+    if next_count[device_id] >= google_account_elements:
         next_count[device_id] = 0
     else:
         next_count[device_id] += 1
