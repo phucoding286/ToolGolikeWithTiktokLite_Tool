@@ -107,6 +107,11 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
 
         if random.choice([False for _ in range(10)] + [True] + [False for _ in range(10)]) and rdn_options:
             try:
+                size = driver.get_window_size()
+                width = size['width']
+                height = size['height']
+                os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
+                
                 WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located(
                         (By.ID, 'com.zhiliaoapp.musically.go:id/dm4')
