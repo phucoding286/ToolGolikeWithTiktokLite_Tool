@@ -239,14 +239,13 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
             (By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.support.v7.widget.RecyclerView/android.widget.LinearLayout")
         )
     )
-    google_account_elements = len(_gaelms) -2
 
     if device_id not in next_count:
         next_count[device_id] = 0
     
     _gaelms[next_count[device_id]].click()
 
-    if next_count[device_id] >= google_account_elements:
+    if next_count[device_id] >= 3:
         next_count[device_id] = 0
     else:
         next_count[device_id] += 1
