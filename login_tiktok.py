@@ -17,6 +17,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     size = driver.get_window_size()
     width = size['width']
     height = size['height']
+    os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
 
     r = None
     max_times = 1
