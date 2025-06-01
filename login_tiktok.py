@@ -4,12 +4,10 @@ from process_popup_via_screencap import (
     screencap
 )
 
-google_account_elements = 0
 next_count = {}
 scroll_to_find_delete_btn = 20
 
 def login_tiktok_lite(adb_path, driver, device_id, appium_port):
-    global google_account_elements
     global next_count
     global capabilities
     global scroll_to_find_delete_btn
