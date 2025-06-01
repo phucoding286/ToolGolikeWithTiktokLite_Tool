@@ -48,11 +48,18 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
                 continue
         
         # check username
+        all_usernames = WebDriverWait(driver, 5).until(
+            EC.presence_of_all_elements_located(
+                (By.CLASS_NAME, f'com.lynx.tasm.behavior.ui.text.FlattenUIText')
+            )
+        )
+        top_username = ""
         try:
-            xml_src = driver.page_source
-            top_username = xml_src.split("desc=\"")[39].split("\" checkable")[0]
-
-            if top_username != target_link.split("/")[3].replace("@", ""):
+            for username in all_usernames:
+                if username.text.strip() == target_link.split("/")[3].replace("@", ""):
+                    top_username = username.text.strip()
+                    break
+            else:
                 os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
                 
                 exit_btn2 = WebDriverWait(driver, 10).until(
@@ -67,8 +74,7 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
                 os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
 
                 return "!=username"
-        except:
-            pass
+        except: pass
         
         time.sleep(1)
         
