@@ -8,8 +8,12 @@ def manual_send_keys(adb_path, text: str, enter=False, device_id=None):
 
 
 def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", time_scroll=3, device_id=None):
-
     try:
+
+        size = driver.get_window_size()
+        width = size['width']
+        height = size['height']
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
         
         time.sleep(2)
         kham_pha_btn = WebDriverWait(driver, 10).until(
