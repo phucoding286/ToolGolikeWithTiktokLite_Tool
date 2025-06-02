@@ -32,6 +32,18 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
 
         manual_send_keys(adb_path, target_link.split("/")[3], True, device_id)
 
+        for _ in range(5):
+            try:
+                follow_btn = WebDriverWait(driver, 2).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, '(//com.lynx.tasm.behavior.ui.text.FlattenUIText[@content-desc="Follow"])[1]')
+                    )
+                )
+                break
+            except:
+                time.sleep(1)
+                continue
+
         user_finded_list = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located(
                 (By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/com.bytedance.ies.xelement.viewpager.childitem.LynxTabbarItem[2]")
@@ -115,7 +127,23 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
             os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
             time.sleep(1)
 
-        except: pass
+        except:
+            os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+            time.sleep(1)
+            os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+                
+            exit_btn2 = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/com.lynx.component.svg.UISvg")
+                )
+            )
+            time.sleep(1)
+            exit_btn2.click()
+
+            time.sleep(1)
+            os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+
+            return "!=username"
         
         # follow và thoát
         follow_btn = WebDriverWait(driver, 5).until(

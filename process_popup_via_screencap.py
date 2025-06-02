@@ -71,6 +71,7 @@ def popup_processing():
 def screencap(adb_path, device_id: str):
     global processing_flag
     while processing_flag: continue
+    time.sleep(random.randint(1, 4))
     processing_flag = True
     try:
         if device_id.startswith("emulator"):
