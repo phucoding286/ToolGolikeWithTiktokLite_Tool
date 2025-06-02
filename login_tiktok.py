@@ -24,7 +24,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     count = 0
     while True:
         try:
-            screencap(adb_path, device_id)
+            screencap(adb_path, device_id, login_mode=True)
             r = popup_processing()
             print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
             if r is None and count < max_times:
@@ -75,7 +75,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     count = 0
     while True:
         try:
-            screencap(adb_path, device_id)
+            screencap(adb_path, device_id, login_mode=True)
             r = popup_processing()
             print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
             if r is None and count < max_times:
@@ -166,7 +166,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         count = 0
         while True:
             try:
-                screencap(adb_path, device_id)
+                screencap(adb_path, device_id, login_mode=True)
                 r = popup_processing()
                 print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
                 if r is None and count < max_times:
@@ -256,7 +256,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     count = 0
     while True:
         try:
-            screencap(adb_path, device_id)
+            screencap(adb_path, device_id, login_mode=True)
             r = popup_processing()
             print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
             if r is None and count < max_times:
@@ -301,7 +301,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     count = 0
     while True:
         try:
-            screencap(adb_path, device_id)
+            screencap(adb_path, device_id, login_mode=True)
             r = popup_processing()
             print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
             if r is None and count < max_times:
