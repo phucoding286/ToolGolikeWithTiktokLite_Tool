@@ -32,17 +32,7 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
 
         manual_send_keys(adb_path, target_link.split("/")[3], True, device_id)
 
-        for _ in range(5):
-            try:
-                follow_btn = WebDriverWait(driver, 2).until(
-                    EC.presence_of_element_located(
-                        (By.XPATH, '(//com.lynx.tasm.behavior.ui.text.FlattenUIText[@content-desc="Follow"])[1]')
-                    )
-                )
-                break
-            except:
-                time.sleep(1)
-                continue
+        time.sleep(2)
 
         user_finded_list = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located(
