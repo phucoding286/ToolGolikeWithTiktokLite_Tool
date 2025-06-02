@@ -1,5 +1,7 @@
 from modules import *
 
+processing_flag = False
+
 vocab = {
     "a": list("áàảãạăắằẳẵặâấầẩẫậ"),
     "e": list("éèẻẽẹêếềểễệ"),
@@ -45,19 +47,42 @@ def detect_popup(img1, img2):
     
     elif "Khdeng cho phep" in str_detected or "Kheng cho phep" in str_detected:
         return "Không cho phép"
+    
+    elif 'Cap nhat Chinh sach ve' in str_detected:
+        return "Cập nhật Chính sách về"
+    
+    elif "Da hieu" in str_detected:
+        return "Đã hiểu"
 
 def popup_processing(): 
-    image = cv2.imread("./screenshot.png")
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    gray = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
-    gray = cv2.GaussianBlur(gray, (5,5), 0)
-    image = Image.open("./screenshot.png")
-    return detect_popup(gray, image)
+    global processing_flag
+    try:
+        image = cv2.imread("./screenshot.png")
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        gray = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
+        gray = cv2.GaussianBlur(gray, (5,5), 0)
+        image = Image.open("./screenshot.png")
+        processing_flag = False
+        return detect_popup(gray, image)
+    except:
+        processing_flag = False
+        raise ValueError()
 
-def screencap(adb_path, device_id):
-    os.system(f'{adb_path} -s {device_id} shell screencap /storage/emulated/0/Download/screenshot.png')
-    os.system(f'{adb_path} -s {device_id} pull /storage/emulated/0/Download/screenshot.png ./screenshot.png')
+def screencap(adb_path, device_id: str):
+    global processing_flag
+    while processing_flag: continue
+    try:
+        if device_id.startswith("emulator"):
+            os.system(f'{adb_path} -s {device_id} shell screencap /storage/emulated/legacy/Download/screenshot.png')
+            os.system(f'{adb_path} -s {device_id} pull /storage/emulated/legacy/Download/screenshot.png ./screenshot.png')
+        else:
+            os.system(f'{adb_path} -s {device_id} shell screencap /storage/emulated/0/Download/screenshot.png')
+            os.system(f'{adb_path} -s {device_id} pull /storage/emulated/0/Download/screenshot.png ./screenshot.png')
+    except:
+        processing_flag = False
+        raise ValueError()
+    processing_flag = True
 
 if __name__ == "__main__":
-    screencap(open("adb_path.txt").read(), "192.168.1.56:5555")
+    screencap(open("adb_path.txt").read(), "351a9fc")
     print(popup_processing())
