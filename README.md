@@ -10,8 +10,8 @@
 
 - Link video hướng dẫn chi tiết setup appium và android studio [Link Video](https://youtu.be/oqaJvdIQ7JQ?si=Zc_kqeJcMMiULRZ8)
 
-4. bạn cần cài đặt ```tiktok lik```e phiên bản phù hợp với tool ```(37.8.4)``` cho điện thoại
-- [link tải tệp tiktok lite apk tương thích cho tool]([https://apkpure.com/vn/tiktok-lite-2024/com.zhiliaoapp.musically.go/downloading](https://drive.google.com/file/d/11wyNGK_q191wjZp72HFnDrbMqA_3RQh1/view?usp=drive_link))
+4. bạn cần cài đặt ```tiktok like``` phiên bản phù hợp với tool ```(37.8.4)``` cho điện thoại
+- [link tải tệp tiktok lite apk tương thích cho tool](https://drive.google.com/file/d/11wyNGK_q191wjZp72HFnDrbMqA_3RQh1/view?usp=drive_link)
 
 5. bạn cần cài đặt ```tesseract```
 - [link đến trang web tải tesseract](https://sourceforge.net/projects/tesseract-ocr.mirror/)
