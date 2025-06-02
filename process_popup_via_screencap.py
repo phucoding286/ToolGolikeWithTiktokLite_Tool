@@ -71,6 +71,7 @@ def popup_processing():
 def screencap(adb_path, device_id: str):
     global processing_flag
     while processing_flag: continue
+    processing_flag = True
     try:
         if device_id.startswith("emulator"):
             os.system(f'{adb_path} -s {device_id} shell screencap /storage/emulated/legacy/Download/screenshot.png')
@@ -78,10 +79,10 @@ def screencap(adb_path, device_id: str):
         else:
             os.system(f'{adb_path} -s {device_id} shell screencap /storage/emulated/0/Download/screenshot.png')
             os.system(f'{adb_path} -s {device_id} pull /storage/emulated/0/Download/screenshot.png ./screenshot.png')
+            return None
     except:
         processing_flag = False
         raise ValueError()
-    processing_flag = True
 
 if __name__ == "__main__":
     screencap(open("adb_path.txt").read(), "351a9fc")
