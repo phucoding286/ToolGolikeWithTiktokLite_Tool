@@ -68,10 +68,10 @@ def popup_processing():
         processing_flag = False
         raise ValueError()
 
-def screencap(adb_path, device_id: str, login_mode=False):
+def screencap(adb_path, device_id: str):
     global processing_flag
     while processing_flag: continue
-    if not login_mode: time.sleep(random.randint(1, 4))
+    time.sleep(random.randint(1, 4))
     processing_flag = True
     try:
         if device_id.startswith("emulator"):
