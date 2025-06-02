@@ -160,7 +160,7 @@ def auto(driver, account_id, adb_path, time_scroll, device_id):
 
 def run(adb_path, device_id, wait, appium_port, times_scroll=3):
     more_wait_when_error = 1
-    max_times_for_switch_account = 3
+    max_times_for_switch_account = 10
     max_times_for_error_verify_job = 2
     switch_account_counter = 0
     error_verify_job_counter = 0
