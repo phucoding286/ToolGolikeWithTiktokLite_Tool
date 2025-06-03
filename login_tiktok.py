@@ -8,17 +8,7 @@ google_account_elements = 0
 next_count = {}
 scroll_to_find_delete_btn = 20
 
-def login_tiktok_lite(adb_path, driver, device_id, appium_port):
-    global google_account_elements
-    global next_count
-    global capabilities
-    global scroll_to_find_delete_btn
-
-    size = driver.get_window_size()
-    width = size['width']
-    height = size['height']
-    os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
-
+def screen_cap_(device_id):
     r = None
     max_times = 1
     count = 0
@@ -35,11 +25,24 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         except:
             print(error_color(f"[Device: {device_id}] [!] Lỗi không thể chụp ảnh màn hình và detect văn bản trong ảnh."))
             continue
+    return r
+
+def login_tiktok_lite(adb_path, driver, device_id, appium_port):
+    global google_account_elements
+    global next_count
+    global capabilities
+    global scroll_to_find_delete_btn
 
     size = driver.get_window_size()
     width = size['width']
     height = size['height']
+    os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
 
+    size = driver.get_window_size()
+    width = size['width']
+    height = size['height']
+    
+    r = screen_cap_(device_id)
     if r == "Trạng thái tài khoản":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2)+150} {(height/2)+145}")
     elif r == "Follow bạn bè của bạn":
@@ -58,6 +61,8 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
     elif r == "Đã hiểu":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        r = screen_cap_(device_id)
+        if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
 
     option_btns = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(
@@ -69,24 +74,8 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     size = driver.get_window_size()
     width = size['width']
     height = size['height']
-
-    r = None
-    max_times = 2
-    count = 0
-    while True:
-        try:
-            screencap(adb_path, device_id)
-            r = popup_processing()
-            print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
-            if r is None and count < max_times:
-                count += 1
-                print(system_color(f"[Device: {device_id}] [>] Kết quả là None, thử lại ({count}/{max_times})"))
-                continue
-            break
-        except:
-            print(error_color(f"[Device: {device_id}] [!] Lỗi không thể chụp ảnh màn hình và detect văn bản trong ảnh."))
-            continue
     
+    r = screen_cap_(device_id)
     if r == "Follow bạn bè của bạn":
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
     elif r == "Trạng thái tài khoản":
@@ -105,6 +94,8 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
     elif r == "Đã hiểu":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        r = screen_cap_(device_id)
+        if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
 
     logined_previous = False
     try:
@@ -203,6 +194,8 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
             os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
         elif r == "Đã hiểu":
             os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+            r = screen_cap_(device_id)
+            if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
     
         logined_previous = True
 
@@ -286,6 +279,8 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
     elif r == "Đã hiểu":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        r = screen_cap_(device_id)
+        if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
 
     print(system_color(f"[Device: {device_id}] [>] lấy username..."))
     os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
@@ -331,6 +326,8 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
     elif r == "Đã hiểu":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        r = screen_cap_(device_id)
+        if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
 
     username = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(

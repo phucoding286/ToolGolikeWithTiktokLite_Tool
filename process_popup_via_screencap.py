@@ -20,7 +20,7 @@ def detect_popup(img1, img2):
                 str_detected[i] = str_detected[i].replace(char, key)
 
     # print(str_detected)
-    
+
     if "Dang xuat?" in str_detected:
         return "Đăng xuất?"
     
@@ -86,5 +86,17 @@ def screencap(adb_path, device_id: str):
         raise ValueError()
 
 if __name__ == "__main__":
-    screencap(open("adb_path.txt").read(), "351a9fc")
+    screencap(open("adb_path.txt").read(), "192.168.1.56")
     print(popup_processing())
+
+    adb_path = open("adb_path.txt", "r").read()
+    # driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
+
+    # size = driver.get_window_size()
+    width = 720
+    height = 1465
+
+    print(width)
+    print(height)
+
+    os.system(adb_path + f" -s 192.168.1.56:5555" + f" shell input tap {width/2} {(height/2)+420}")
