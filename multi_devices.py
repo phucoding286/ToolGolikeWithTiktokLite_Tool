@@ -20,6 +20,8 @@ from delete_tiktok_lite_cache import (
 )
 from login_tiktok import login_tiktok_lite
 from get_device_id import get_devices
+from upload_image import upload_image
+from tuongtaccheo import ttc
 
 from modules import *
 import time
@@ -213,6 +215,48 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3):
     driver = waiting_scroll(driver, adb_path, 5, f"Đợi 5 scroll để bắt đầu...", device_id=device_id, appium_port=appium_port)
 
     while True:
+        decision = random.choice(
+            ["run" for _ in range(50)] +\
+            ['ttc' for _ in range(1)] +\
+            ['up' for _ in range(1)]
+        )
+
+        if decision == "ttc":
+            r = ttc(driver, adb_path, device_id)
+            if "error" in r:
+                print(error_color(f"[Device: {device_id}] [!] Lỗi khi TTC khởi lại tại driver..."))
+                driver = driver_init(adb_path, False, device_id, appium_port)
+                try:
+                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
+                except:
+                    pass
+                continue
+            else:
+                print(success_color(f"[Device: {device_id}] [#] TTC thành công"))
+                try:
+                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
+                except:
+                    pass
+                continue
+
+        if decision == "up":
+            r = upload_image(driver, adb_path, device_id)
+            if "error" in r:
+                print(error_color(f"[Device: {device_id}] [!] Lỗi khi UP Ảnh khởi lại tại driver..."))
+                driver = driver_init(adb_path, False, device_id, appium_port)
+                try:
+                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
+                except:
+                    pass
+                continue
+            else:
+                print(success_color(f"[Device: {device_id}] [#] UP Ảnh thành công"))
+                try:
+                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
+                except:
+                    pass
+                continue
+                
         r = auto(driver, id_gl, adb_path, times_scroll, device_id)
 
         if r == "success":
