@@ -224,6 +224,9 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3):
         if decision == "ttc":
             r = ttc(driver, adb_path, device_id)
             if "error" in r:
+                try:
+                    driver.quit()
+                except: pass
                 print(error_color(f"[Device: {device_id}] [!] Lỗi khi TTC khởi lại tại driver..."))
                 driver = driver_init(adb_path, False, device_id, appium_port)
                 try:
@@ -242,6 +245,9 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3):
         if decision == "up":
             r = upload_image(driver, adb_path, device_id)
             if "error" in r:
+                try:
+                    driver.quit()
+                except: pass
                 print(error_color(f"[Device: {device_id}] [!] Lỗi khi UP Ảnh khởi lại tại driver..."))
                 driver = driver_init(adb_path, False, device_id, appium_port)
                 try:
