@@ -8,7 +8,7 @@ google_account_elements = 0
 next_count = {}
 scroll_to_find_delete_btn = 20
 
-def screen_cap_(device_id):
+def screen_cap_(adb_path, device_id):
     r = None
     max_times = 1
     count = 0
@@ -42,7 +42,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     width = size['width']
     height = size['height']
     
-    r = screen_cap_(device_id)
+    r = screen_cap_(adb_path, device_id)
     if r == "Trạng thái tài khoản":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2)+150} {(height/2)+145}")
     elif r == "Follow bạn bè của bạn":
@@ -61,7 +61,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
     elif r == "Đã hiểu":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
-        r = screen_cap_(device_id)
+        r = screen_cap_(adb_path, device_id)
         if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
 
     option_btns = WebDriverWait(driver, 10).until(
@@ -75,7 +75,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     width = size['width']
     height = size['height']
     
-    r = screen_cap_(device_id)
+    r = screen_cap_(adb_path, device_id)
     if r == "Follow bạn bè của bạn":
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
     elif r == "Trạng thái tài khoản":
@@ -94,7 +94,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
     elif r == "Đã hiểu":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
-        r = screen_cap_(device_id)
+        r = screen_cap_(adb_path, device_id)
         if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
 
     logined_previous = False
@@ -194,7 +194,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
             os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
         elif r == "Đã hiểu":
             os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
-            r = screen_cap_(device_id)
+            r = screen_cap_(adb_path, device_id)
             if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
     
         logined_previous = True
@@ -279,7 +279,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
     elif r == "Đã hiểu":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
-        r = screen_cap_(device_id)
+        r = screen_cap_(adb_path, device_id)
         if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
 
     print(system_color(f"[Device: {device_id}] [>] lấy username..."))
@@ -326,7 +326,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
     elif r == "Đã hiểu":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
-        r = screen_cap_(device_id)
+        r = screen_cap_(adb_path, device_id)
         if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
 
     username = WebDriverWait(driver, 10).until(
@@ -339,15 +339,16 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
 
     return {"username": username}
 
-if __name__ == "__main__":
-    capabilities['udid'] = "192.168.1.56:5555"
-    adb_path = open("adb_path.txt", "r").read()
+if __name__ == "__main__": 
+    pass
+    # capabilities['udid'] = "192.168.1.56:5555"
+    # adb_path = open("adb_path.txt", "r").read()
 
-    driver = driver_init(adb_path, ask_udid=False, device_id="351a9fc", appium_port="1000")
-    size = driver.get_window_size()
-    input(size)
-    r = login_tiktok_lite(adb_path, driver, device_id="351a9fc", appium_port="1000")
-    print(r)
-    input(">>> ")
-    r = login_tiktok_lite(adb_path, driver, device_id="192.168.1.56:5555", appium_port="1000")
-    print(r)
+    # driver = driver_init(adb_path, ask_udid=False, device_id="351a9fc", appium_port="1000")
+    # size = driver.get_window_size()
+    # input(size)
+    # r = login_tiktok_lite(adb_path, driver, device_id="351a9fc", appium_port="1000")
+    # print(r)
+    # input(">>> ")
+    # r = login_tiktok_lite(adb_path, driver, device_id="192.168.1.56:5555", appium_port="1000")
+    # print(r)
