@@ -13,7 +13,7 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
                 print(error_color(f"[Device: {device_id}] [!] Lỗi khi lấy profile id, thử lại {retry+1}/5"))
                 continue
         else:
-            raise ValueError()
+            return "!=username"
 
         os.system(f"""{adb_path} -s {device_id} shell am start -n com.zhiliaoapp.musically.go/com.ss.android.ugc.aweme.deeplink.DeepLinkActivityV2 -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d "snssdk1180://user/profile/{profile_id}?params_url=https://www.tiktok.com/{username_link.split("/")[3]}""")
 
