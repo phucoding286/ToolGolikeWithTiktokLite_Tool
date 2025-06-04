@@ -29,4 +29,5 @@
 - Quyền vị trí
 2. Đảm bảo rằng ứng dụng ```tiktok lite``` của bạn trong quá trình hoạt động không có popup gì khác trong script, để đảm bảo tool chạy ổn định!
 3. trên tài khoản ```tiktok``` của bạn, để đảm bảo tool chạy đúng hãy cập nhật ```tên hồ sơ``` (nếu chưa có) và đăng ít nhất ```một ảnh``` nếu chưa đăng ảnh nào.
-4. hãy dùng app vpn ```1.1.1.1``` nếu bạn auto nhiều thiết bị cùng lúc
+4. hãy dùng app vpn ```1.1.1.1``` nếu bạn auto nhiều thiết bị cùng lúc (Hoặc không cũng được, dựa trên việc chạy thực tế, tool này hoạt động ít nhả follow khi không fake VPN)
+5. Lưu Ý quan trọng!! Vì tool có auto post ảnh, nên bạn cần chuẩn bị 1 hoặc 2 ảnh trở lên trong thư viện ảnh, và hạn chế các ảnh cá nhân để tránh post ảnh không mong muốn.
