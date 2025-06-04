@@ -22,6 +22,7 @@ from login_tiktok import login_tiktok_lite
 from get_device_id import get_devices
 from upload_image import upload_image
 from tuongtaccheo import ttc
+from follow_via_open_link import follow_via_link
 
 from modules import *
 import time
@@ -100,7 +101,13 @@ def auto(driver, account_id, adb_path, time_scroll, device_id):
         return "error job"
     
     else:
-        rf = follow(driver, adb_path, rj[0], time_scroll, device_id)
+        desicion_follow_type = random.choice(
+            ["via_link" for _ in range(10)] +\
+            ["search" for _ in range(2)] +\
+            ["via_link" for _ in range(10)]
+        )
+        if desicion_follow_type == "search": rf = follow(driver, adb_path, rj[0], time_scroll, device_id)
+        elif desicion_follow_type == "via_link": rf = follow_via_link(adb_path, driver, device_id, rj[0], time_scroll)
         
         if "error" in rf:
             print(error_color(f"[Device: {device_id}] [!] Đã có lỗi khi follow!"))
