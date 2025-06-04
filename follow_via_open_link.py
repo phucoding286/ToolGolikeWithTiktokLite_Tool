@@ -4,7 +4,7 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
     try:
         response = scraper.get(username_link)
         profile_id = response.text.split("\"user\":{\"id\":\"")[1].split("\",\"")[0]
-        os.system(f"""{adb_path} -s {device_id} shell am start -n com.zhiliaoapp.musically.go/com.ss.android.ugc.aweme.deeplink.DeepLinkActivityV2 -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d "snssdk1180://user/profile/{profile_id}?params_url=https://www.tiktok.com/{username_link.split("/")[3]}&refer=web&needlaunchlog=1&ug_medium=fe_component&jump_time=1749009058347&page_name=others_homepage_6706066558852531202&gd_label=click_wap_silence_awaken&refer=direct&referer=direct&utm_campaign=tiktokwebother&wid=7506608441981421074" -f 0x14000000""")
+        os.system(f"""{adb_path} -s {device_id} shell am start -n com.zhiliaoapp.musically.go/com.ss.android.ugc.aweme.deeplink.DeepLinkActivityV2 -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d "snssdk1180://user/profile/{profile_id}?params_url=https://www.tiktok.com/{username_link.split("/")[3]}""")
 
         try:
             top_user_video_btn = WebDriverWait(driver, 5).until(
@@ -56,6 +56,6 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
 
 if __name__ == "__main__":
     adb_path = open("adb_path.txt", "r").read()
-    driver = driver_init(adb_path, ask_udid=False, device_id="112787d8", appium_port="1000")
-    out = follow_via_link(adb_path, driver, "112787d8", "https://tiktok.com/@phujstruong/", 3)
+    # driver = driver_init(adb_path, ask_udid=False, device_id="351a9fc", appium_port="1000")
+    out = follow_via_link(adb_path, None, "351a9fc", "https://www.tiktok.com/@phujstruong/", 3)
     print(out)
