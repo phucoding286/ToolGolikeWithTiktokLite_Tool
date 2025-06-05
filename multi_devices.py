@@ -390,6 +390,8 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3):
                     driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
                 except:
                     pass
+            else:
+                print(success_color(f"[Device: {device_id}] [#] UP Ảnh thành công"))
             continue
 
         elif r == "error follow":

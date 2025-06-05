@@ -59,6 +59,8 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
         
         # thoat
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+        time.sleep(1)
+        os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
 
         return {"success": "Follow thành công!"}
     
