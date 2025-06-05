@@ -169,7 +169,7 @@ def auto(driver, account_id, adb_path, time_scroll, device_id):
 
 def run(adb_path, device_id, wait, appium_port, times_scroll=3):
     more_wait_when_error = 1
-    max_times_for_switch_account = 10
+    max_times_for_switch_account = 3
     max_times_for_error_verify_job = 2
     switch_account_counter = 0
     error_verify_job_counter = 0
@@ -223,9 +223,10 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3):
 
     while True:
         decision = random.choice(
-            ["run" for _ in range(50)] +\
-            ['ttc' for _ in range(1)] +\
-            ['up' for _ in range(1)]
+            ["run" for _ in range(20)] +\
+            ['ttc' for _ in range(2)] +\
+            ['up' for _ in range(1)] +\
+            ["run" for _ in range(20)]
         )
 
         if decision == "ttc":
@@ -344,10 +345,11 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3):
                 print(system_color(f"[Device: {device_id}] [!] Lỗi nhận job, tiến hành đổi tài khoản khác..."))
             else:
                 print(system_color(f"[Device: {device_id}] [!] Lỗi xác minh job, tiến hành đổi tài khoản khác..."))
+            
             id_gl = None
             success = False
             while True:
-
+                
                 try:
                     username = login_tiktok_lite(adb_path, driver, device_id, appium_port)
                 except:
@@ -375,6 +377,19 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3):
                     continue
                 else:
                     break
+            
+            print(system_color(f"[Device: {device_id}] [>] Đăng ảnh sau khi đổi tài khoản để tăng trust..."))
+            r = upload_image(driver, adb_path, device_id)
+            if "error" in r:
+                try:
+                    driver.quit()
+                except: pass
+                print(error_color(f"[Device: {device_id}] [!] Lỗi khi UP Ảnh khởi lại tại driver..."))
+                driver = driver_init(adb_path, False, device_id, appium_port)
+                try:
+                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
+                except:
+                    pass
             continue
 
         elif r == "error follow":
