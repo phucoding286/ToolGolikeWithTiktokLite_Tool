@@ -50,6 +50,16 @@ capabilities = {
 
 
 def driver_init(adb_path, ask_udid=True, device_id=None, appium_port=None):
+    for retry in range(5):
+        try:
+            requests.get("https://www.google.com/", timeout=2)
+            break
+        except:
+            time.sleep(1)
+            continue
+    else:
+        input("[!] Lỗi mạng >>> ")
+
     appium_server_url = f"http://localhost:{appium_port}/wd/hub"
 
     if ask_udid:
