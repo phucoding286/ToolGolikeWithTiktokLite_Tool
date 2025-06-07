@@ -30,7 +30,7 @@ def ttc(driver, adb_path, device_id):
         find_cell.click()
         
         time.sleep(1)
-        manual_send_keys(adb_path, "Follow cheo", True, device_id)
+        manual_send_keys(adb_path, "FollowCheo", True, device_id)
 
         time.sleep(2)
 
@@ -84,7 +84,7 @@ def ttc(driver, adb_path, device_id):
                 cell_comment.click()
             except: pass
 
-        manual_send_keys(adb_path, random.choice(["@tt", "@tt nha"]), False, device_id)
+        manual_send_keys(adb_path, random.choice(["@tt", "@tt@tt"]), False, device_id)
         
         time.sleep(1)
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width-50} {(height/2)+50}")
