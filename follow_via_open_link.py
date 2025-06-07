@@ -46,6 +46,10 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
 
         except:
             os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+            size = driver.get_window_size()
+            width = size['width']
+            height = size['height']
+            driver.swipe(start_x=width/2, start_y=height/2, end_x=width/2, end_y=0, duration=500)
             return "!=username"
         
         # follow và thoát
