@@ -2,6 +2,11 @@ import one_tk
 from modules import *
 import multi_devices
 
+for character in "TOOL BY HOANG PHU : tool được viết bởi Phú":
+    print(system_color(character), end="", flush=True)
+    time.sleep(0.02)
+print()
+
 if __name__ == "__main__":
     while True:
         print(system_color(" -------------------------------------------------"))
@@ -58,6 +63,7 @@ if __name__ == "__main__":
             devices = multi_devices.get_devices(adb_path)
             wait = int(input(system_color(f"[?] Nhập số thời gian chờ\n-> ")))
             times_scroll = int(input(system_color(f"[?] Nhập số scroll video user\n-> ")))
+            wait_for_when_error = int(input(system_color(f"[?] Nhập số scroll video khi lỗi\n-> ")))
             wait_device_setup = int(input(system_color("[?] Nhận vào số thời gian chờ mỗi thiết bị setup xong\n-> ")))
             ask = input(system_color("[?] Bạn có muốn thêm mã device tách biệt?\n(y/N)-> "))
             
@@ -96,7 +102,7 @@ if __name__ == "__main__":
                     continue
                 try:
                     thread = threading.Thread(
-                        target=multi_devices.run, args=[adb_path, device, wait, appium_port, times_scroll],
+                        target=multi_devices.run, args=[adb_path, device, wait, appium_port, times_scroll, wait_for_when_error],
                         daemon=True
                     )
                     thread.start()

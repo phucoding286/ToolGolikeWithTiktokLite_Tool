@@ -167,7 +167,7 @@ def auto(driver, account_id, adb_path, time_scroll, device_id):
                 return "success"
 
 
-def run(adb_path, device_id, wait, appium_port, times_scroll=3):
+def run(adb_path, device_id, wait, appium_port, times_scroll=3, wait_for_when_error=5):
     more_wait_when_error = 1
     max_times_for_switch_account = 3
     max_times_for_error_verify_job = 2
@@ -314,21 +314,21 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3):
             elif error_verify_job_counter < max_times_for_error_verify_job and r == "error verify job":
                 print(system_color(f"[Device: {device_id}] [!] Thử lại follow trên account '{username}' lần thử {error_verify_job_counter}/{max_times_for_error_verify_job}"))
                 try:
-                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
+                    driver = waiting_scroll(driver, adb_path, wait_for_when_error * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
                 except:
                     pass
                 continue
             elif error_get_job_counter < max_times_for_error_get_job and r == "error job":
                 print(system_color(f"[Device: {device_id}] [!] Thử lại nhận job trên account '{username}' lần thử {error_get_job_counter}/{max_times_for_error_get_job}"))
                 try:
-                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
+                    driver = waiting_scroll(driver, adb_path, wait_for_when_error * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
                 except:
                     pass
                 continue
             elif error_follow_counter < max_times_for_error_follow and r == "error follow":
                 print(system_color(f"[Device: {device_id}] [!] Thử lại follow trên account '{username}' lần thử {error_follow_counter}/{max_times_for_error_follow}"))
                 try:
-                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
+                    driver = waiting_scroll(driver, adb_path, wait_for_when_error * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
                 except:
                     pass
                 continue
@@ -336,7 +336,7 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3):
             if switch_account_counter >= max_times_for_switch_account:
                 print(system_color(f"[Device: {device_id}] [>] Số lần đổi account đã lớn hơn mức quy định, tiến hành scroll..."))
                 try:
-                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
+                    driver = waiting_scroll(driver, adb_path, wait_for_when_error * more_wait_when_error, f"Vui lòng đợi {wait_for_when_error * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
                 except:
                     pass
                 switch_account_counter = 0
