@@ -33,7 +33,10 @@ def dump_following_list():
     while True:
         dump_following_params['minCursor'] = min_cursor
         r = requests.get(url=url, headers=headers, params=dump_following_params)
-        min_cursor = r.json()['minCursor']
+        try: min_cursor = r.json()['minCursor']
+        except:
+            time.sleep(1)
+            continue
         try:
             for user_list in r.json()['userList']:
                 users.append(user_list['user']['uniqueId'])
