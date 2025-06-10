@@ -1,7 +1,5 @@
 from modules import *
 
-processing_flag = False
-
 vocab = {
     "a": list("áàảãạăắằẳẵặâấầẩẫậ"),
     "e": list("éèẻẽẹêếềểễệ"),
@@ -54,49 +52,50 @@ def detect_popup(img1, img2):
     elif "Da hieu" in str_detected:
         return "Đã hiểu"
 
-def popup_processing(): 
-    global processing_flag
+def popup_processing(filepng: str): 
     try:
-        image = cv2.imread("./screenshot.png")
+        image = cv2.imread(f"./{filepng}")
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         gray = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
         gray = cv2.GaussianBlur(gray, (5,5), 0)
-        image = Image.open("./screenshot.png")
-        processing_flag = False
-        return detect_popup(gray, image)
+        image = Image.open(f"./{filepng}")
+        r = detect_popup(gray, image)
+        os.remove(f"./{filepng}")
+        return r
     except:
-        processing_flag = False
         raise ValueError()
 
 def screencap(adb_path, device_id: str):
-    global processing_flag
-    while processing_flag: continue
-    time.sleep(random.randint(1, 4))
-    processing_flag = True
+    filepng = [s for s in "qwertyuiopasdfghjklzxcvbnm1234567890"]
+    random.shuffle(filepng)
+    filepng = "".join(filepng) + ".png"
     try:
         if device_id.startswith("emulator"):
             os.system(f'{adb_path} -s {device_id} shell screencap /storage/emulated/legacy/Download/screenshot.png')
             os.system(f'{adb_path} -s {device_id} pull /storage/emulated/legacy/Download/screenshot.png ./screenshot.png')
         else:
             os.system(f'{adb_path} -s {device_id} shell screencap /storage/emulated/0/Download/screenshot.png')
-            os.system(f'{adb_path} -s {device_id} pull /storage/emulated/0/Download/screenshot.png ./screenshot.png')
-            return None
+            os.system(f'{adb_path} -s {device_id} pull /storage/emulated/0/Download/screenshot.png ./{filepng}')
+            return filepng
     except:
-        processing_flag = False
         raise ValueError()
 
 if __name__ == "__main__":
-    screencap(open("adb_path.txt").read(), "192.168.1.56")
-    print(popup_processing())
+    r = screencap(open("adb_path.txt").read(), "192.168.1.56")
+    print(popup_processing(r))
 
-    adb_path = open("adb_path.txt", "r").read()
-    # driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
+    # adb_path = open("adb_path.txt", "r").read()
+    # driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.2:5555", appium_port="1000")
 
     # size = driver.get_window_size()
-    width = 720
-    height = 1465
+    # width = 720
+    # height = 1465
+    # height = 1280
 
-    print(width)
-    print(height)
+    # width = size['width']
+    # height = size['height']
 
-    os.system(adb_path + f" -s 192.168.1.56:5555" + f" shell input tap {width/2} {(height/2)+420}")
+    # print(width)
+    # print(height)
+    
+    # os.system(adb_path + f" -s 351a9fc" + f" shell input tap {width-50} {(height/2)}")

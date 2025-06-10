@@ -14,8 +14,8 @@ def screen_cap_(adb_path, device_id):
     count = 0
     while True:
         try:
-            screencap(adb_path, device_id)
-            r = popup_processing()
+            r = screencap(adb_path, device_id)
+            r = popup_processing(r)
             print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
             if r is None and count < max_times:
                 count += 1
@@ -27,7 +27,7 @@ def screen_cap_(adb_path, device_id):
             continue
     return r
 
-def login_tiktok_lite(adb_path, driver, device_id, appium_port):
+def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port):
     global google_account_elements
     global next_count
     global capabilities
@@ -63,6 +63,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
         r = screen_cap_(adb_path, device_id)
         if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
+    driver.activate_app(capabilities['appPackage'])
 
     option_btns = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(
@@ -96,6 +97,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
         r = screen_cap_(adb_path, device_id)
         if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
+    driver.activate_app(capabilities['appPackage'])
 
     logined_previous = False
     try:
@@ -157,8 +159,8 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         count = 0
         while True:
             try:
-                screencap(adb_path, device_id)
-                r = popup_processing()
+                r = screencap(adb_path, device_id)
+                r = popup_processing(r)
                 print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
                 if r is None and count < max_times:
                     count += 1
@@ -196,7 +198,8 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
             os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
             r = screen_cap_(adb_path, device_id)
             if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
-    
+        driver.activate_app(capabilities['appPackage'])
+
         logined_previous = True
 
     except:
@@ -249,8 +252,8 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     count = 0
     while True:
         try:
-            screencap(adb_path, device_id)
-            r = popup_processing()
+            r = screencap(adb_path, device_id)
+            r = popup_processing(r)
             print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
             if r is None and count < max_times:
                 count += 1
@@ -281,6 +284,7 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
         r = screen_cap_(adb_path, device_id)
         if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
+    driver.activate_app(capabilities['appPackage'])
 
     print(system_color(f"[Device: {device_id}] [>] lấy username..."))
     os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
@@ -296,8 +300,8 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
     count = 0
     while True:
         try:
-            screencap(adb_path, device_id)
-            r = popup_processing()
+            r = screencap(adb_path, device_id)
+            r = popup_processing(r)
             print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
             if r is None and count < max_times:
                 count += 1
@@ -328,7 +332,8 @@ def login_tiktok_lite(adb_path, driver, device_id, appium_port):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
         r = screen_cap_(adb_path, device_id)
         if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
-
+    driver.activate_app(capabilities['appPackage'])
+    
     username = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(
             (By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.viewpager.widget.ViewPager/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.FrameLayout[4]/android.widget.LinearLayout/android.view.ViewGroup/android.widget.Button")
