@@ -9,6 +9,9 @@ vocab = {
     "y": list("ýỳỷỹỵ")
 }
 
+if not os.path.exists("./vision"):
+    os.makedirs("./vision")
+
 def detect_popup(img1, img2):
     str_detected = pytesseract.image_to_string(img1).splitlines()
     str_detected += pytesseract.image_to_string(img2).splitlines()
@@ -68,7 +71,7 @@ def popup_processing(filepng: str):
 def screencap(adb_path, device_id: str):
     filepng = [s for s in "qwertyuiopasdfghjklzxcvbnm1234567890"]
     random.shuffle(filepng)
-    filepng = "".join(filepng) + ".png"
+    filepng = "vision/" + "".join(filepng) + ".png"
     try:
         if device_id.startswith("emulator"):
             os.system(f'{adb_path} -s {device_id} shell screencap /storage/emulated/legacy/Download/screenshot.png')
