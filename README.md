@@ -3,18 +3,19 @@
 - [link tải python, hãy kéo xuống cùng trang bạn sẽ thấy các bản cài đặt](https://www.python.org/downloads/release/python-3110/)
 
 2. bạn cần cài đặt ```android-studio```
-- [link tải android-studio (bạn có thể tải thủ công nếu link lỗi)](https://developer.android.com/studio?gad_source=1&gclid=CjwKCAiA5Ka9BhB5EiwA1ZVtvG3pfLygEY-iGi0KHeQFqXem0MrQMpZ5JksOcjQt8eDMFLx8SwDjbBoC7oAQAvD_BwE&gclsrc=aw.ds)
+- [link tải android-studio (bạn có thể tải thủ công nếu link lỗi)](https://drive.google.com/file/d/1eG1hifNHqvXMb4IPuJaVNGBeaPo--Dkl/view?usp=drive_link)
 
 3. bạn cần cài đặt ```appium```
 - [link cài đặt appium](https://github.com/appium/appium-desktop/releases/tag/v1.22.3-4)
+- [link dự phòng](https://drive.google.com/file/d/1noyMgAdIbIb8ot4G01ohrqqfWZ5wReRQ/view?usp=drive_link)
 
 - Link video hướng dẫn chi tiết setup appium và android studio [Link Video](https://youtu.be/oqaJvdIQ7JQ?si=Zc_kqeJcMMiULRZ8)
 
 4. bạn cần cài đặt ```tiktok like``` phiên bản phù hợp với tool ```(37.8.4)``` cho điện thoại
-- [link tải tệp tiktok lite apk tương thích cho tool](https://drive.google.com/file/d/11wyNGK_q191wjZp72HFnDrbMqA_3RQh1/view?usp=drive_link)
+- [link tải tệp tiktok lite apk tương thích cho tool](https://drive.google.com/file/d/1a0riuIloZ2aWNNRnIkF75pvCOZ8mbs4d/view?usp=drive_link)
 
 5. bạn cần cài đặt ```tesseract```
-- [link đến trang web tải tesseract](https://sourceforge.net/projects/tesseract-ocr.mirror/)
+- [link tải tesseract](https://drive.google.com/file/d/1PUsrhBLqjYi2eubnH_H-e8erdGOF7ENL/view?usp=drive_link)
 
 # Hướng dẫn setup các file quan trọng trong tool
 1. file ```adb_path.txt```
