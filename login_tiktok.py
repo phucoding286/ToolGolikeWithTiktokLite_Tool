@@ -36,11 +36,6 @@ def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port
     size = driver.get_window_size()
     width = size['width']
     height = size['height']
-    os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
-
-    size = driver.get_window_size()
-    width = size['width']
-    height = size['height']
     
     r = screen_cap_(adb_path, device_id)
     if r == "Trạng thái tài khoản":
@@ -64,6 +59,7 @@ def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port
         r = screen_cap_(adb_path, device_id)
         if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
     driver.activate_app(capabilities['appPackage'])
+    os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
 
     option_btns = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(
