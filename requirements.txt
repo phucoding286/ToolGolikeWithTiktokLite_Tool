@@ -1,7 +1,7 @@
-colorama
-selenium
-cloudscraper
-Appium-Python-Client
-pytesseract
-Pillow
-opencv-python
+colorama==0.4.6
+selenium==4.29.0
+cloudscraper==1.2.71
+Appium-Python-Client==4.5.1
+pytesseract==0.3.13
+Pillow==11.1.0
+opencv-python==4.11.0.86
