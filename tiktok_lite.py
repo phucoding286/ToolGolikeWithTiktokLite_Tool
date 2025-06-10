@@ -16,7 +16,7 @@ def screen_cap_(adb_path, device_id):
             r = screencap(adb_path, device_id)
             r = popup_processing(r)
             print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
-            if r is None and count < max_times:
+            if r is None and count <= max_times:
                 count += 1
                 print(system_color(f"[Device: {device_id}] [>] Kết quả là None, thử lại ({count}/{max_times})"))
                 continue
