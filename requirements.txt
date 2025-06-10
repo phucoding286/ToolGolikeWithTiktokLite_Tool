@@ -5,3 +5,6 @@ Appium-Python-Client==4.5.1
 pytesseract==0.3.13
 Pillow==11.1.0
 opencv-python==4.11.0.86
+undetected-chromedriver==3.5.5
+webdriver-manager==4.0.2
+requests==2.32.3
