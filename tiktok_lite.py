@@ -1,4 +1,5 @@
 from modules import *
+from process_popup_via_screencap import screencap, popup_processing
 
 def manual_send_keys(adb_path, text: str, enter=False, device_id=None):
     os.system(f'{adb_path} -s {device_id}  shell input text "{text}"')
@@ -6,6 +7,24 @@ def manual_send_keys(adb_path, text: str, enter=False, device_id=None):
     if enter:
         os.system(f'{adb_path} -s {device_id}  shell input keyevent 66')
 
+def screen_cap_(adb_path, device_id):
+    r = None
+    max_times = 1
+    count = 0
+    while True:
+        try:
+            r = screencap(adb_path, device_id)
+            r = popup_processing(r)
+            print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
+            if r is None and count < max_times:
+                count += 1
+                print(system_color(f"[Device: {device_id}] [>] Kết quả là None, thử lại ({count}/{max_times})"))
+                continue
+            break
+        except:
+            print(error_color(f"[Device: {device_id}] [!] Lỗi không thể chụp ảnh màn hình và detect văn bản trong ảnh."))
+            continue
+    return r
 
 def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", time_scroll=3, device_id=None):
     try:
@@ -13,6 +32,29 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
         size = driver.get_window_size()
         width = size['width']
         height = size['height']
+
+        r = screen_cap_(adb_path, device_id)
+        if r == "Trạng thái tài khoản":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2)+150} {(height/2)+145}")
+        elif r == "Follow bạn bè của bạn":
+            os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+        elif r == "Thêm bạn bè, dùng Tiktok t":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "Thêm bạn bè, dùng TikTok":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "Đồng bộ danh sách bạn bè":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "trên Tiktok, hãy cho phép tru":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "Không cho phép":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "Cập nhật Chính sách về":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "Đã hiểu":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+            r = screen_cap_(adb_path, device_id)
+            if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
+        driver.activate_app(capabilities['appPackage'])
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
         
         time.sleep(2)
