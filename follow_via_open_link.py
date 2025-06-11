@@ -1,6 +1,8 @@
 from modules import *
 from process_popup_via_screencap import screencap, popup_processing
 
+diff_username_flag = list()
+
 def screen_cap_(adb_path, device_id):
     r = None
     max_times = 1
@@ -21,32 +23,37 @@ def screen_cap_(adb_path, device_id):
     return r
 
 def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
+    global diff_username_flag
     size = driver.get_window_size()
     width = size['width']
     height = size['height']
     
-    r = screen_cap_(adb_path, device_id)
-    if r == "Trạng thái tài khoản":
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2)+150} {(height/2)+145}")
-    elif r == "Follow bạn bè của bạn":
-        os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
-    elif r == "Thêm bạn bè, dùng Tiktok t":
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
-    elif r == "Thêm bạn bè, dùng TikTok":
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
-    elif r == "Đồng bộ danh sách bạn bè":
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
-    elif r == "trên Tiktok, hãy cho phép tru":
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
-    elif r == "Không cho phép":
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
-    elif r == "Cập nhật Chính sách về":
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
-    elif r == "Đã hiểu":
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+    if device_id not in diff_username_flag and random.choice([False, True, False]):
         r = screen_cap_(adb_path, device_id)
-        if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
+        if r == "Trạng thái tài khoản":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2)+150} {(height/2)+145}")
+        elif r == "Follow bạn bè của bạn":
+            os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+        elif r == "Thêm bạn bè, dùng Tiktok t":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "Thêm bạn bè, dùng TikTok":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "Đồng bộ danh sách bạn bè":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "trên Tiktok, hãy cho phép tru":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "Không cho phép":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "Cập nhật Chính sách về":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "Đã hiểu":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+            r = screen_cap_(adb_path, device_id)
+            if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
     
+    if device_id in diff_username_flag:
+        diff_username_flag.remove(device_id)
+
     try:
         for retry in range(5):
             try:
@@ -59,6 +66,7 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
                 print(error_color(f"[Device: {device_id}] [!] Lỗi khi lấy profile id, thử lại {retry+1}/5"))
                 continue
         else:
+            diff_username_flag.append(device_id)
             return "!=username"
 
         os.system(f"""{adb_path} -s {device_id} shell am start -n com.zhiliaoapp.musically.go/com.ss.android.ugc.aweme.deeplink.DeepLinkActivityV2 -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d "snssdk1180://user/profile/{profile_id}?params_url=https://www.tiktok.com/{username_link.split("/")[3]}""")
@@ -96,6 +104,7 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
             width = size['width']
             height = size['height']
             driver.swipe(start_x=width/2, start_y=height/2, end_x=width/2, end_y=0, duration=500)
+            diff_username_flag.append(device_id)
             return "!=username"
         
         # follow và thoát
