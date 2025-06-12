@@ -29,7 +29,9 @@ def upload_image(driver, adb_path, device_id):
             )
         )
         post_btn.click()
-
+        
+        print(success_color(f"[Device: {device_id}] [..] UP Ảnh thành công, đợi 10s để tiếp tục!"))
+        time.sleep(10)
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
 
         return {"success": "Upload image thành công"}
@@ -38,6 +40,6 @@ def upload_image(driver, adb_path, device_id):
 
 if __name__ == "__main__":
     adb_path = open("adb_path.txt", "r").read()
-    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
-    print(upload_image(driver, adb_path, device_id="192.168.1.56:5555"))
+    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.4:5555", appium_port="1000")
+    print(upload_image(driver, adb_path, device_id="192.168.1.4:5555"))
     input(">>> ")
