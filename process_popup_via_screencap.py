@@ -73,32 +73,13 @@ def screencap(adb_path, device_id: str):
     random.shuffle(filepng)
     filepng = "vision/" + "".join(filepng) + ".png"
     try:
-        if device_id.startswith("emulator"):
-            os.system(f'{adb_path} -s {device_id} shell screencap /storage/emulated/legacy/Download/screenshot.png')
-            os.system(f'{adb_path} -s {device_id} pull /storage/emulated/legacy/Download/screenshot.png ./screenshot.png')
-        else:
-            os.system(f'{adb_path} -s {device_id} shell screencap /storage/emulated/0/Download/screenshot.png')
-            os.system(f'{adb_path} -s {device_id} pull /storage/emulated/0/Download/screenshot.png ./{filepng}')
-            return filepng
+        os.system(f'{adb_path} -s {device_id} shell screencap /storage/emulated/0/Download/screenshot.png')
+        os.system(f'{adb_path} -s {device_id} pull /storage/emulated/0/Download/screenshot.png ./{filepng}')
+        os.system(adb_path + f" -s {device_id}" + f" shell rm /storage/emulated/0/Download/screenshot.png")
+        return filepng
     except:
         raise ValueError()
 
 if __name__ == "__main__":
     r = screencap(open("adb_path.txt").read(), "192.168.1.56")
     print(popup_processing(r))
-
-    # adb_path = open("adb_path.txt", "r").read()
-    # driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.2:5555", appium_port="1000")
-
-    # size = driver.get_window_size()
-    # width = 720
-    # height = 1465
-    # height = 1280
-
-    # width = size['width']
-    # height = size['height']
-
-    # print(width)
-    # print(height)
-    
-    # os.system(adb_path + f" -s 351a9fc" + f" shell input tap {width-50} {(height/2)}")
