@@ -76,6 +76,8 @@ def screencap(adb_path, device_id: str):
         os.system(f'{adb_path} -s {device_id} shell screencap /storage/emulated/0/Download/screenshot.png')
         os.system(f'{adb_path} -s {device_id} pull /storage/emulated/0/Download/screenshot.png ./{filepng}')
         os.system(adb_path + f" -s {device_id}" + f" shell rm /storage/emulated/0/Download/screenshot.png")
+        time.sleep(1)
+        os.system(adb_path + f" -s {device_id}" + f" shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Download/screenshot.png")
         return filepng
     except:
         raise ValueError()
