@@ -126,7 +126,7 @@ def change_img_profile(driver: webdriver.Remote, adb_path, device_id, folderpath
         time.sleep(1)
         os.system(adb_path + f" -s {device_id}" + f" shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Download/{random_img}")
 
-        print(success_color(f"[Device: {device_id}] [..] UP Ảnh thành công, đợi 10s để tiếp tục!"))
+        print(success_color(f"[Device: {device_id}] [..] Đã đổi ảnh đại diện thành công, đợi 10s để tiếp tục!"))
         time.sleep(10)
 
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
@@ -138,6 +138,7 @@ def change_img_profile(driver: webdriver.Remote, adb_path, device_id, folderpath
         
 if __name__ == "__main__":
     adb_path = open("adb_path.txt", "r").read()
-    driver = driver_init(adb_path, ask_udid=False, device_id="351a9fc", appium_port="1000")
-    print(change_img_profile(driver, adb_path, device_id="351a9fc"))
+    # driver = driver_init(adb_path, ask_udid=False, device_id="351a9fc", appium_port="1000")
+    # print(change_img_profile(driver, adb_path, device_id="351a9fc"))
+    upload_avatar_img("192.168.1.56:5555", adb_path, r"E:\MySRC\golike-tools\golike_tiktok_lite_adb_api\img_for_change_avatar_for_golike_tool_by_phu")
     input(">>> ")
