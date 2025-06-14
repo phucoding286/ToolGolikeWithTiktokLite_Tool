@@ -151,17 +151,13 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
             else:
                 print(system_color(f"[Device: {device_id}] [#] Lướt xem video mới."))
                 break
-
-        if rdn_options:
-            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2) - 100}")
         
         try:
 
             size = driver.get_window_size()
             width = size['width']
             height = size['height']
-            driver.swipe(start_x=width/2, start_y=height/2, end_x=width/2, end_y=0, duration=500)
-
+            driver.swipe(start_x=width/2, start_y=height*0.8, end_x=width/2, end_y=height*0.2, duration=800)
             print(colorama.Fore.YELLOW + f"[Device: {device_id}] [{i}-scroll] " + colorama.Style.RESET_ALL, end="")
             print(colorama.Fore.BLUE + text + colorama.Style.RESET_ALL)
             time.sleep(1)
