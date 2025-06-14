@@ -112,13 +112,13 @@ def waiting_ui(timeout=5, text="", device_id=None):
     return 0
 
 def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, recreate_driver=True, device_id=None, appium_port=None):
+    size = driver.get_window_size()
+    width = size['width']
+    height = size['height']
     for i in range(1, times_scroll+1):
 
         if random.choice([False for _ in range(10)] + [True] + [False for _ in range(10)]) and rdn_options:
             try:
-                size = driver.get_window_size()
-                width = size['width']
-                height = size['height']
                 os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
                 
                 WebDriverWait(driver, 5).until(
