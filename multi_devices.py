@@ -23,6 +23,7 @@ from get_device_id import get_devices
 from upload_image import upload_image
 from tuongtaccheo import ttc
 from follow_via_open_link import follow_via_link
+from change_profile_img import change_img_profile
 
 from modules import *
 import time
@@ -169,7 +170,7 @@ def auto(driver, account_id, adb_path, time_scroll, device_id):
 
 def run(adb_path, device_id, wait, appium_port, times_scroll=3, wait_for_when_error=5):
     more_wait_when_error = 1
-    max_times_for_switch_account = 10
+    max_times_for_switch_account = 3
     max_times_for_error_verify_job = 2
     switch_account_counter = 0
     error_verify_job_counter = 0
@@ -226,6 +227,7 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3, wait_for_when_er
             ["run" for _ in range(20)] +\
             ['ttc' for _ in range(2)] +\
             ['up' for _ in range(1)] +\
+            ['change' for _ in range(1)] +\
             ["run" for _ in range(20)]
         )
 
@@ -265,6 +267,27 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3, wait_for_when_er
                 continue
             else:
                 print(success_color(f"[Device: {device_id}] [#] UP Ảnh thành công"))
+                try:
+                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
+                except:
+                    pass
+                continue
+
+        if decision == "change":
+            r = change_img_profile(driver, adb_path, device_id)
+            if "error" in r:
+                try:
+                    driver.quit()
+                except: pass
+                print(error_color(f"[Device: {device_id}] [!] Lỗi khi Đổi ảnh đại diện khởi lại tại driver..."))
+                driver = driver_init(adb_path, False, device_id, appium_port)
+                try:
+                    driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
+                except:
+                    pass
+                continue
+            else:
+                print(success_color(f"[Device: {device_id}] [#] Đổi ảnh đại diện thành công"))
                 try:
                     driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
                 except:
@@ -378,20 +401,21 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3, wait_for_when_er
                 else:
                     break
             
-            print(system_color(f"[Device: {device_id}] [>] Đăng ảnh sau khi đổi tài khoản để tăng trust..."))
-            r = upload_image(driver, adb_path, device_id)
+            decision = random.choice(["UP Ảnh", "Đổi ảnh đại diện"])
+            print(system_color(f"[Device: {device_id}] [>] {decision} sau khi đổi tài khoản để tăng trust..."))
+            r = upload_image(driver, adb_path, device_id) if decision == "UP Ảnh" else change_img_profile(driver, adb_path, device_id)
             if "error" in r:
                 try:
                     driver.quit()
                 except: pass
-                print(error_color(f"[Device: {device_id}] [!] Lỗi khi UP Ảnh khởi lại tại driver..."))
+                print(error_color(f"[Device: {device_id}] [!] Lỗi khi {decision} khởi lại tại driver..."))
                 driver = driver_init(adb_path, False, device_id, appium_port)
                 try:
                     driver = waiting_scroll(driver, adb_path, wait * more_wait_when_error, f"Vui lòng đợi {wait * more_wait_when_error} scroll để follow tiếp theo...", device_id=device_id, appium_port=appium_port)
                 except:
                     pass
             else:
-                print(success_color(f"[Device: {device_id}] [#] UP Ảnh thành công"))
+                print(success_color(f"[Device: {device_id}] [#] {decision} thành công"))
             continue
 
         elif r == "error follow":

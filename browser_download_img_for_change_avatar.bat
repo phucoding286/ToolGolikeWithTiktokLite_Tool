@@ -1,0 +1,2 @@
+browser_download_img_for_change_avatar.py
+pause
