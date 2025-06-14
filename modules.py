@@ -157,8 +157,8 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
             size = driver.get_window_size()
             width = size['width']
             height = size['height']
-            time.sleep(2)
-            driver.swipe(start_x=width/2, start_y=height*0.7, end_x=width/2, end_y=height*0.4, duration=200)
+            if rdn_options: time.sleep(2)
+            driver.swipe(start_x=width/2, start_y=height, end_x=width/2, end_y=0, duration=500)
             print(colorama.Fore.YELLOW + f"[Device: {device_id}] [{i}-scroll] " + colorama.Style.RESET_ALL, end="")
             print(colorama.Fore.BLUE + text + colorama.Style.RESET_ALL)
             time.sleep(1)

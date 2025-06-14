@@ -56,6 +56,11 @@ def upload_avatar_img(device_id, adb_path, folderpath_img_upload):
 
             path_for_save = "/storage/emulated/0/Download/" + random_img
             os.system(adb_path + f" -s {device_id}" + f" push {path_come_img} {path_for_save}")
+            os.system(adb_path + f" -s {device_id}" + f" shell rm {path_for_save}")
+            time.sleep(1)
+            os.system(adb_path + f" -s {device_id}" + f" shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Download/{random_img}")
+            time.sleep(1)
+            os.system(adb_path + f" -s {device_id}" + f" push {path_come_img} {path_for_save}")
             time.sleep(2)
             os.system(adb_path + f" -s {device_id}" + f" shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Download/{random_img}")
             return random_img, path_for_save
@@ -121,10 +126,6 @@ def change_img_profile(driver: webdriver.Remote, adb_path, device_id, folderpath
             EC.presence_of_element_located((By.XPATH, "//android.widget.Button[@text='Lưu']"))
         )
         save_img_profile_btn.click()
-
-        os.system(adb_path + f" -s {device_id}" + f" shell rm {path_for_save}")
-        time.sleep(1)
-        os.system(adb_path + f" -s {device_id}" + f" shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Download/{random_img}")
 
         print(success_color(f"[Device: {device_id}] [..] Đã đổi ảnh đại diện thành công, đợi 10s để tiếp tục!"))
         time.sleep(10)
