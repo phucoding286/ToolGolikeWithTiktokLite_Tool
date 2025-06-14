@@ -1,7 +1,7 @@
 from modules import *
 
 def manual_send_keys(adb_path, text: str, enter=False, device_id=None):
-    text = "_".join(text.split(" "))
+    text = "%s".join(text.split(" "))
     os.system(f'{adb_path} -s {device_id}  shell input text "{text}"')
     time.sleep(4)
     if enter:
@@ -83,8 +83,17 @@ def ttc(driver, adb_path, device_id):
                 )
                 cell_comment.click()
             except: pass
-
-        manual_send_keys(adb_path, random.choice(["@tt", "@tt@tt"]), False, device_id)
+        
+        bot_comments = [
+            "tt", "@tt", "Tuong tac cho minh di ban oi, minh follow roi do",
+            "Tuong tac lai minh di, follow roi, cam on ban nhieu", "tt ne ban",
+            "Minh rat thich kenh cua ban, follow lai minh di, minh da follow roi",
+            "Hii, follow lai cho to nhe, to follow cau roi do", "Cheo follow nhe, minh follow roi a.",
+            "Ban oi, nho follow lai minh nhe, minh follow roi a", "Ban tra cho minh lai tim duoc ko, minh follow roi",
+            "Tra lai cho minh tim nha, minh follow ban roi", "To follow cau roi do, tra cho minh comment nha, tks cau",
+            "Minh follow ban xong roi do, ban tra cho minh vai tim nhe, hay cmt cung duoc, cam on ban"
+        ]
+        manual_send_keys(adb_path, random.choice(bot_comments), False, device_id)
         
         time.sleep(1)
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width-50} {(height/2)+50}")
