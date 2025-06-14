@@ -39,7 +39,8 @@ def get_job(account_id, device_id=None):
         # requests for get job
         get_job = scraper.get(
             url=f"https://gateway.golike.net/api/advertising/publishers/tiktok/jobs?account_id={account_id}&data=null",
-            headers=GOLIKE_HEADERS
+            headers=GOLIKE_HEADERS,
+            timeout=10
         )
         gjj = get_job.json()
 
@@ -69,7 +70,8 @@ def drop_job(ads_id, object_id, account_id, task_type, device_id=None):
             response = scraper.post(
                 url="https://gateway.golike.net/api/advertising/publishers/tiktok/skip-jobs",
                 headers=GOLIKE_HEADERS,
-                json={"account_id": account_id, "ads_id": ads_id, "object_id": object_id, "type": task_type}
+                json={"account_id": account_id, "ads_id": ads_id, "object_id": object_id, "type": task_type},
+                timeout=10
             )
 
             if response.status_code == 200:
@@ -94,7 +96,8 @@ def verify_complete_job(ads_id, account_id, device_id=None):
             complete_job = scraper.post(
                 url="https://gateway.golike.net/api/advertising/publishers/tiktok/complete-jobs",
                 headers=GOLIKE_HEADERS,
-                json={"async": True, "captcha": "recaptcha", "data": None, "account_id": account_id, "ads_id": ads_id, "data": None}
+                json={"async": True, "captcha": "recaptcha", "data": None, "account_id": account_id, "ads_id": ads_id, "data": None},
+                timeout=10
             )
             c = complete_job.json()
             prices += c['data']['prices']
@@ -113,7 +116,8 @@ def check_tiktok_account_id(device_id=None):
         try:
             response = scraper.get(
                 url="https://gateway.golike.net/api/tiktok-account",
-                headers=GOLIKE_HEADERS
+                headers=GOLIKE_HEADERS,
+                timeout=10
             )
             resj = response.json()
 
