@@ -115,6 +115,9 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
         )
         time.sleep(1)
         follow_btn.click()
+
+        print(success_color(f"[Device: {device_id}] [..] Follow thành công, hãy đợi 4s"))
+        time.sleep(4)
         
         # thoat
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
