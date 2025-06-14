@@ -152,7 +152,8 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
                 print(system_color(f"[Device: {device_id}] [#] Lướt xem video mới."))
                 break
 
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2) - 100}")
+        if rdn_options:
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2) - 100}")
         
         try:
 
