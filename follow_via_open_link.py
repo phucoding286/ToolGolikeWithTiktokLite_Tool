@@ -24,9 +24,12 @@ def screen_cap_(adb_path, device_id):
 
 def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
     global diff_username_flag
-    size = driver.get_window_size()
-    width = size['width']
-    height = size['height']
+    try:
+        size = driver.get_window_size()
+        width = size['width']
+        height = size['height']
+    except:
+        return {"error": "Đã có lỗi khi follow"}
     
     if device_id not in diff_username_flag and random.choice([False, True, False]):
         r = screen_cap_(adb_path, device_id)
