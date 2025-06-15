@@ -113,8 +113,9 @@ def waiting_ui(timeout=5, text="", device_id=None):
 
 def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, recreate_driver=True, device_id=None, appium_port=None):
     for i in range(1, times_scroll+1):
-
-        if random.choice([False for _ in range(10)] + [True] + [False for _ in range(10)]) and rdn_options:
+        
+        tim_desicion = random.choice([False for _ in range(10)] + [True] + [False for _ in range(10)])
+        if tim_desicion and rdn_options:
             try:
                 os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
                 
@@ -124,6 +125,7 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
                     )
                 ).click()
                 print(success_color(f"[Device: {device_id}] [#] Đã thực hiện tim video"))
+                os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
             except:
                 try:
                     WebDriverWait(driver, 5).until(
@@ -131,6 +133,8 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
                             (By.ID, 'com.zhiliaoapp.musically.go:id/dmb')
                         )
                     ).click()
+                    print(success_color(f"[Device: {device_id}] [#] Đã thực hiện tim video"))
+                    os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
                 except:
                     print(error_color(f"[Device: {device_id}] [!] Đã có lỗi khi tim video"))
         else:
@@ -139,22 +143,29 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
 
         if rdn_options:
             print(f"[Device: {device_id}] [...] Thực hiện thời gian xem ngẫu nhiên")
-            
+        
+        prob_continue_view = 3
+        time_wait_beforce_scroll = 1
         while True and rdn_options:
-            if random.choice([False]+[True for _ in range(2)]):
-                print(system_color(f"[Device: {device_id}] [>] Xem tiếp 2s..."))
-                time.sleep(2)
+            if random.choice([False]+[True for _ in range(int(prob_continue_view))]):
+                time_wait_beforce_scroll = random.choice([1 + (i * 0.1) for i in range(20)])
+                if tim_desicion: time_wait_beforce_scroll *= 1.5
+                print(system_color(f"[Device: {device_id}] [>] Xem tiếp {time_wait_beforce_scroll}s..."))
+                prob_continue_view -= random.choice([(i * 0.1) for i in range(10)])
+                time.sleep(time_wait_beforce_scroll)
                 continue
             else:
                 print(system_color(f"[Device: {device_id}] [#] Lướt xem video mới."))
                 break
         
         try:
-
+            
+            if rdn_options: time.sleep(1)
             size = driver.get_window_size()
             width = size['width']
             height = size['height']
-            if rdn_options: time.sleep(2)
+            if rdn_options: time.sleep(1)
+
             driver.swipe(start_x=width/2, start_y=height/2, end_x=width/2, end_y=0, duration=500)
             print(colorama.Fore.YELLOW + f"[Device: {device_id}] [{i}-scroll] " + colorama.Style.RESET_ALL, end="")
             print(colorama.Fore.BLUE + text + colorama.Style.RESET_ALL)
