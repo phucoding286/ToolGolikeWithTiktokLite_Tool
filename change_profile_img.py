@@ -55,7 +55,6 @@ def upload_avatar_img(device_id, adb_path, folderpath_img_upload):
                 path_come_img = new_img_path
 
             path_for_save = "/storage/emulated/0/Download/" + random_img
-            os.system(adb_path + f" -s {device_id}" + f" push {path_come_img} {path_for_save}")
             os.system(adb_path + f" -s {device_id}" + f" shell rm {path_for_save}")
             time.sleep(1)
             os.system(adb_path + f" -s {device_id}" + f" shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Download/{random_img}")
