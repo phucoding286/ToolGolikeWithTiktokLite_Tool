@@ -114,7 +114,7 @@ def waiting_ui(timeout=5, text="", device_id=None):
 def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, recreate_driver=True, device_id=None, appium_port=None):
     for i in range(1, times_scroll+1):
         
-        tim_desicion = random.choice([False for _ in range(10)] + [True] + [False for _ in range(10)])
+        tim_desicion = random.choice([False for _ in range(20)] + [True] + [False for _ in range(20)])
         if tim_desicion and rdn_options:
             try:
                 os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
