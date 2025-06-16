@@ -34,19 +34,24 @@ def detect_popup(img1, img2):
     elif "Them ban be, dung TikTok t" in str_detected:
         return "Thêm bạn bè, dùng Tiktok t"
     
-    elif "Deng be danh sach ban be" in str_detected:
+    elif "Deng be danh sach ban be" in str_detected\
+        or "Dong bo danh sach ban be" in str_detected:
         return "Đồng bộ danh sách bạn bè"
 
     elif "Them ban be, dung TikTok" in str_detected:
         return "Thêm bạn bè, dùng TikTok"
     
-    elif "Trang thai tai knoan" in str_detected:
+    elif "Trang thai tai knoan" in str_detected\
+        or "Tai khoan cUa ban da bi dang xuat." in str_detected\
+        or "Tai khoan cla ban da bi dang xuat." in str_detected\
+        or "Trang thai tai khoan" in str_detected:
         return "Trạng thái tài khoản"
     
     elif "tren TikTok, hay cho phep tru" in str_detected:
         return "trên Tiktok, hãy cho phép tru"
     
-    elif "Khdeng cho phep" in str_detected or "Kheng cho phep" in str_detected:
+    elif "Khdeng cho phep" in str_detected or "Kheng cho phep" in str_detected\
+        or "Khong cho phep" in str_detected:
         return "Không cho phép"
     
     elif 'Cap nhat Chinh sach ve' in str_detected:
