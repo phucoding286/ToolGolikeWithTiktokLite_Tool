@@ -103,9 +103,9 @@ def auto(driver, account_id, adb_path, time_scroll, device_id):
     
     else:
         desicion_follow_type = random.choice(
-            ["via_link" for _ in range(10)] +\
+            ["via_link" for _ in range(15)] +\
             ["search" for _ in range(2)] +\
-            ["via_link" for _ in range(10)]
+            ["via_link" for _ in range(15)]
         )
         if desicion_follow_type == "search": rf = follow(driver, adb_path, rj[0], time_scroll, device_id)
         elif desicion_follow_type == "via_link": rf = follow_via_link(adb_path, driver, device_id, rj[0], time_scroll)
@@ -224,11 +224,11 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3, wait_for_when_er
 
     while True:
         decision = random.choice(
-            ["run" for _ in range(30)] +\
-            ['ttc' for _ in range(1)] +\
-            ['up' for _ in range(2)] +\
+            ["run" for _ in range(60)] +\
+            ['ttc' for _ in range(2)] +\
+            ['up' for _ in range(3)] +\
             ['change' for _ in range(1)] +\
-            ["run" for _ in range(30)]
+            ["run" for _ in range(60)]
         )
 
         if decision == "ttc":
