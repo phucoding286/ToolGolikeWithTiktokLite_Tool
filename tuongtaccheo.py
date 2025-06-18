@@ -30,7 +30,7 @@ def ttc(driver, adb_path, device_id):
         find_cell.click()
         
         time.sleep(1)
-        manual_send_keys(adb_path, "FollowCheo", True, device_id)
+        manual_send_keys(adb_path, "Follow Cheo", True, device_id)
 
         time.sleep(2)
 
@@ -46,19 +46,25 @@ def ttc(driver, adb_path, device_id):
                 (By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/com.lynx.tasm.ui.image.FlattenUIImage[3]")
             )
         )
-        
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2)} {height/2}")
         time.sleep(1)
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
         
-        try:
-            mini_follow = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located(
-                    (By.XPATH, "//android.widget.ImageView[@resource-id='com.zhiliaoapp.musically.go:id/ds5']")
+        for i in range(10):
+            time.sleep(1)
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
+        
+            try:
+                mini_follow = WebDriverWait(driver, 4).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, "//android.widget.ImageView[@resource-id='com.zhiliaoapp.musically.go:id/ds5']")
+                    )
                 )
-            )
-            mini_follow.click()
-        except: pass
+                mini_follow.click()
+                break
+            except:
+                try: waiting_scroll(driver, adb_path, times_scroll=1, text="Scroll để tìm video TTC", rdn_options=False, recreate_driver=False, device_id=device_id)
+                except: return {"error": "TTC thất bại"}
+                continue
 
         comment_btn = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located(
@@ -130,6 +136,6 @@ def ttc(driver, adb_path, device_id):
 
 if __name__ == "__main__":
     adb_path = open("adb_path.txt", "r").read()
-    driver = driver_init(adb_path, ask_udid=False, device_id="351a9fc", appium_port="1000")
-    print(ttc(driver, adb_path, device_id="351a9fc"))
+    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
+    print(ttc(driver, adb_path, device_id="192.168.1.56:5555"))
     input(">>> ")
