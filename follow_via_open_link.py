@@ -60,7 +60,7 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
     try:
         for retry in range(5):
             try:
-                response = scraper.get(username_link)
+                response = scraper.get(username_link, timeout=10)
                 profile_id = response.text.split("\"user\":{\"id\":\"")[1].split("\",\"")[0]
                 print(success_color(f"[Device: {device_id}] [#] Lấy profile id thành công"))
                 break
