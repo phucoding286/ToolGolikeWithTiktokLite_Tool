@@ -148,14 +148,14 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
         wait_times_ = 0
         while True and rdn_options:
             if random.choice([False]+[True for _ in range(int(prob_continue_view))]):
-                time_wait_beforce_scroll = random.choice([i * 0.1 for i in range(25)][10:])
+                time_wait_beforce_scroll = random.choice([i * 0.1 for i in range(20)][10:])
                 if tim_desicion: time_wait_beforce_scroll *= 2
                 print(system_color(f"[Device: {device_id}] [>] Xem tiếp {time_wait_beforce_scroll}s..."))
                 time.sleep(time_wait_beforce_scroll)
                 wait_times_ += 1
                 continue
             else:
-                if wait_times_ == 0: time.sleep(2)
+                if wait_times_ == 0: time.sleep(1.5)
                 print(system_color(f"[Device: {device_id}] [#] Lướt xem video mới."))
                 break
         
@@ -165,7 +165,7 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
             width = size['width']
             height = size['height']
 
-            driver.swipe(start_x=width/2, start_y=height/2, end_x=width/2, end_y=0, duration=500)
+            os.system(adb_path + f" -s {device_id}" + f" shell input swipe {width/2} {height/2} {width/2} 0 500")
             print(colorama.Fore.YELLOW + f"[Device: {device_id}] [{i}-scroll] " + colorama.Style.RESET_ALL, end="")
             print(colorama.Fore.BLUE + text + colorama.Style.RESET_ALL)
 
