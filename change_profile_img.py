@@ -72,7 +72,7 @@ def change_img_profile(driver: webdriver.Remote, adb_path, device_id, folderpath
         size = driver.get_window_size()
         width = size['width']
         height = size['height']
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
 
         option_btns = WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located(
@@ -81,6 +81,28 @@ def change_img_profile(driver: webdriver.Remote, adb_path, device_id, folderpath
         )
         option_btns[-1].click()
     
+        r = screen_cap_(adb_path, device_id)
+        if r == "Follow bạn bè của bạn":
+            os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+        elif r == "Trạng thái tài khoản":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2)+150} {(height/2)+145}")
+        elif r == "Thêm bạn bè, dùng Tiktok t":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "Thêm bạn bè, dùng TikTok":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "Đồng bộ danh sách bạn bè":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "trên Tiktok, hãy cho phép tru":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "Không cho phép":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "Cập nhật Chính sách về":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        elif r == "Đã hiểu":
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+            r = screen_cap_(adb_path, device_id)
+            if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
+        driver.activate_app(capabilities['appPackage'])
         r = screen_cap_(adb_path, device_id)
         if r == "Follow bạn bè của bạn":
             os.system(f'{adb_path} -s {device_id} shell input keyevent 4')

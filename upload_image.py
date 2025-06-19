@@ -51,7 +51,7 @@ def upload_image(driver, adb_path, device_id, folderpath_img_upload="./img_for_u
         size = driver.get_window_size()
         width = size['width']
         height = size['height']
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
 
         add_btn = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located(

@@ -55,7 +55,7 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
             r = screen_cap_(adb_path, device_id)
             if r == "Đã hiểu": os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+420}")
         driver.activate_app(capabilities['appPackage'])
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {height/2}")
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
         
         time.sleep(2)
         kham_pha_btn = WebDriverWait(driver, 10).until(
