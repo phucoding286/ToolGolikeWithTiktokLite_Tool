@@ -5,7 +5,7 @@ def screen_cap_(adb_path, device_id):
     r = None
     max_times = 1
     count = 0
-    while True:
+    while count < 1:
         try:
             r = screencap(adb_path, device_id)
             r = popup_processing(r)
