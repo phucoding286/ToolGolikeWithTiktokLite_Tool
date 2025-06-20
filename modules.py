@@ -162,11 +162,11 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
         
         try:
             
-            if watch_user_video: os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
             size = driver.get_window_size()
             width = size['width']
             height = size['height']
-
+            
+            if watch_user_video: os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
             os.system(adb_path + f" -s {device_id}" + f" shell input swipe {width/2} {height/2} {width/2} 0 500")
             print(colorama.Fore.YELLOW + f"[Device: {device_id}] [{i}-scroll] " + colorama.Style.RESET_ALL, end="")
             print(colorama.Fore.BLUE + text + colorama.Style.RESET_ALL)
