@@ -156,7 +156,8 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
                 total_wait += time_wait_beforce_scroll
                 continue
             else:
-                if wait_times_ == 0 or total_wait < 1.5: time.sleep(1.5)
+                if not watch_user_video:
+                    if wait_times_ == 0 or total_wait < 1.5: time.sleep(1.5)
                 print(system_color(f"[Device: {device_id}] [#] Lướt xem video mới."))
                 break
         
@@ -166,7 +167,9 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
             width = size['width']
             height = size['height']
             
-            if watch_user_video: os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
+            if watch_user_video:
+                os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
+                time.sleep(1.5)
             os.system(adb_path + f" -s {device_id}" + f" shell input swipe {width/2} {height/2} {width/2} 0 500")
             print(colorama.Fore.YELLOW + f"[Device: {device_id}] [{i}-scroll] " + colorama.Style.RESET_ALL, end="")
             print(colorama.Fore.BLUE + text + colorama.Style.RESET_ALL)
