@@ -151,7 +151,8 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
                 times_scroll=times_scrol_rdn,
                 text="Xem video của user trước khi follow",
                 recreate_driver=False,
-                device_id=device_id
+                device_id=device_id,
+                watch_user_video=True
             )
             if r == "lỗi khi scroll":
                 raise ValueError("")

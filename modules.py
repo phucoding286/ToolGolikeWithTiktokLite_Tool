@@ -111,9 +111,9 @@ def waiting_ui(timeout=5, text="", device_id=None):
     print()
     return 0
 
-def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, recreate_driver=True, device_id=None, appium_port=None):
+def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, recreate_driver=True, device_id=None, appium_port=None, watch_user_video=False):
     for i in range(1, times_scroll+1):
-        
+
         tim_desicion = random.choice([False for _ in range(20)] + [True] + [False for _ in range(20)])
         if tim_desicion and rdn_options:
             try:
@@ -162,6 +162,7 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
         
         try:
             
+            if watch_user_video: os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
             size = driver.get_window_size()
             width = size['width']
             height = size['height']

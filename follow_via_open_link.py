@@ -93,7 +93,8 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
                 times_scroll=times_scrol_rdn,
                 text="Xem video của user trước khi follow",
                 recreate_driver=False,
-                device_id=device_id
+                device_id=device_id,
+                watch_user_video=True
             )
             if r == "lỗi khi scroll":
                 raise ValueError("")
