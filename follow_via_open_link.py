@@ -111,6 +111,15 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
             diff_username_flag.append(device_id)
             return "!=username"
         
+        try:
+            WebDriverWait(driver, 1.5).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, '//android.widget.Button[@text="Tin nhắn"]')
+                )
+            )
+            return "!=username"
+        except: pass
+        
         # follow và thoát
         follow_btn = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located(
@@ -132,6 +141,6 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
 
 if __name__ == "__main__":
     adb_path = open("adb_path.txt", "r").read()
-    # driver = driver_init(adb_path, ask_udid=False, device_id="351a9fc", appium_port="1000")
-    out = follow_via_link(adb_path, None, "351a9fc", "https://www.tiktok.com/@phujstruong/", 3)
+    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
+    out = follow_via_link(adb_path, driver, "192.168.1.56:5555", "https://www.tiktok.com/@phujstruong/", 3)
     print(out)

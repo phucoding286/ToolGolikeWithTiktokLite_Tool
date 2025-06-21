@@ -112,6 +112,7 @@ def waiting_ui(timeout=5, text="", device_id=None):
     return 0
 
 def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, recreate_driver=True, device_id=None, appium_port=None, watch_user_video=False):
+    width, height = 0, 0
     for i in range(1, times_scroll+1):
 
         tim_desicion = random.choice([False for _ in range(20)] + [True] + [False for _ in range(20)])
@@ -148,7 +149,7 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
         total_wait = 0
         while True and rdn_options:
             if random.choice([True, False, True]):
-                time_wait_beforce_scroll = random.choice([i * 0.1 for i in range(1, 15)])
+                time_wait_beforce_scroll = random.choice([i * 0.1 for i in range(1, 25)][10:])
                 if tim_desicion: time_wait_beforce_scroll *= 2
                 print(system_color(f"[Device: {device_id}] [>] Xem tiếp {time_wait_beforce_scroll}s..."))
                 time.sleep(time_wait_beforce_scroll)
@@ -166,9 +167,6 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
             width = size['width']
             height = size['height']
             
-            if watch_user_video and i >= times_scroll:
-                os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
-                time.sleep(1.5)
             os.system(adb_path + f" -s {device_id}" + f" shell input swipe {width/2} {height/2} {width/2} 0 500")
             print(colorama.Fore.YELLOW + f"[Device: {device_id}] [{i}-scroll] " + colorama.Style.RESET_ALL, end="")
             print(colorama.Fore.BLUE + text + colorama.Style.RESET_ALL)
@@ -179,5 +177,6 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
                 waiting_ui(5, "Lỗi driver, đợi 5s để tiếp tục scroll", device_id)
             else:
                 return "lỗi khi scroll"
-        
+            
+    os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
     return driver

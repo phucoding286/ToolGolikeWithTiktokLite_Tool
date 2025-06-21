@@ -178,6 +178,15 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
 
             return "!=username"
         
+        try:
+            WebDriverWait(driver, 1.5).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, '//android.widget.Button[@text="Tin nhắn"]')
+                )
+            )
+            return "!=username"
+        except: pass
+        
         # follow và thoát
         follow_btn = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located(
