@@ -5,7 +5,7 @@ import multi_devices
 appium_done = False
 def activate_appium():
     global appium_done
-    os.system(open("appium_path.txt").read() + " --adb " + open("adb_path.txt").read())
+    os.system('start cmd /k "activate_appium.py"')
 
 def appium_wait_ui():
     global appium_done
