@@ -148,8 +148,8 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
         wait_times_ = 0
         total_wait = 0
         while True and rdn_options:
-            if random.choice([True, False, True]):
-                time_wait_beforce_scroll = random.choice([i * 0.1 for i in range(5, 15)])
+            if random.choice([False, True, True]):
+                time_wait_beforce_scroll = random.choice([2, 1.8])
                 if tim_desicion: time_wait_beforce_scroll *= 2
                 print(system_color(f"[Device: {device_id}] [>] Xem tiếp {time_wait_beforce_scroll}s..."))
                 time.sleep(time_wait_beforce_scroll)
@@ -157,7 +157,7 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
                 total_wait += time_wait_beforce_scroll
                 continue
             else:
-                if wait_times_ == 0 or total_wait < 1.5: time.sleep(1.5)
+                if wait_times_ == 0 or total_wait < 1.5: time.sleep(2)
                 print(system_color(f"[Device: {device_id}] [#] Lướt xem video mới."))
                 break
         
