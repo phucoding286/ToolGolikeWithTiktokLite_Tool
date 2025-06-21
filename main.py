@@ -2,6 +2,28 @@ import one_tk
 from modules import *
 import multi_devices
 
+appium_done = False
+def activate_appium():
+    global appium_done
+    os.system(open("appium_path.txt").read() + " --adb " + open("adb_path.txt").read())
+
+def appium_wait_ui():
+    global appium_done
+    while not appium_done:
+        [os.system("cls") if sys.platform.startswith("win") else os.system("clear"), print(system_color("Đang đợi khởi động appium server"), end="", flush=True)]
+        for character in "......": [print(wait_color(character), end="", flush=True), time.sleep(0.2)]
+    print()
+
+thread = threading.Thread(target=activate_appium)
+thread.daemon = True
+thread.start()
+wthread = threading.Thread(target=appium_wait_ui)
+wthread.daemon = True
+wthread.start()
+time.sleep(10)
+appium_done = True
+time.sleep(1)
+
 for character in "TOOL BY HOANG PHU : tool được viết bởi Phú":
     print(system_color(character), end="", flush=True)
     time.sleep(0.02)
