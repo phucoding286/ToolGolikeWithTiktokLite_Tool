@@ -2,8 +2,9 @@ from modules import *
 from process_popup_via_screencap import screencap, popup_processing
 
 def manual_send_keys(adb_path, text: str, enter=False, device_id=None):
+    time.sleep(4)
+    text = "%s".join(text.split(" "))
     os.system(f'{adb_path} -s {device_id}  shell input text "{text}"')
-    time.sleep(2)
     if enter:
         os.system(f'{adb_path} -s {device_id}  shell input keyevent 66')
 

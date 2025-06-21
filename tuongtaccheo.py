@@ -1,9 +1,9 @@
 from modules import *
 
 def manual_send_keys(adb_path, text: str, enter=False, device_id=None):
+    time.sleep(4)
     text = "%s".join(text.split(" "))
     os.system(f'{adb_path} -s {device_id}  shell input text "{text}"')
-    time.sleep(4)
     if enter:
         os.system(f'{adb_path} -s {device_id}  shell input keyevent 66')
 
@@ -49,7 +49,7 @@ def ttc(driver, adb_path, device_id):
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2)} {height/2}")
         time.sleep(1)
         
-        for i in range(10):
+        for i in range(30):
             time.sleep(1)
             os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
         
@@ -97,7 +97,9 @@ def ttc(driver, adb_path, device_id):
             "Hii, follow lai cho to nhe, to follow cau roi do", "Cheo follow nhe, minh follow roi a.",
             "Ban oi, nho follow lai minh nhe, minh follow roi a", "Ban tra cho minh lai tim duoc ko, minh follow roi",
             "Tra lai cho minh tim nha, minh follow ban roi", "To follow cau roi do, tra cho minh comment nha, tks cau",
-            "Minh follow ban xong roi do, ban tra cho minh vai tim nhe, hay cmt cung duoc, cam on ban"
+            "Minh follow ban xong roi do, ban tra cho minh vai tim nhe, hay cmt cung duoc, cam on ban",
+            "Follow xong roi nhe! nho tra lai cho minh do :3", "Da xong roi. dang doi nhan follow lai hehe...",
+            "Follow roi nhe ban, minh cho ban fl lai."
         ]
         manual_send_keys(adb_path, random.choice(bot_comments), False, device_id)
         
