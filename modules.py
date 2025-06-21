@@ -178,5 +178,5 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
             else:
                 return "lỗi khi scroll"
             
-    os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
+    if watch_user_video: os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
     return driver
