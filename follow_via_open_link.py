@@ -80,7 +80,6 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
                     (By.XPATH, f'/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.LinearLayout/androidx.viewpager.widget.ViewPager/android.widget.FrameLayout/android.widget.GridView/android.widget.FrameLayout[1]/android.view.View')
                 )
             )
-            top_user_video_btn.click()
 
             try:
                 WebDriverWait(driver, 1.5).until(
@@ -90,6 +89,8 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
                 )
                 return "!=username"
             except: pass
+
+            top_user_video_btn.click()
         
             times_scrol_rdn = random.choice([i for i in range(time_scroll)])
             if times_scrol_rdn < 1:
