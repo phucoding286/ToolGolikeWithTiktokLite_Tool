@@ -141,6 +141,15 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
                 )
             )
             top_user_video_btn.click()
+
+            try:
+                WebDriverWait(driver, 1.5).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, '//android.widget.Button[@text="Tin nhắn"]')
+                    )
+                )
+                return "!=username"
+            except: pass
         
             times_scrol_rdn = random.choice([i for i in range(time_scroll)])
             if times_scrol_rdn < 1:

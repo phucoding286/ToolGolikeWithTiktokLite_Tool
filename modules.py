@@ -149,7 +149,7 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
         total_wait = 0
         while True and rdn_options:
             if random.choice([True, False, True]):
-                time_wait_beforce_scroll = random.choice([i * 0.1 for i in range(1, 25)][10:])
+                time_wait_beforce_scroll = random.choice([i * 0.1 for i in range(5, 15)])
                 if tim_desicion: time_wait_beforce_scroll *= 2
                 print(system_color(f"[Device: {device_id}] [>] Xem tiếp {time_wait_beforce_scroll}s..."))
                 time.sleep(time_wait_beforce_scroll)

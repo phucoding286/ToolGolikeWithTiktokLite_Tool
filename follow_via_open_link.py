@@ -81,6 +81,15 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
                 )
             )
             top_user_video_btn.click()
+
+            try:
+                WebDriverWait(driver, 1.5).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, '//android.widget.Button[@text="Tin nhắn"]')
+                    )
+                )
+                return "!=username"
+            except: pass
         
             times_scrol_rdn = random.choice([i for i in range(time_scroll)])
             if times_scrol_rdn < 1:
@@ -110,15 +119,6 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
             driver.swipe(start_x=width/2, start_y=height/2, end_x=width/2, end_y=0, duration=500)
             diff_username_flag.append(device_id)
             return "!=username"
-        
-        try:
-            WebDriverWait(driver, 1.5).until(
-                EC.presence_of_element_located(
-                    (By.XPATH, '//android.widget.Button[@text="Tin nhắn"]')
-                )
-            )
-            return "!=username"
-        except: pass
         
         # follow và thoát
         follow_btn = WebDriverWait(driver, 5).until(
