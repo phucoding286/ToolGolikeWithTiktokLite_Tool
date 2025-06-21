@@ -6,7 +6,6 @@ def upload_image(driver, adb_path, device_id, folderpath_img_upload="./img_for_u
         try:
             list_img = os.listdir(folderpath_img_upload)
             random_img = random.choice(list_img)
-            list_img.remove(random_img)
             path_come_img = folderpath_img_upload + "/" + random_img
     
             for char in list(" `~!@#$%^&*()-+=[]{}:;'\"<>?,./|\\"):
@@ -14,11 +13,10 @@ def upload_image(driver, adb_path, device_id, folderpath_img_upload="./img_for_u
                     new_img = Image.open(path_come_img)
                     for char in list(" `~!@#$%^&*()-+=[]{}:;'\"<>?,/|\\"): random_img = random_img.replace(char, "")
                     
-                    if random_img in list_img:
-                        random_sent = list("qwertyuiopasdfghjklzxcvbnm"*4)
-                        random.shuffle(random_sent)
-                        random_sent = "".join(random_sent[:int(len(random_sent)/4)])
-                        random_img = random_sent + random_img
+                    random_sent = list("qwertyuiopasdfghjklzxcvbnm"*4)
+                    random.shuffle(random_sent)
+                    random_sent = "".join(random_sent[:int(len(random_sent)/4)])
+                    random_img = random_sent + random_img
 
                     new_path = folderpath_img_upload + "/" + random_img
                     new_img.save(new_path)
