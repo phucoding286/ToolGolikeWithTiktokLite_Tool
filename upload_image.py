@@ -8,7 +8,7 @@ def upload_image(driver, adb_path, device_id, folderpath_img_upload="./img_for_u
             random_img = random.choice(list_img)
             path_come_img = folderpath_img_upload + "/" + random_img
     
-            for char in list(" `~!@#$%^&*()-+=[]{}:;'\"<>?,./|\\"):
+            for char in list(" `~!@#$%^&*()-+=[]{}:;'\"<>?,/|\\"):
                 if len(random_img.split(char)) > 1:
                     new_img = Image.open(path_come_img)
                     for char in list(" `~!@#$%^&*()-+=[]{}:;'\"<>?,/|\\"): random_img = random_img.replace(char, "")
