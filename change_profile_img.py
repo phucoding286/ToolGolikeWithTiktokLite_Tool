@@ -46,6 +46,12 @@ def upload_avatar_img(device_id, adb_path, folderpath_img_upload):
     
             if path_come_img.split(".")[-1] not in ["jpeg"]:
                 new_img = Image.open(path_come_img)
+                
+                random_sent = list("qwertyuiopasdfghjklzxcvbnm"*4)
+                random.shuffle(random_sent)
+                random_sent = "".join(random_sent[:int(len(random_sent)/4)])
+                random_img = random_sent + random_img
+
                 random_img = random_img.replace(".","") + ".jpeg"
                 new_img_path = folderpath_img_upload + "/" + random_img
                 new_img.save(new_img_path, format="JPEG")

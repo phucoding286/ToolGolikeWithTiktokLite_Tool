@@ -26,6 +26,12 @@ def upload_image(driver, adb_path, device_id, folderpath_img_upload="./img_for_u
     
             if path_come_img.split(".")[-1] not in ["jpeg"]:
                 new_img = Image.open(path_come_img)
+
+                random_sent = list("qwertyuiopasdfghjklzxcvbnm"*4)
+                random.shuffle(random_sent)
+                random_sent = "".join(random_sent[:int(len(random_sent)/4)])
+                random_img = random_sent + random_img
+
                 random_img = random_img.replace(".","") + ".jpeg"
                 new_img_path = folderpath_img_upload + "/" + random_img
                 new_img.save(new_img_path, format="JPEG")
@@ -83,6 +89,6 @@ def upload_image(driver, adb_path, device_id, folderpath_img_upload="./img_for_u
 
 if __name__ == "__main__":
     adb_path = open("adb_path.txt", "r").read()
-    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
-    # print(upload_image(None, adb_path, device_id="192.168.1.56:5555"))
-    # input(">>> ")
+    # driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
+    print(upload_image(None, adb_path, device_id="192.168.1.56:5555", folderpath_img_upload="./test_img"))
+    input(">>> ")
