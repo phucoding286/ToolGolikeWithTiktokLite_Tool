@@ -12,7 +12,7 @@ def ttc(driver, adb_path, device_id):
         size = driver.get_window_size()
         width = size['width']
         height = size['height']
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {720/2} {(1424 / 2) - 350}")
         
         time.sleep(2)
         kham_pha_btn = WebDriverWait(driver, 10).until(
@@ -51,7 +51,7 @@ def ttc(driver, adb_path, device_id):
         
         for i in range(30):
             time.sleep(1)
-            os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
+            os.system(adb_path + f" -s {device_id}" + f" shell input tap {720/2} {(1424 / 2) - 350}")
         
             try:
                 mini_follow = WebDriverWait(driver, 4).until(

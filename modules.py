@@ -118,7 +118,7 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
         tim_desicion = random.choice([False for _ in range(20)] + [True] + [False for _ in range(20)])
         if tim_desicion and rdn_options:
             try:
-                os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
+                os.system(adb_path + f" -s {device_id}" + f" shell input tap {720/2} {(1424 / 2) - 350}")
                 
                 WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located(
@@ -126,7 +126,7 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
                     )
                 ).click()
                 print(success_color(f"[Device: {device_id}] [#] Đã thực hiện tim video"))
-                os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
+                os.system(adb_path + f" -s {device_id}" + f" shell input tap {720/2} {(1424 / 2) - 350}")
             except:
                 try:
                     WebDriverWait(driver, 5).until(
@@ -135,7 +135,7 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
                         )
                     ).click()
                     print(success_color(f"[Device: {device_id}] [#] Đã thực hiện tim video"))
-                    os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
+                    os.system(adb_path + f" -s {device_id}" + f" shell input tap {720/2} {(1424 / 2) - 350}")
                 except:
                     print(error_color(f"[Device: {device_id}] [!] Đã có lỗi khi tim video"))
         else:
@@ -146,17 +146,20 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
             print(f"[Device: {device_id}] [...] Thực hiện thời gian xem ngẫu nhiên")
         
         wait_times_ = 0
-        total_wait = 0
         while True and rdn_options:
-            if random.choice([False, True, True]):
-                time_wait_beforce_scroll = random.choice([0.5, 1])
+            n_false, n_true = random.randint(1, 2), random.randint(1, 2)
+            false_list = [False for _ in range(n_false)]
+            true_list = [True for _ in range(n_true)]
+            low_val_for_randn = random.uniform(0.5, 0.8)
+            high_val_for_randn = random.uniform(0.9, 1.2)
+            if random.choice(false_list + true_list):
+                time_wait_beforce_scroll = random.choice([low_val_for_randn, high_val_for_randn])
                 print(system_color(f"[Device: {device_id}] [>] Xem tiếp {time_wait_beforce_scroll}s..."))
                 time.sleep(time_wait_beforce_scroll)
                 wait_times_ += 1
-                total_wait += time_wait_beforce_scroll
                 continue
             else:
-                if wait_times_ == 0 or total_wait < 1: time.sleep(1)
+                if wait_times_ < 2: continue
                 print(system_color(f"[Device: {device_id}] [#] Lướt xem video mới."))
                 break
         
@@ -177,5 +180,5 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
             else:
                 return "lỗi khi scroll"
             
-    if watch_user_video: os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
+    if watch_user_video: os.system(adb_path + f" -s {device_id}" + f" shell input tap {720/2} {(1424 / 2) - 350}")
     return driver

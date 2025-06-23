@@ -75,7 +75,7 @@ def change_img_profile(driver: webdriver.Remote, adb_path, device_id, folderpath
         size = driver.get_window_size()
         width = size['width']
         height = size['height']
-        os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 100}")
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {720/2} {(1424 / 2) - 350}")
 
         option_btns = WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located(
