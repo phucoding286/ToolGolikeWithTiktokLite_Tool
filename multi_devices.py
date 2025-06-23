@@ -171,12 +171,12 @@ def auto(driver, account_id, adb_path, time_scroll, device_id):
 def run(adb_path, device_id, wait, appium_port, times_scroll=3, wait_for_when_error=5):
     more_wait_when_error = 1
     max_times_for_switch_account = 3
-    max_times_for_error_verify_job = 2
+    max_times_for_error_verify_job = 3
     switch_account_counter = 0
     error_verify_job_counter = 0
     error_get_job_counter = 0
-    max_times_for_error_get_job = 2
-    max_times_for_error_follow = 2
+    max_times_for_error_get_job = 3
+    max_times_for_error_follow = 3
     error_follow_counter = 0
     const_wait = wait
 
@@ -224,11 +224,11 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3, wait_for_when_er
 
     while True:
         decision = random.choice(
-            ["run" for _ in range(50)] +\
-            ['ttc' for _ in range(6)] +\
-            ['up' for _ in range(3)] +\
+            ["run" for _ in range(30)] +\
+            ['ttc' for _ in range(2)] +\
+            ['up' for _ in range(1)] +\
             ['change' for _ in range(1)] +\
-            ["run" for _ in range(50)]
+            ["run" for _ in range(30)]
         )
 
         if decision == "ttc":
