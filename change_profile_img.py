@@ -21,7 +21,6 @@ def screen_cap_(adb_path, device_id):
     return r
 
 def upload_avatar_img(device_id, adb_path, folderpath_img_upload):
-    folderpath_img_upload = os.path.abspath(folderpath_img_upload)
     while True:
         try:
             list_img = os.listdir(folderpath_img_upload)
@@ -58,14 +57,14 @@ def upload_avatar_img(device_id, adb_path, folderpath_img_upload):
                 os.remove(path_come_img)
                 path_come_img = new_img_path
 
-            path_for_save = "/storage/emulated/0/Download/" + random_img
+            path_for_save = "/storage/emulated/0/Download/random_image_from_tool_golike_by_phu.jpeg"
             os.system(adb_path + f" -s {device_id}" + f" shell rm {path_for_save}")
             time.sleep(1)
-            os.system(adb_path + f" -s {device_id}" + f" shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Download/{random_img}")
+            os.system(adb_path + f" -s {device_id}" + f" shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Download/random_image_from_tool_golike_by_phu.jpeg")
             time.sleep(1)
             os.system(adb_path + f" -s {device_id}" + f" push {path_come_img} {path_for_save}")
             time.sleep(2)
-            os.system(adb_path + f" -s {device_id}" + f" shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Download/{random_img}")
+            os.system(adb_path + f" -s {device_id}" + f" shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Download/random_image_from_tool_golike_by_phu.jpeg")
             return random_img, path_for_save
         except:
             print(error_color(f"[Device: {device_id}] [!] Push ảnh lên thiết bị thất bại, thử lại..."))

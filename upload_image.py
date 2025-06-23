@@ -1,9 +1,8 @@
 from modules import *
 
 def upload_image(driver, adb_path, device_id, folderpath_img_upload="./img_for_upload_for_golike_tool_by_phu"):
-    folderpath_img_upload = os.path.abspath(folderpath_img_upload)
     while True:
-        try:
+        # try:
             list_img = os.listdir(folderpath_img_upload)
             random_img = random.choice(list_img)
             path_come_img = folderpath_img_upload + "/" + random_img
@@ -38,18 +37,18 @@ def upload_image(driver, adb_path, device_id, folderpath_img_upload="./img_for_u
                 os.remove(path_come_img)
                 path_come_img = new_img_path
 
-            path_for_save = "/storage/emulated/0/Download/" + random_img
+            path_for_save = "/storage/emulated/0/Download/random_image_from_tool_golike_by_phu.jpeg"
             os.system(adb_path + f" -s {device_id}" + f" shell rm {path_for_save}")
             time.sleep(1)
-            os.system(adb_path + f" -s {device_id}" + f" shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Download/{random_img}")
+            os.system(adb_path + f" -s {device_id}" + f" shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Download/random_image_from_tool_golike_by_phu.jpeg")
             time.sleep(1)
             os.system(adb_path + f" -s {device_id}" + f" push {path_come_img} {path_for_save}")
             time.sleep(2)
-            os.system(adb_path + f" -s {device_id}" + f" shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Download/{random_img}")
+            os.system(adb_path + f" -s {device_id}" + f" shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Download/random_image_from_tool_golike_by_phu.jpeg")
             break
-        except:
-            print(error_color(f"[Device: {device_id}] [!] Push ảnh lên thiết bị thất bại, thử lại..."))
-            continue
+        # except:
+        #     print(error_color(f"[Device: {device_id}] [!] Push ảnh lên thiết bị thất bại, thử lại..."))
+        #     continue
 
     try:
         size = driver.get_window_size()
@@ -90,5 +89,5 @@ def upload_image(driver, adb_path, device_id, folderpath_img_upload="./img_for_u
 if __name__ == "__main__":
     adb_path = open("adb_path.txt", "r").read()
     # driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
-    print(upload_image(None, adb_path, device_id="192.168.1.56:5555", folderpath_img_upload="./test_img"))
+    print(upload_image(None, adb_path, device_id="192.168.1.56:5555"))
     input(">>> ")
