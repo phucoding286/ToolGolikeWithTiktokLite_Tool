@@ -10,7 +10,7 @@ def get_user_da_duyet_tien(device_id, account_id, limit, page):
     url = f"https://gateway.golike.net/api/advertising/publishers/tiktok/logs?limit={limit}&log_type=success&page={page}&_t=1750926867&account_id={account_id}"
     for i in range(5):
         try:
-            r = scraper.get(url, headers=GOLIKE_HEADERS)
+            r = scraper.get(url, headers=GOLIKE_HEADERS, timeout=10)
             users_da_duyet_tien = list()
             for object_user in r.json()['data']:
                 users_da_duyet_tien.append((object_user['advertising']['link'], object_user['advertising']['object_id']))
