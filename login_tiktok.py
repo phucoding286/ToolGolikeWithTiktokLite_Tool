@@ -3,6 +3,7 @@ from process_popup_via_screencap import (
     popup_processing,
     screencap
 )
+from auto_unfollow_tiktok_lite import auto_unfollow_tiktok_lite
 
 google_account_elements = 0
 next_count = {}
@@ -338,18 +339,19 @@ def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port
     username = username[0].text
     os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
 
+    auto_unfollow_tiktok_lite(driver, adb_path, device_id, username.replace("@", ""), limit_check_follow=5000)
+
     return {"username": username}
 
 if __name__ == "__main__": 
     pass
     # capabilities['udid'] = "192.168.1.56:5555"
-    # adb_path = open("adb_path.txt", "r").read()
-
-    # driver = driver_init(adb_path, ask_udid=False, device_id="351a9fc", appium_port="1000")
+    adb_path = open("adb_path.txt", "r").read()
+    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
     # size = driver.get_window_size()
     # input(size)
-    # r = login_tiktok_lite(adb_path, driver, device_id="351a9fc", appium_port="1000")
-    # print(r)
-    # input(">>> ")
+    r = login_tiktok_lite(adb_path, driver, device_id="192.168.1.56:5555", appium_port="1000")
+    print(r)
+    input(">>> ")
     # r = login_tiktok_lite(adb_path, driver, device_id="192.168.1.56:5555", appium_port="1000")
     # print(r)
