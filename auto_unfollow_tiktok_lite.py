@@ -59,11 +59,13 @@ def auto_unfollow_tiktok_lite(driver, adb_path, device_id, account_username, lim
                     idx_page_log = random.randint(1, 100)
                     length_sequence_log = random.randint(1, 100)
                     curr_state = f"{idx_page_log}_{length_sequence_log}"
-
-                    while curr_state in states:
+                     
+                    max_count = 1
+                    while curr_state in states and max_count < 1000:
                         idx_page_log = random.randint(1, 100)
                         length_sequence_log = random.randint(1, 100)
                         curr_state = f"{idx_page_log}_{length_sequence_log}"
+                        max_count += 1
                     states.append(curr_state)
 
                     break
