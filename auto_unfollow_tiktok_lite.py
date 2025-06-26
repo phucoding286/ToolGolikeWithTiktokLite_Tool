@@ -39,10 +39,11 @@ def auto_unfollow_tiktok_lite(driver, adb_path, device_id, account_username, lim
     print(error_color(f"[Device: {device_id}] [!] Phát hiện số lượng follwing của account '{account_username}' lớn hơn mức '{limit_check_follow}', tiến hành unfollow tự động."))
     
     tiktok_acc_id = select_id_from_username(account_username, device_id=device_id)
-    error_count, idx = 1, 1
+    error_count, idx_page_log, length_sequence_log = 1, 1, 30
+    states = [f"{idx_page_log}_{length_sequence_log}"]
 
     while error_count < 10:
-        list_da_duyet = get_user_da_duyet_tien(device_id, tiktok_acc_id, 100, idx)
+        list_da_duyet = get_user_da_duyet_tien(device_id, tiktok_acc_id, length_sequence_log, idx_page_log)
         if "success" in list_da_duyet: list_da_duyet = list_da_duyet['success']
         else: return
         if str(list_da_duyet).strip() == "[]": return
@@ -53,13 +54,24 @@ def auto_unfollow_tiktok_lite(driver, adb_path, device_id, account_username, lim
             if "error" in r:
                 print(error_color(f"[Device: {device_id}] [!] Unfollow user {obj_target_user[0]} thất bại."))
                 error_count += 1
+
                 if (error_count - 1) % 2 == 0:
+                    idx_page_log = random.randint(1, 100)
+                    length_sequence_log = random.randint(1, 100)
+                    curr_state = f"{idx_page_log}_{length_sequence_log}"
+
+                    while curr_state in states:
+                        idx_page_log = random.randint(1, 100)
+                        length_sequence_log = random.randint(1, 100)
+                        curr_state = f"{idx_page_log}_{length_sequence_log}"
+                    states.append(curr_state)
+
                     break
             else:
                 print(success_color(f"[Device: {device_id}] [#] Unfollow user {obj_target_user[0]} thành công."))
                 error_count = 1
 
-        idx += 1
+        idx_page_log += 1
 
 if __name__ == "__main__":
     GOLIKE_HEADERS['authorization'] = open("auth.txt", "r").read()
