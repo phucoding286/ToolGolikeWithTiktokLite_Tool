@@ -37,13 +37,16 @@ def auto_unfollow_tiktok_lite(driver, adb_path, device_id, account_username, lim
     r = check_follow_count(account_username, limit_check_follow)
     if not r[0]: return
     print(error_color(f"[Device: {device_id}] [!] Phát hiện số lượng follwing của account '{account_username}' lớn hơn mức '{limit_check_follow}', tiến hành unfollow tự động."))
+    
     tiktok_acc_id = select_id_from_username(account_username, device_id=device_id)
     error_count, idx = 1, 1
+
     while error_count < 10:
         list_da_duyet = get_user_da_duyet_tien(device_id, tiktok_acc_id, 100, idx)
         if "success" in list_da_duyet: list_da_duyet = list_da_duyet['success']
         else: return
         if str(list_da_duyet['success']).strip() == "[]": return
+
         for obj_target_user in list_da_duyet:
             if error_count >= 10: return
             r = unfollow(driver, adb_path, device_id, obj_target_user[1])
@@ -53,4 +56,5 @@ def auto_unfollow_tiktok_lite(driver, adb_path, device_id, account_username, lim
             else:
                 print(success_color(f"[Device: {device_id}] [#] Unfollow user {obj_target_user[0]} thành công."))
                 error_count = 1
+
         idx += 1
