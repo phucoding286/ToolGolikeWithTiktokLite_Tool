@@ -135,11 +135,13 @@ def change_img_profile(driver: webdriver.Remote, adb_path, device_id, folderpath
             EC.presence_of_element_located((By.XPATH, "//android.widget.ImageView[@resource-id='com.zhiliaoapp.musically.go:id/dxe']"))
         )
         avatar_btn.click()
-
+        
+        # com.lynx.tasm.behavior.ui.LynxFlattenUI
+        # idx 4
         edit_img_profile_btn = WebDriverWait(driver, 10).until(
-            EC.presence_of_all_elements_located((By.CLASS_NAME, "com.lynx.component.svg.UISvg"))
+            EC.presence_of_all_elements_located((By.CLASS_NAME, "com.lynx.tasm.behavior.ui.LynxFlattenUI"))
         )
-        edit_img_profile_btn[1].click()
+        edit_img_profile_btn[4].click()
 
         select_first_img = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.GridView/android.widget.ImageView[1]'))
@@ -163,7 +165,7 @@ def change_img_profile(driver: webdriver.Remote, adb_path, device_id, folderpath
         
 if __name__ == "__main__":
     adb_path = open("adb_path.txt", "r").read()
-    # driver = driver_init(adb_path, ask_udid=False, device_id="351a9fc", appium_port="1000")
-    # print(change_img_profile(driver, adb_path, device_id="351a9fc"))
-    upload_avatar_img("192.168.1.56:5555", adb_path, r"E:\MySRC\golike-tools\golike_tiktok_lite_adb_api\img_for_change_avatar_for_golike_tool_by_phu")
+    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.7:5555", appium_port="1000")
+    print(change_img_profile(driver, adb_path, device_id="192.168.1.7:5555"))
+    # upload_avatar_img("192.168.1.56:5555", adb_path, r"E:\MySRC\golike-tools\golike_tiktok_lite_adb_api\img_for_change_avatar_for_golike_tool_by_phu")
     input(">>> ")
