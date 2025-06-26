@@ -45,7 +45,7 @@ def auto_unfollow_tiktok_lite(driver, adb_path, device_id, account_username, lim
         list_da_duyet = get_user_da_duyet_tien(device_id, tiktok_acc_id, 100, idx)
         if "success" in list_da_duyet: list_da_duyet = list_da_duyet['success']
         else: return
-        if str(list_da_duyet['success']).strip() == "[]": return
+        if str(list_da_duyet).strip() == "[]": return
 
         for obj_target_user in list_da_duyet:
             if error_count >= 10: return
@@ -58,3 +58,12 @@ def auto_unfollow_tiktok_lite(driver, adb_path, device_id, account_username, lim
                 error_count = 1
 
         idx += 1
+
+if __name__ == "__main__":
+    GOLIKE_HEADERS['authorization'] = open("auth.txt", "r").read()
+    GOLIKE_HEADERS["t"] = open("t.txt", "r").read()
+    adb_path = open("adb_path.txt").read()
+    device_id = "192.168.1.56:5555"
+
+    driver = driver_init(adb_path, ask_udid=False, device_id=device_id, appium_port="1000")
+    auto_unfollow_tiktok_lite(driver, adb_path, device_id, "ngi.tnh.xa", limit_check_follow=10000)
