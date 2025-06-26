@@ -118,7 +118,7 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
         tim_desicion = random.choice([False for _ in range(20)] + [True] + [False for _ in range(20)])
         if tim_desicion and rdn_options:
             try:
-                os.system(adb_path + f" -s {device_id}" + f" shell input tap {720/2} {(1424 / 2) - 350}")
+                os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 350}")
                 
                 WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located(
@@ -126,7 +126,7 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
                     )
                 ).click()
                 print(success_color(f"[Device: {device_id}] [#] Đã thực hiện tim video"))
-                os.system(adb_path + f" -s {device_id}" + f" shell input tap {720/2} {(1424 / 2) - 350}")
+                os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 350}")
             except:
                 try:
                     WebDriverWait(driver, 5).until(
@@ -135,7 +135,7 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
                         )
                     ).click()
                     print(success_color(f"[Device: {device_id}] [#] Đã thực hiện tim video"))
-                    os.system(adb_path + f" -s {device_id}" + f" shell input tap {720/2} {(1424 / 2) - 350}")
+                    os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 350}")
                 except:
                     print(error_color(f"[Device: {device_id}] [!] Đã có lỗi khi tim video"))
         else:
@@ -180,5 +180,5 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
             else:
                 return "lỗi khi scroll"
             
-    if watch_user_video: os.system(adb_path + f" -s {device_id}" + f" shell input tap {720/2} {(1424 / 2) - 350}")
+    if watch_user_video: os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 350}")
     return driver

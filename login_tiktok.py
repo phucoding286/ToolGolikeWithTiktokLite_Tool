@@ -284,7 +284,7 @@ def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port
     driver.activate_app(capabilities['appPackage'])
 
     print(system_color(f"[Device: {device_id}] [>] lấy username..."))
-    os.system(adb_path + f" -s {device_id}" + f" shell input tap {720/2} {(1424 / 2) - 350}")
+    os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 350}")
     option_btns = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located(
             (By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.viewpager.widget.ViewPager/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout")
