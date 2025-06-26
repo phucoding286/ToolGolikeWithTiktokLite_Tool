@@ -53,6 +53,8 @@ def auto_unfollow_tiktok_lite(driver, adb_path, device_id, account_username, lim
             if "error" in r:
                 print(error_color(f"[Device: {device_id}] [!] Unfollow user {obj_target_user[0]} thất bại."))
                 error_count += 1
+                if (error_count - 1) % 2 == 0:
+                    break
             else:
                 print(success_color(f"[Device: {device_id}] [#] Unfollow user {obj_target_user[0]} thành công."))
                 error_count = 1

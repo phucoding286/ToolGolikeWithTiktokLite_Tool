@@ -338,8 +338,9 @@ def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port
     )
     username = username[0].text
     os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
-
-    auto_unfollow_tiktok_lite(driver, adb_path, device_id, username.replace("@", ""), limit_check_follow=1000)
+    
+    if random.choice([False, True, False]):
+        auto_unfollow_tiktok_lite(driver, adb_path, device_id, username.replace("@", ""), limit_check_follow=1000)
 
     return {"username": username}
 
