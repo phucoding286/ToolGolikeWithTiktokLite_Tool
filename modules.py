@@ -111,7 +111,7 @@ def waiting_ui(timeout=5, text="", device_id=None):
     print()
     return 0
 
-def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, recreate_driver=True, device_id=None, appium_port=None, watch_user_video=False):
+def waiting_scroll(driver: webdriver.Remote, adb_path, times_scroll=0, text="", rdn_options=True, recreate_driver=True, device_id=None, appium_port=None, watch_user_video=False):
     width, height = 0, 0
     for i in range(1, times_scroll+1):
 
@@ -169,7 +169,7 @@ def waiting_scroll(driver, adb_path, times_scroll=0, text="", rdn_options=True, 
             width = size['width']
             height = size['height']
             
-            os.system(adb_path + f" -s {device_id}" + f" shell input swipe {width/2} {height/2} {width/2} 0 500")
+            driver.swipe(start_x=width/2, start_y=height/2, end_x=width/2, end_y=0, duration=500)
             print(colorama.Fore.YELLOW + f"[Device: {device_id}] [{i}-scroll] " + colorama.Style.RESET_ALL, end="")
             print(colorama.Fore.BLUE + text + colorama.Style.RESET_ALL)
 
