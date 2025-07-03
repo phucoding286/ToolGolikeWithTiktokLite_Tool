@@ -232,7 +232,7 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3, wait_for_when_er
         )
 
         if decision == "ttc":
-            skip_ttc = random.choice([True] + ([False] * 200)) # tạo thêm 1 lớp thiên vị
+            skip_ttc = random.choice(([False] * 100) + [True] + ([False] * 100)) # tạo thêm 1 lớp thiên vị
             if skip_ttc: # thiên vị bỏ qua ttc để tránh số follow quá lớn
                 continue
             
