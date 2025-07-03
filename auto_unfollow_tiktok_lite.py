@@ -44,11 +44,14 @@ def auto_unfollow_tiktok_lite(driver, adb_path, device_id, account_username, lim
 
     while error_count < 10:
         list_da_duyet = get_user_da_duyet_tien(device_id, tiktok_acc_id, length_sequence_log, idx_page_log)
-        if "success" in list_da_duyet: list_da_duyet = list_da_duyet['success']
-        else: return
+        if "success" in list_da_duyet:
+            list_da_duyet = list_da_duyet['success']
+        else:
+            continue
         if str(list_da_duyet).strip() == "[]":
             idx_page_log = random.randint(1, 1000)
             length_sequence_log = random.randint(1, 100)
+            continue
 
         for obj_target_user in list_da_duyet:
             if error_count >= 10: return
