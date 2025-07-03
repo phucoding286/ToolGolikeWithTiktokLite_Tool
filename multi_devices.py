@@ -236,7 +236,7 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3, wait_for_when_er
             if skip_ttc: # thiên vị bỏ qua ttc để tránh số follow quá lớn
                 continue
             
-            r = ttc(driver, adb_path, device_id)
+            r = ttc(driver, adb_path, device_id, username)
             if "error" in r:
                 try:
                     driver.quit()

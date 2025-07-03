@@ -70,16 +70,55 @@ def auto_unfollow_tiktok_lite(driver, adb_path, device_id, account_username, lim
 
                     break
             else:
-                print(success_color(f"[Device: {device_id}] [#] Unfollow user {obj_target_user[0]} thành công."))
+                print(success_color(f"[Device: {device_id}] [#] {account_username} -> Unfollow user {obj_target_user[0]} thành công."))
                 error_count = 1
 
         idx_page_log += 1
+
+
+def auto_unfollow_ttc(driver, adb_path, device_id, account_username, limit_check_follow, ttc_hist_username_filepath="ttc_hist.json"):
+    r = check_follow_count(account_username, limit_check_follow)
+    if not r[0]: return
+    print(error_color(f"[Device: {device_id}] [!] Phát hiện số lượng follwing của account '{account_username}' lớn hơn mức '{limit_check_follow}', tiến hành unfollow tự động."))
+    
+    with open(ttc_hist_username_filepath, "r", encoding="utf8") as f:
+        obj = json.load(f)
+    
+    for username_target in obj[account_username]:
+        username_link = f"https://www.tiktok.com/{username_target}"
+        
+        for retry in range(5):
+            try:
+                response = scraper.get(username_link, timeout=10)
+                profile_id = response.text.split("\"user\":{\"id\":\"")[1].split("\",\"")[0]
+                print(success_color(f"[Device: {device_id}] [#] Lấy profile id thành công"))
+                break
+            except:
+                time.sleep(1)
+                print(error_color(f"[Device: {device_id}] [!] Lỗi khi lấy profile id, thử lại {retry+1}/5"))
+                continue
+        else:
+            return
+        
+        r = unfollow(driver, adb_path, device_id, profile_id)
+        if "error" in r:
+            continue
+        
+        try:
+            obj[account_username].remove(username_target)
+            with open(ttc_hist_username_filepath, "w", encoding="utf8") as f:
+                json.dump(obj, f, indent=4, ensure_ascii=False)
+        except:
+            pass
+
+        print(success_color(f"[Device: {device_id}] [#] {account_username} -> Unfollow user {username_link} thành công."))
+            
 
 if __name__ == "__main__":
     GOLIKE_HEADERS['authorization'] = open("auth.txt", "r").read()
     GOLIKE_HEADERS["t"] = open("t.txt", "r").read()
     adb_path = open("adb_path.txt").read()
-    device_id = "192.168.1.56:5555"
+    device_id = "192.168.1.7:5555"
 
     driver = driver_init(adb_path, ask_udid=False, device_id=device_id, appium_port="1000")
-    auto_unfollow_tiktok_lite(driver, adb_path, device_id, "ngi.tnh.xa", limit_check_follow=10000)
+    auto_unfollow_ttc(driver, adb_path, device_id, "jison.nguyen4", limit_check_follow=1000)

@@ -7,7 +7,7 @@ def manual_send_keys(adb_path, text: str, enter=False, device_id=None):
     if enter:
         os.system(f'{adb_path} -s {device_id}  shell input keyevent 66')
 
-def ttc(driver, adb_path, device_id):
+def ttc(driver, adb_path, device_id, current_account, ttc_hist_username_filepath="ttc_hist.json"):
     try:
         size = driver.get_window_size()
         width = size['width']
@@ -30,7 +30,8 @@ def ttc(driver, adb_path, device_id):
         find_cell.click()
         
         time.sleep(1)
-        manual_send_keys(adb_path, "Follow Cheo", True, device_id)
+        random_find = ["Follow cheo", "Tuong tac cheo", "Cheo follow", "Cheo tuong tac", "Follow cheo moi nhat"]
+        manual_send_keys(adb_path, random.choice(random_find), True, device_id)
 
         time.sleep(2)
 
@@ -59,7 +60,48 @@ def ttc(driver, adb_path, device_id):
                         (By.XPATH, "//android.widget.ImageView[@resource-id='com.zhiliaoapp.musically.go:id/ds5']")
                     )
                 )
-                mini_follow.click()
+
+                avatar = WebDriverWait(driver, 4).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, "//android.widget.ImageView[@resource-id='com.zhiliaoapp.musically.go:id/etq']")
+                    )
+                )
+                avatar.click()
+                
+                username = WebDriverWait(driver, 5).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, '//android.widget.Button[@resource-id="com.zhiliaoapp.musically.go:id/etv"]')
+                    )
+                ).text
+                
+                # lưu username đã TTC để sau này unfollow
+                if not os.path.exists(ttc_hist_username_filepath):
+                    with open(ttc_hist_username_filepath, "w", encoding="utf8") as f:
+                        obj = {current_account: [username]}
+                        json.dump(obj, f, indent=4, ensure_ascii=False)
+                else:
+                    with open(ttc_hist_username_filepath, "r", encoding="utf8") as f:
+                        obj = json.load(f)
+
+                    if current_account not in obj:
+                        obj[current_account] = [username]
+                    else:
+                        obj[current_account].append(username)
+
+                    with open(ttc_hist_username_filepath, "w", encoding="utf8") as f:
+                        json.dump(obj, f, indent=4, ensure_ascii=False)
+
+                follow_btn = WebDriverWait(driver, 5).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, '//android.widget.Button[@text="Follow"]')
+                    )
+                )
+                time.sleep(1)
+                follow_btn.click()
+                os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+                time.sleep(1)
+                os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2) - 20} {(height / 2) - 350}")
+
                 break
             except:
                 try: waiting_scroll(driver, adb_path, times_scroll=1, text="Scroll để tìm video TTC", rdn_options=False, recreate_driver=False, device_id=device_id)
@@ -135,6 +177,6 @@ def ttc(driver, adb_path, device_id):
 
 if __name__ == "__main__":
     adb_path = open("adb_path.txt", "r").read()
-    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
-    print(ttc(driver, adb_path, device_id="192.168.1.56:5555"))
+    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.4:5555", appium_port="1000")
+    print(ttc(driver, adb_path, device_id="192.168.1.4:5555", current_account="pt12190"))
     input(">>> ")
