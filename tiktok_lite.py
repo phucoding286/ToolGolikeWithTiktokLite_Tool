@@ -110,8 +110,10 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
                     break
             else:
                 os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+                time.sleep(1)
                 
                 os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+                time.sleep(1)
                 os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
 
                 time.sleep(1)
@@ -146,8 +148,10 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
                 os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
                 time.sleep(1)
                 os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+                time.sleep(1)
                 
                 os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+                time.sleep(1)
                 os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
 
                 time.sleep(1)
@@ -180,8 +184,10 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
             os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
             time.sleep(1)
             os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+            time.sleep(1)
                 
             os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+            time.sleep(1)
             os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
 
             time.sleep(1)
@@ -202,8 +208,10 @@ def follow(driver, adb_path="adb", target_link="https://tiktok.com/@example/", t
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
         time.sleep(1)
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+        time.sleep(1)
         
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+        time.sleep(1)
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
         
         time.sleep(1)

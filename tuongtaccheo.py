@@ -120,8 +120,10 @@ def ttc(driver, adb_path, device_id):
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
         time.sleep(1)
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+        time.sleep(1)
         
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+        time.sleep(1)
         os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
         
         time.sleep(1)
