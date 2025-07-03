@@ -3,7 +3,7 @@ from process_popup_via_screencap import (
     popup_processing,
     screencap
 )
-from auto_unfollow_tiktok_lite import auto_unfollow_tiktok_lite
+from auto_unfollow_tiktok_lite import auto_unfollow_tiktok_lite, auto_unfollow_ttc
 
 google_account_elements = 0
 next_count = {}
@@ -340,8 +340,12 @@ def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port
     os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
     
     if random.choice([False, True, False]):
-        try: auto_unfollow_tiktok_lite(driver, adb_path, device_id, username.replace("@", ""), limit_check_follow=1000)
-        except: pass
+        if random.choice([True, False]):
+            try: auto_unfollow_ttc(driver, adb_path, device_id, username.replace("@", ""), limit_check_follow=1000)
+            except: pass
+        else:
+            try: auto_unfollow_tiktok_lite(driver, adb_path, device_id, username.replace("@", ""), limit_check_follow=1000)
+            except: pass
 
     return {"username": username}
 
