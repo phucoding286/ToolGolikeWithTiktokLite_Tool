@@ -46,7 +46,9 @@ def auto_unfollow_tiktok_lite(driver, adb_path, device_id, account_username, lim
         list_da_duyet = get_user_da_duyet_tien(device_id, tiktok_acc_id, length_sequence_log, idx_page_log)
         if "success" in list_da_duyet: list_da_duyet = list_da_duyet['success']
         else: return
-        if str(list_da_duyet).strip() == "[]": return
+        if str(list_da_duyet).strip() == "[]":
+            idx_page_log = random.randint(1, 1000)
+            length_sequence_log = random.randint(1, 100)
 
         for obj_target_user in list_da_duyet:
             if error_count >= 10: return
@@ -56,13 +58,13 @@ def auto_unfollow_tiktok_lite(driver, adb_path, device_id, account_username, lim
                 error_count += 1
 
                 if (error_count - 1) % 2 == 0:
-                    idx_page_log = random.randint(1, 100)
+                    idx_page_log = random.randint(1, 1000)
                     length_sequence_log = random.randint(1, 100)
                     curr_state = f"{idx_page_log}_{length_sequence_log}"
                      
                     max_count = 1
                     while curr_state in states and max_count < 1000:
-                        idx_page_log = random.randint(1, 100)
+                        idx_page_log = random.randint(1, 1000)
                         length_sequence_log = random.randint(1, 100)
                         curr_state = f"{idx_page_log}_{length_sequence_log}"
                         max_count += 1
