@@ -107,7 +107,7 @@ def auto_unfollow_ttc(driver, adb_path, device_id, account_username, limit_check
         
         r = unfollow(driver, adb_path, device_id, profile_id)
         if "error" in r:
-            continue
+            pass
         
         try:
             obj[account_username].remove(username_target)
