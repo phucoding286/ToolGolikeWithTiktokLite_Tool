@@ -225,8 +225,8 @@ def run(adb_path, device_id, wait, appium_port, times_scroll=3, wait_for_when_er
     while True:
         decision = random.choice(
             ["run" for _ in range(30)] +\
-            ['ttc' for _ in range(1)] +\
-            ['up' for _ in range(3)] +\
+            ['ttc' for _ in range(6)] +\
+            ['up' for _ in range(1)] +\
             ['change' for _ in range(1)] +\
             ["run" for _ in range(30)]
         )
