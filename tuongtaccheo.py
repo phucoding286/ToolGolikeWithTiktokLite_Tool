@@ -60,6 +60,7 @@ def ttc(driver, adb_path, device_id, current_account, ttc_hist_username_filepath
                         (By.XPATH, "//android.widget.ImageView[@resource-id='com.zhiliaoapp.musically.go:id/ds5']")
                     )
                 )
+                mini_follow.click()
 
                 avatar = WebDriverWait(driver, 4).until(
                     EC.presence_of_element_located(
@@ -91,13 +92,6 @@ def ttc(driver, adb_path, device_id, current_account, ttc_hist_username_filepath
                     with open(ttc_hist_username_filepath, "w", encoding="utf8") as f:
                         json.dump(obj, f, indent=4, ensure_ascii=False)
 
-                follow_btn = WebDriverWait(driver, 5).until(
-                    EC.presence_of_element_located(
-                        (By.XPATH, '//android.widget.Button[@text="Follow"]')
-                    )
-                )
-                time.sleep(1)
-                follow_btn.click()
                 os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
                 time.sleep(1)
                 os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2) - 20} {(height / 2) - 350}")
