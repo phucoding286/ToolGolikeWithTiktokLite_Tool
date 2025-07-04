@@ -164,6 +164,7 @@ def waiting_scroll(driver: webdriver.Remote, adb_path, times_scroll=0, text="", 
                 break
         
         try:
+            driver.activate_app(capabilities['appPackage'])
             
             size = driver.get_window_size()
             width = size['width']

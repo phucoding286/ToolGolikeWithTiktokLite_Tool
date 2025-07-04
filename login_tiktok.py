@@ -275,6 +275,7 @@ def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
     elif r == "Không cho phép":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
+        os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
     elif r == "Cập nhật Chính sách về":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
     elif r == "Đã hiểu":
@@ -340,10 +341,12 @@ def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port
     os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
     
     if random.choice([False, True, False]):
-        if random.choice([False, False, True, False, False]):
+        if random.choice([False, False, True, False, False]) is True:
+            print(system_color(f"[Device: {device_id}] [>] Chọn unfollow TTC"))
             try: auto_unfollow_ttc(driver, adb_path, device_id, username.replace("@", ""), limit_check_follow=1000)
             except: pass
         else:
+            print(system_color(f"[Device: {device_id}] [>] Chọn unfollow golike"))
             try: auto_unfollow_tiktok_lite(driver, adb_path, device_id, username.replace("@", ""), limit_check_follow=1000)
             except: pass
 
