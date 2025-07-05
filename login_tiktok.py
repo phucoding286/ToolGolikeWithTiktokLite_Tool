@@ -340,8 +340,8 @@ def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port
     username = username[0].text
     os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
     
-    if random.choice([False, True, False]) is True:
-        if random.choice([False, False, True, False, False]) is True:
+    if random.choice([False, False, True, False, False]) is True:
+        if random.choice([False, True, False]) is True:
             print(system_color(f"[Device: {device_id}] [>] Chọn unfollow TTC"))
             try: auto_unfollow_ttc(driver, adb_path, device_id, username.replace("@", ""), limit_check_follow=1000)
             except: pass
