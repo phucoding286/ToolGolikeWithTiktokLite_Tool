@@ -1,0 +1,2 @@
+devices_battery_info.py
+pause
