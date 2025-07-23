@@ -21,5 +21,5 @@ driver = driver_init(
 while True:
     driver = waiting_scroll(
         driver, adb_path, times_scroll=10, text="Scroll 10 lần",
-        device_id=device_id, appium_port=appium_port
+        device_id=device_id, appium_port=appium_port, rdn_options=False
     )
