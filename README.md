@@ -7,7 +7,6 @@
 
 3. bạn cần cài đặt ```appium```
 - [link cài đặt appium](https://github.com/appium/appium-desktop/releases/tag/v1.21.0)
-- [link dự phòng](https://drive.google.com/file/d/1noyMgAdIbIb8ot4G01ohrqqfWZ5wReRQ/view?usp=drive_link)
 
 - Link video hướng dẫn chi tiết setup appium và android studio [Link Video](https://youtu.be/oqaJvdIQ7JQ?si=Zc_kqeJcMMiULRZ8)
 
