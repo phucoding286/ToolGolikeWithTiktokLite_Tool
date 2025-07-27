@@ -10,10 +10,13 @@
 
 - Link video hướng dẫn chi tiết setup appium và android studio [Link Video 1](https://youtu.be/oqaJvdIQ7JQ?si=Zc_kqeJcMMiULRZ8) [Link video 2](https://youtu.be/AExZRlVznQs?si=nLJexMYi4abqWKB4)
 
-4. bạn cần cài đặt ```tiktok like``` phiên bản phù hợp với tool ```(37.8.4)``` cho điện thoại
+4. Bạn cần cài đặt ```Java```
+- [link cài đặt java](https://download.oracle.com/java/23/archive/jdk-23.0.2_windows-x64_bin.exe)
+
+5. bạn cần cài đặt ```tiktok like``` phiên bản phù hợp với tool ```(37.8.4)``` cho điện thoại
 - [link tải tệp tiktok lite apk tương thích cho tool](https://drive.google.com/file/d/1a0riuIloZ2aWNNRnIkF75pvCOZ8mbs4d/view?usp=drive_link)
 
-5. bạn cần cài đặt ```tesseract```
+6. bạn cần cài đặt ```tesseract```
 - [link tải tesseract](https://drive.google.com/file/d/1PUsrhBLqjYi2eubnH_H-e8erdGOF7ENL/view?usp=drive_link)
 
 # Hướng dẫn setup các file quan trọng trong tool
