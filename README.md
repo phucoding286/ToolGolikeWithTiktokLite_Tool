@@ -34,3 +34,5 @@
 3. trên tài khoản ```tiktok``` của bạn, để đảm bảo tool chạy đúng hãy cập nhật ```tên hồ sơ``` (nếu chưa có) và đăng ít nhất ```một ảnh``` nếu chưa đăng ảnh nào.
 4. hãy dùng app vpn ```1.1.1.1``` nếu bạn auto nhiều thiết bị cùng lúc (Hoặc không cũng được, dựa trên việc chạy thực tế, tool này hoạt động ít nhả follow khi không fake VPN)
 5. Lưu Ý quan trọng!! Vì tool có auto post ảnh, nên bạn cần chuẩn bị 1 hoặc 2 ảnh trở lên trong thư viện ảnh, và hạn chế các ảnh cá nhân để tránh post ảnh không mong muốn.
+6. Lưu ý quan trọng!! Bạn vui lòng vào ứng dụng google play để tải về ứng dụng bàn phím ```Gboard``` để đảm bảo tương thích với tool.
+7. Lưu ý quan trọng!! Bạn vui lòng thêm số điện thoại hoặc email vào tài khoản tiktok làm việc.
