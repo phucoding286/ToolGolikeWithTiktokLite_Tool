@@ -92,19 +92,6 @@ def driver_init(adb_path, ask_udid=True, device_id=None, appium_port=None):
             print(error_color(f"[Device: {device_id}] [!] Lỗi khi tạo driver, thử lại..."))
             error = True
     
-    try:
-        driver.execute_script('mobile: shell', {
-            'command': 'wm',
-            'args': ['size', '720x1280']
-        })
-
-        driver.execute_script('mobile: shell', {
-            'command': 'wm',
-            'args': ['density', '320']
-        })
-    except:
-        pass
-    
     return driver
 
 def go_to_my_page(username, adb_path):
