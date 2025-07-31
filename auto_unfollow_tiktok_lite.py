@@ -103,7 +103,7 @@ def auto_unfollow_ttc(driver, adb_path, device_id, account_username, limit_check
                 print(error_color(f"[Device: {device_id}] [!] Lỗi khi lấy profile id, thử lại {retry+1}/5"))
                 continue
         else:
-            return
+            continue
         
         r = unfollow(driver, adb_path, device_id, profile_id)
         if "error" in r:
