@@ -73,6 +73,23 @@ def follow_via_link(adb_path, driver, device_id, username_link, time_scroll=3):
             return "!=username"
 
         os.system(f"""{adb_path} -s {device_id} shell am start -n com.zhiliaoapp.musically.go/com.ss.android.ugc.aweme.deeplink.DeepLinkActivityV2 -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d "snssdk1180://user/profile/{profile_id}?params_url=https://www.tiktok.com/{username_link.split("/")[3]}""")
+        
+        if time_scroll == 0:
+            # follow và thoát
+            follow_btn = WebDriverWait(driver, 5).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, '//android.widget.Button[@text="Follow"]')
+                )
+            )
+            time.sleep(1)
+            follow_btn.click()
+        
+            # thoat
+            os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+            time.sleep(1)
+            os.system(f'{adb_path} -s {device_id} shell input keyevent 4')
+
+            return {"success": "Follow thành công!"}
 
         try:
             top_user_video_btn = WebDriverWait(driver, 5).until(
