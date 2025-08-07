@@ -49,6 +49,13 @@ capabilities = {
 
 
 def driver_init(adb_path, ask_udid=True, device_id=None, appium_port=None):
+    capabilities = {
+        "udid": "351a9fc",
+        "platformName": "Android",
+        "appPackage": "com.zhiliaoapp.musically.go",
+        "appActivity": "com.ss.android.ugc.aweme.main.homepage.MainActivity",
+        "noReset": True
+    }
     for retry in range(5):
         try:
             requests.get("https://www.google.com/", timeout=2)
@@ -182,4 +189,5 @@ def waiting_scroll(driver: webdriver.Remote, adb_path, times_scroll=0, text="", 
                 return "lỗi khi scroll"
             
     if watch_user_video: os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height / 2) - 350}")
+
     return driver
