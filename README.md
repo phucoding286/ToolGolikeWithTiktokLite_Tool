@@ -38,4 +38,6 @@
 7. Lưu ý quan trọng!! Bạn vui lòng không thêm email hoặc số điện thoại vào tài khoản tiktok để tránh 2fa phá hỏng luồng làm việc của bot
 8. Lưu ý quan trọng!! Sau khi mọi thiết lập hoàn tất, bạn hãy tắt hoặc hạn chế google play đi, để tránh tự động cập nhật (dù đã bật không tự động cập nhật, nhưng đôi lúc nó khó hiểu lắm :> ..)
 
-
+# Cách chạy.
+- chỉ cần nhấn đúp vào file `main.bat` hoặc `main.py` là được, trước đó hãy nhớ để app mở các file python mặc định là python.
+- chia sẻ một số kinh nghiệm thực tế, tiêu chuẩn bạn nên để các tham số chờ hoặc lướt mô phỏng là `5` hết, đó rất tối ưu, hoặc bạn có thể bỏ qua phần lướt trong profile mục tiêu để rút ngắn thời gian kiếm tiền, hiện tại golike đang giảm giá tiktok rất thấp, nhưng vẫn ổn với trên 100k một ngày với 6 thiết bị mà tôi đang chạy, tầm 120 - 140k, nếu như là hồi trước thì tôi chạy cũng phải trên 200k đến 300k, bạn nếu có cần liên hệ hãy ghé vào trang facebook của tôi -> https://www.facebook.com/hoangphu020
