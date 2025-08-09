@@ -59,6 +59,9 @@ def detect_popup(img1, img2):
     
     elif "Da hieu" in str_detected:
         return "Đã hiểu"
+    
+    elif "De sau" in str_detected:
+        return "Để sau"
 
 def popup_processing(filepng: str): 
     try:
@@ -88,5 +91,11 @@ def screencap(adb_path, device_id: str):
         raise ValueError()
 
 if __name__ == "__main__":
-    r = screencap(open("adb_path.txt").read(), "192.168.1.56")
-    print(popup_processing(r))
+    adb_path = open("adb_path.txt").read()
+    device_id = "192.168.1.56:5555"
+    r = screencap(adb_path, device_id)
+    r = popup_processing(r)
+    print(r)
+    if r == "Để sau":
+        print("yes")
+        os.system(adb_path + f" -s {device_id}" + f" shell input tap {720/2} {(1465/2)+255}")
