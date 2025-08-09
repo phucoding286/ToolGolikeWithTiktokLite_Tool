@@ -33,26 +33,7 @@ def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port
     global next_count
     global capabilities
     global scroll_to_find_delete_btn
-    
-    result = subprocess.run(
-        ["cmd", "/c", adb_path + f" -s {device_id} shell wm size"],
-        capture_output=True,
-        text=True
-    )
-    if result.stdout.split("Physical size: ")[1].split()[0] not in ["720x1600", "720x1280", "720x1520"]:
-        try:
-            driver.execute_script('mobile: shell', {
-                'command': 'wm',
-                'args': ['size', '720x1280']
-            })
 
-            driver.execute_script('mobile: shell', {
-                'command': 'wm',
-                'args': ['density', '320']
-            })
-        except:
-            pass
-    
     size = driver.get_window_size()
     width = size['width']
     height = size['height']
@@ -87,6 +68,10 @@ def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port
         )
     )
     option_btns[-1].click()
+
+    size = driver.get_window_size()
+    width = size['width']
+    height = size['height']
     
     r = screen_cap_(adb_path, device_id)
     if r == "Follow bạn bè của bạn":
@@ -157,6 +142,10 @@ def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port
 
         # dùng toán học để xác định tọa độ của nút đăng xuất trong popup đăng xuất
         # lý do dùng tọa độ thay vì appium: Do appium không quét được popup tiktok lite
+        size = driver.get_window_size()
+        width = size['width']
+        height = size['height']
+
         width_dx = (width / 2) + 150
         height_dx = (height / 2) + 145
         width_asdt = (width / 2) - 150
@@ -271,7 +260,7 @@ def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port
         except:
             print(error_color(f"[Device: {device_id}] [!] Lỗi không thể chụp ảnh màn hình và detect văn bản trong ảnh."))
             continue
-
+    
     if r == "Trạng thái tài khoản":
         os.system(adb_path + f" -s {device_id}" + f" shell input tap {(width/2)+150} {(height/2)+145}")
     elif r == "Follow bạn bè của bạn":
@@ -360,19 +349,6 @@ def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port
             print(system_color(f"[Device: {device_id}] [>] Chọn unfollow golike"))
             try: auto_unfollow_tiktok_lite(driver, adb_path, device_id, username.replace("@", ""), limit_check_follow=1000)
             except: pass
-    
-    try:
-        driver.execute_script('mobile: shell', {
-            'command': 'wm',
-            'args': ['size', 'reset']
-        })
-
-        driver.execute_script('mobile: shell', {
-            'command': 'wm',
-            'args': ['density', 'reset']
-        })
-    except:
-        pass
 
     return {"username": username}
 
@@ -380,10 +356,10 @@ if __name__ == "__main__":
     pass
     # capabilities['udid'] = "192.168.1.56:5555"
     adb_path = open("adb_path.txt", "r").read()
-    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.12:5555", appium_port="1000")
+    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
     # size = driver.get_window_size()
     # input(size)
-    r = login_tiktok_lite(adb_path, driver, device_id="192.168.1.12:5555", appium_port="1000")
+    r = login_tiktok_lite(adb_path, driver, device_id="192.168.1.56:5555", appium_port="1000")
     print(r)
     input(">>> ")
     # r = login_tiktok_lite(adb_path, driver, device_id="192.168.1.56:5555", appium_port="1000")
