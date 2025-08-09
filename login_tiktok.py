@@ -231,6 +231,26 @@ def login_tiktok_lite(adb_path, driver: webdriver.Remote, device_id, appium_port
             print(system_color(f"[Device: {device_id}] [>] Phát hiện nút `để sau` nhấn vào nút `để sau` sau khi nhấn đăng xuất"))
             os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+255}")
 
+            r = None
+            max_times = 2
+            count = 0
+            while True:
+                try:
+                    r = screencap(adb_path, device_id)
+                    r = popup_processing(r)
+                    print(system_color(f"[Device: {device_id}] Kết quả detected -> {r}"))
+                    if r is None and count < max_times:
+                        count += 1
+                        print(system_color(f"[Device: {device_id}] [>] Kết quả là None, thử lại ({count}/{max_times})"))
+                        continue
+                    break
+                except:
+                    print(error_color(f"[Device: {device_id}] [!] Lỗi không thể chụp ảnh màn hình và detect văn bản trong ảnh."))
+                    continue
+            
+            if r == "Để sau":
+                os.system(adb_path + f" -s {device_id}" + f" shell input tap {width/2} {(height/2)+200}")
+
         driver.activate_app(capabilities['appPackage'])
 
         logined_previous = True
@@ -405,10 +425,10 @@ if __name__ == "__main__":
     pass
     # capabilities['udid'] = "192.168.1.56:5555"
     adb_path = open("adb_path.txt", "r").read()
-    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.56:5555", appium_port="1000")
+    driver = driver_init(adb_path, ask_udid=False, device_id="192.168.1.10:5555", appium_port="1000")
     # size = driver.get_window_size()
     # input(size)
-    r = login_tiktok_lite(adb_path, driver, device_id="192.168.1.56:5555", appium_port="1000")
+    r = login_tiktok_lite(adb_path, driver, device_id="192.168.1.10:5555", appium_port="1000")
     print(r)
     input(">>> ")
     # r = login_tiktok_lite(adb_path, driver, device_id="192.168.1.56:5555", appium_port="1000")
