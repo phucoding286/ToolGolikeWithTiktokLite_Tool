@@ -35,4 +35,6 @@
 4. hãy dùng app vpn ```1.1.1.1``` nếu bạn auto nhiều thiết bị cùng lúc (Hoặc không cũng được, dựa trên việc chạy thực tế, tool này hoạt động ít nhả follow khi không fake VPN)
 5. Lưu Ý quan trọng!! Vì tool có auto post ảnh, nên bạn cần chuẩn bị 1 hoặc 2 ảnh trở lên trong thư viện ảnh, và hạn chế các ảnh cá nhân để tránh post ảnh không mong muốn.
 6. Lưu ý quan trọng!! Bạn vui lòng vào ứng dụng google play để tải về ứng dụng bàn phím ```Gboard``` để đảm bảo tương thích với tool.
-7. Lưu ý quan trọng!! Bạn vui lòng thêm số điện thoại hoặc email vào tài khoản tiktok làm việc.
+7. Lưu ý quan trọng!! Bạn vui lòng không thêm email hoặc số điện thoại vào tài khoản facebook để tránh 2fa phá hỏng luồng làm việc của tool
+8. Lưu ý quan trọng!! Sau khi mọi thiết lập hoàn tất, bạn hãy tắt hoặc hạn chế google play đi, để tránh tự động cập nhật (dù đã bật không tự động cập nhật, nhưng đôi lúc nó khó hiểu lắm :> ..)
+
